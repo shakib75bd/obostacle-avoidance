@@ -58,6 +58,78 @@ Additional arguments:
 - `--uncertainty-threshold`: Threshold for confidence regions (default: 0.3)
 - `--output`: Output video path (default: no output)
 
+### Test Video Processing System
+
+The `test_video.py` script allows for testing and visualization of the obstacle detection system with various options for different use cases.
+
+#### Basic Usage
+
+Process a video file:
+
+```
+python test_video.py --video path/to/video.mp4
+```
+
+Use webcam (default camera):
+
+```
+python test_video.py --webcam-mode
+```
+
+List all available webcams:
+
+```
+python test_video.py --list-webcams
+```
+
+Use a specific webcam (e.g., external camera):
+
+```
+python test_video.py --webcam-mode --webcam-source 1
+```
+
+#### Processing Modes
+
+1. **Video File Mode**
+   
+   Process a video file with standard settings:
+   ```
+   python test_video.py --video test_video1.mp4
+   ```
+
+   Optimize processing with lower resolution and fewer MC samples:
+   ```
+   python test_video.py --video test_video1.mp4 --resolution 320x240 --mc-samples 2 --target-fps 24
+   ```
+
+2. **Webcam Mode**
+   
+   Real-time processing with default webcam:
+   ```
+   python test_video.py --webcam-mode
+   ```
+
+   Use external webcam with optimization for real-time performance:
+   ```
+   python test_video.py --webcam-mode --webcam-source 1 --mc-samples 1 --skip-frames 2
+   ```
+
+#### Command-line Arguments
+
+- `--video`: Path to video file for processing
+- `--download-sample`: Download a sample test video if none provided
+- `--resolution`: Processing resolution in WxH format (default: "320x240")
+- `--depth-model`: Depth model type (default: "MiDaS_small")
+- `--yolo-model`: YOLOv8 model path (default: "yolov8n.pt")
+- `--mc-samples`: Number of Monte Carlo dropout samples (default: 2)
+- `--output`: Output video path (default: "output.mp4")
+- `--webcam-mode`: Optimize for real-time webcam processing
+- `--save-frames`: Save individual frames to output_frames directory
+- `--skip-frames`: Skip N frames for each processed frame to increase speed (default: 3)
+- `--target-fps`: Target FPS for live processing (default: 24)
+- `--webcam-source`: Webcam source index (0 for default camera, 1+ for external cameras)
+- `--list-webcams`: List all available webcam sources and exit
+
 ### Running Benchmarks
 
 To benchmark the system performance:
@@ -73,12 +145,84 @@ This will:
 3. Generate summary statistics and plots
 4. Save results to the `benchmark_results` directory
 
+## Webcam Mode Features
+
+The webcam mode is designed for real-time obstacle detection and provides several optimizations:
+
+### Webcam Source Selection
+
+The system can automatically detect and list available webcam sources:
+
+```
+python test_video.py --list-webcams
+```
+
+This will display all connected cameras with their resolution and frame rate information, allowing you to select the most appropriate camera for your use case.
+
+### Real-time Optimization
+
+When using `--webcam-mode`, the system:
+
+1. Uses an optimized frame buffer to minimize latency
+2. Adapts frame skipping dynamically based on processing capabilities
+3. Prioritizes the most recent frames for processing
+4. Automatically detects webcam properties (resolution, FPS)
+5. Provides visual feedback with a webcam mode indicator
+
+### Performance Tuning
+
+Fine-tune webcam performance with these options:
+
+- Reduce `--mc-samples` (1-2 recommended for webcam) to speed up depth estimation
+- Adjust `--skip-frames` to balance smoothness and processing load
+- Set `--target-fps` to match your display capabilities
+- Use `--resolution` to reduce the processing resolution for faster performance
+
+### Example Configurations
+
+For maximum responsiveness on slower hardware:
+```
+python test_video.py --webcam-mode --mc-samples 1 --resolution 160x120 --skip-frames 4
+```
+
+For balanced performance on standard hardware:
+```
+python test_video.py --webcam-mode --mc-samples 2 --resolution 320x240 --skip-frames 2
+```
+
+For higher quality on powerful hardware:
+```
+python test_video.py --webcam-mode --mc-samples 3 --resolution 640x480 --skip-frames 1
+```
+
 ## System Architecture
 
 ### Video Input
 
 - The system accepts input from a webcam or video file
 - Low resolution (default: 320x240) for faster processing
+- Supports multiple webcam sources with the `--webcam-source` parameter
+- Thread-safe frame buffering for real-time applications
+
+### Video Processing Components
+
+#### VideoSource Class
+
+The `VideoSource` class in `utils/video.py` provides a unified interface for handling both video files and webcam inputs:
+
+- Thread-safe frame capturing with queue-based buffering
+- Automatic FPS detection for videos and webcams
+- Real-time mode with frame skipping for low-latency processing
+- Proper resource management with context manager support
+- Automatic adaption to source properties
+
+#### FPSCounter
+
+The `FPSCounter` class provides real-time performance measurement:
+
+- Rolling average FPS calculation
+- Performance metrics tracking
+- Adaptive frame skipping based on processing capabilities
 
 ### Depth Estimation Module
 
