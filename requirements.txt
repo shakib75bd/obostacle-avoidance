@@ -1,0 +1,11 @@
+numpy
+opencv-python
+torch
+torchvision
+tqdm
+matplotlib
+pillow
+pyyaml
+scipy
+ultralytics
+timm # For MiDaS
