@@ -164,7 +164,13 @@ Lower threshold values (0.2-0.3) make the system more cautious (suggesting turns
 To benchmark the system performance:
 
 ```
-python benchmark.py --source path/to/video.mp4 --max-frames 100
+python benchmark.py --source test_video1.mp4 --max-frames 100
+```
+
+Replace `test_video1.mp4` with the path to your test video file, or use `0` for webcam:
+
+```
+python benchmark.py --source 0 --max-frames 50
 ```
 
 This will:

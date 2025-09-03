@@ -256,6 +256,12 @@ def main():
     # Parse arguments
     args = parse_args()
 
+    # Check if video source exists if it's a file
+    if args.source != "0" and not os.path.exists(args.source):
+        print(f"Error: Video file '{args.source}' does not exist.")
+        print("Please provide a valid video file path or use '0' for webcam.")
+        return
+
     # Initialize benchmark evaluator
     evaluator = BenchmarkEvaluator(
         depth_model=args.depth_model,
