@@ -41,6 +41,10 @@ def parse_args():
                         help="Webcam source index (0 for default camera, 1 for external, etc.)")
     parser.add_argument("--list-webcams", action="store_true",
                         help="List all available webcam sources and exit")
+    parser.add_argument("--navigation", action="store_true", default=True,
+                        help="Enable navigation suggestions (forward or turn)")
+    parser.add_argument("--navigation-threshold", type=float, default=0.4,
+                        help="Obstacle density threshold for navigation decisions (0.0-1.0)")
 
     return parser.parse_args()
 
@@ -302,10 +306,17 @@ def main():
             obstacle_map, obstacle_viz = obstacle_generator.generate_obstacle_map(
                 depth_map, uncertainty_map, obstacles, frame.shape
             )
-            fusion_time = time.time() - fusion_start
-            metrics.update('fusion_time', fusion_time)
 
-            # Calculate total processing time
+            # 4. Determine navigation suggestion based on obstacle density if enabled
+            nav_direction = None
+            nav_confidence = None
+            if args.navigation:
+                nav_direction, nav_confidence = obstacle_generator.determine_navigation_direction(
+                    obstacle_map, threshold=args.navigation_threshold
+                )
+
+            fusion_time = time.time() - fusion_start
+            metrics.update('fusion_time', fusion_time)            # Calculate total processing time
             total_time = time.time() - frame_start
             metrics.update('total_time', total_time)
 
@@ -323,7 +334,9 @@ def main():
             visualization = create_visualization(
                 frame, depth_colored, uncertainty_colored,
                 detection_img, obstacle_viz, fps, metrics,
-                webcam_mode=args.webcam_mode
+                webcam_mode=args.webcam_mode,
+                navigation_direction=nav_direction,
+                navigation_confidence=nav_confidence
             )
 
             # Write to output video

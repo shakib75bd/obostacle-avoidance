@@ -91,25 +91,29 @@ python test_video.py --webcam-mode --webcam-source 1
 #### Processing Modes
 
 1. **Video File Mode**
-   
+
    Process a video file with standard settings:
+
    ```
    python test_video.py --video test_video1.mp4
    ```
 
    Optimize processing with lower resolution and fewer MC samples:
+
    ```
    python test_video.py --video test_video1.mp4 --resolution 320x240 --mc-samples 2 --target-fps 24
    ```
 
 2. **Webcam Mode**
-   
+
    Real-time processing with default webcam:
+
    ```
    python test_video.py --webcam-mode
    ```
 
    Use external webcam with optimization for real-time performance:
+
    ```
    python test_video.py --webcam-mode --webcam-source 1 --mc-samples 1 --skip-frames 2
    ```
@@ -129,6 +133,31 @@ python test_video.py --webcam-mode --webcam-source 1
 - `--target-fps`: Target FPS for live processing (default: 24)
 - `--webcam-source`: Webcam source index (0 for default camera, 1+ for external cameras)
 - `--list-webcams`: List all available webcam sources and exit
+- `--navigation`: Enable navigation suggestions based on obstacle density (default: enabled)
+- `--navigation-threshold`: Obstacle density threshold for navigation decisions (default: 0.4)
+
+### Navigation Feature
+
+The system includes an obstacle density analyzer that provides navigation guidance based on the density of obstacles in front of the camera:
+
+```
+python test_video.py --webcam-mode --navigation
+```
+
+The navigation feature:
+
+- Displays a real-time obstacle density gauge showing how blocked the path ahead is
+- Recommends "MOVE FORWARD" when the path is clear (obstacle density below threshold)
+- Recommends "TURN - PATH BLOCKED" when obstacles are detected (density above threshold)
+- Shows path status as "SAFE" or "UNSAFE" based on obstacle density
+
+You can adjust the sensitivity of obstacle detection with:
+
+```
+python test_video.py --webcam-mode --navigation-threshold 0.3
+```
+
+Lower threshold values (0.2-0.3) make the system more cautious (suggesting turns earlier), while higher values (0.5-0.7) allow navigation through more complex environments.
 
 ### Running Benchmarks
 
@@ -181,16 +210,19 @@ Fine-tune webcam performance with these options:
 ### Example Configurations
 
 For maximum responsiveness on slower hardware:
+
 ```
 python test_video.py --webcam-mode --mc-samples 1 --resolution 160x120 --skip-frames 4
 ```
 
 For balanced performance on standard hardware:
+
 ```
 python test_video.py --webcam-mode --mc-samples 2 --resolution 320x240 --skip-frames 2
 ```
 
 For higher quality on powerful hardware:
+
 ```
 python test_video.py --webcam-mode --mc-samples 3 --resolution 640x480 --skip-frames 1
 ```

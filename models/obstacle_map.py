@@ -201,3 +201,40 @@ class ObstacleMapGenerator:
                 })
 
         return binary_obstacles, obstacle_regions
+
+    def determine_navigation_direction(self, obstacle_map, threshold=0.5):
+        """
+        Determine if it's safe to move forward or if turning is required based on obstacle density
+
+        Args:
+            obstacle_map: Obstacle likelihood map (0-1)
+            threshold: Threshold for obstacle detection
+
+        Returns:
+            navigation_type: 0 for MOVE FORWARD, 1 for TURN
+            obstacle_density: The density of obstacles in front (0-1)
+        """
+        h, w = obstacle_map.shape
+
+        # Define the front region (bottom center of the image)
+        # This is the critical area for forward movement
+        front_y1 = int(h * 0.6)  # Bottom 40% of the image
+        front_y2 = h
+        front_x1 = int(w * 0.3)  # Center 40% of the image
+        front_x2 = int(w * 0.7)
+
+        # Extract the front region
+        front_region = obstacle_map[front_y1:front_y2, front_x1:front_x2]
+
+        # Calculate obstacle density in front region
+        obstacle_density = np.mean(front_region)
+
+        # Determine if forward movement is safe
+        # If obstacle density is below threshold, suggest moving forward
+        # Otherwise, suggest turning
+        if obstacle_density < threshold:
+            navigation_type = 0  # MOVE FORWARD
+        else:
+            navigation_type = 1  # TURN
+
+        return navigation_type, obstacle_density

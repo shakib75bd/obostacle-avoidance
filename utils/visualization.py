@@ -35,7 +35,8 @@ class PerformanceMetrics:
 
 
 def create_visualization(original_img, depth_colored, uncertainty_colored,
-                        detection_img, obstacle_viz, fps, metrics=None, webcam_mode=False):
+                        detection_img, obstacle_viz, fps, metrics=None, webcam_mode=False,
+                        navigation_direction=None, navigation_confidence=None):
     """
     Create a composite visualization of all components
 
@@ -48,6 +49,8 @@ def create_visualization(original_img, depth_colored, uncertainty_colored,
         fps: Current FPS
         metrics: Performance metrics
         webcam_mode: If True, show webcam mode indicator
+        navigation_direction: Navigation type (0 for MOVE FORWARD, 1 for TURN)
+        navigation_confidence: Obstacle density in front (0-1)
 
     Returns:
         visualization: Composite visualization image
@@ -121,7 +124,84 @@ def create_visualization(original_img, depth_colored, uncertainty_colored,
             )
             y_pos += 30
 
-    # Add borders between images
+    # Add navigation suggestion if available
+    if navigation_direction is not None and navigation_confidence is not None:
+        # Display obstacle density gauge
+        gauge_width = w
+        gauge_height = 30
+        gauge_x = w // 2
+        gauge_y = h + h // 2 - 50
+
+        # Calculate density percentage and color
+        density_pct = int(navigation_confidence * 100)
+
+        # Color gradient from green (low density) to red (high density)
+        if navigation_confidence < 0.3:
+            density_color = (0, 255, 0)  # Green for low density
+        elif navigation_confidence < 0.6:
+            density_color = (0, 255, 255)  # Yellow for medium density
+        else:
+            density_color = (0, 0, 255)  # Red for high density
+
+        # Draw density gauge background
+        cv2.rectangle(
+            visualization,
+            (gauge_x - gauge_width // 2, gauge_y),
+            (gauge_x + gauge_width // 2, gauge_y + gauge_height),
+            (50, 50, 50),
+            -1
+        )
+
+        # Draw filled portion based on density
+        filled_width = int(gauge_width * navigation_confidence)
+        cv2.rectangle(
+            visualization,
+            (gauge_x - gauge_width // 2, gauge_y),
+            (gauge_x - gauge_width // 2 + filled_width, gauge_y + gauge_height),
+            density_color,
+            -1
+        )
+
+        # Draw gauge border
+        cv2.rectangle(
+            visualization,
+            (gauge_x - gauge_width // 2, gauge_y),
+            (gauge_x + gauge_width // 2, gauge_y + gauge_height),
+            (255, 255, 255),
+            1
+        )
+
+        # Add density percentage text
+        cv2.putText(
+            visualization, f"Obstacle Density: {density_pct}%",
+            (gauge_x - 120, gauge_y - 10),
+            cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 255, 255), 2
+        )
+
+        # Display navigation suggestion
+        if navigation_direction == 0:
+            suggestion_text = "MOVE FORWARD"
+            suggestion_color = (0, 255, 0)  # Green
+        else:
+            suggestion_text = "TURN - PATH BLOCKED"
+            suggestion_color = (0, 0, 255)  # Red
+
+        # Add suggestion text
+        cv2.putText(
+            visualization, suggestion_text,
+            (gauge_x - 120, gauge_y + gauge_height + 40),
+            cv2.FONT_HERSHEY_SIMPLEX, 1.0, suggestion_color, 2
+        )
+
+        # Add safety indicator
+        safety_text = "SAFE" if navigation_direction == 0 else "UNSAFE"
+        cv2.putText(
+            visualization, f"Path Status: {safety_text}",
+            (gauge_x - 120, gauge_y + gauge_height + 80),
+            cv2.FONT_HERSHEY_SIMPLEX, 0.8, suggestion_color, 2
+        )
+
+    # Add borders between images    # Add borders between images
     # Horizontal line
     cv2.line(
         visualization,
