@@ -37,6 +37,10 @@ def parse_args():
                         help="Skip N frames for each processed frame to increase speed")
     parser.add_argument("--target-fps", type=int, default=24,
                         help="Target FPS for live processing")
+    parser.add_argument("--webcam-source", type=int, default=0,
+                        help="Webcam source index (0 for default camera, 1 for external, etc.)")
+    parser.add_argument("--list-webcams", action="store_true",
+                        help="List all available webcam sources and exit")
 
     return parser.parse_args()
 
@@ -68,13 +72,57 @@ def download_sample_video():
 
     return str(sample_path)
 
+def list_available_webcams():
+    """List all available webcam sources"""
+    print("\nChecking available webcam sources...")
+    available_sources = []
+
+    # Try to open each webcam source from 0 to 10
+    for i in range(10):
+        cap = cv2.VideoCapture(i)
+        if cap.isOpened():
+            # Get camera info if possible
+            width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)
+            height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
+            fps = cap.get(cv2.CAP_PROP_FPS)
+
+            available_sources.append(i)
+            print(f"  Webcam source {i}: {width}x{height} @ {fps}fps")
+
+        cap.release()
+
+    if not available_sources:
+        print("  No webcam sources found!")
+
+    print(f"Found {len(available_sources)} webcam sources\n")
+    return available_sources
+
 def main():
     # Parse arguments
     args = parse_args()
 
+    # If user requested to list webcams, do that and exit
+    if args.list_webcams:
+        list_available_webcams()
+        return
+
+    # Check if we're using webcam
+    is_webcam = args.video == "" and not args.download_sample
+
+    # If we're using webcam, validate the source
+    if is_webcam:
+        # Quick check if the specified webcam source is available
+        cap = cv2.VideoCapture(args.webcam_source)
+        if not cap.isOpened():
+            print(f"Error: Could not open webcam source {args.webcam_source}")
+            print("Use --list-webcams to see available webcam sources")
+            cap.release()
+            return
+        cap.release()
+
     # Download sample video if requested or if no video specified
     video_path = args.video
-    if args.download_sample or not video_path:
+    if args.download_sample or (not video_path and not is_webcam):
         sample_path = download_sample_video()
         if sample_path:
             video_path = sample_path
@@ -123,18 +171,34 @@ def main():
 
     # Initialize video writer
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+
+    # If we're in webcam mode, use the target fps
+    # If using a video file, use the video's original fps
+    if is_webcam:
+        output_fps = args.target_fps
+    else:
+        # We'll read the fps from the video source
+        with VideoSource(video_path) as temp_video:
+            original_fps = temp_video.get_fps()
+            output_fps = original_fps if original_fps > 0 else args.target_fps
+
+    print(f"Output video will use {output_fps} fps")
+
     out = cv2.VideoWriter(
         args.output,
         fourcc,
-        args.target_fps,  # Use target FPS (default: 24)
+        output_fps,  # Use appropriate FPS based on source
         (resolution[0] * 2, resolution[1] * 2)  # Width, height of visualization
     )
 
-    print(f"Processing video: {video_path}")
+    print(f"Processing video: {video_path if not is_webcam else f'Webcam (source: {args.webcam_source})'}")
     print(f"Output will be saved to: {args.output}")
 
+    # Set source for VideoSource
+    source = args.webcam_source if is_webcam else video_path
+
     # Process video
-    with VideoSource(video_path, resolution, webcam_mode=args.webcam_mode) as video:
+    with VideoSource(source, resolution, webcam_mode=args.webcam_mode) as video:
         frame_idx = 0
         processed_frames = 0
         skipped_frames = 0
@@ -154,21 +218,29 @@ def main():
             if not ret:
                 break
 
-            # Webcam mode behavior - always process the latest frame
-            if args.webcam_mode and not isinstance(video_path, str):
-                # For webcam in real-time mode, we focus on processing the latest frames
-                # and maintaining responsiveness rather than processing every frame
-                should_process = True
-                if processed_frames > 0:
-                    # Limit processing rate to avoid overloading the system
-                    # while still maintaining responsive feedback
-                    min_process_interval = 1.0 / 15.0  # Max 15 frames per second for processing
-                    if elapsed < min_process_interval:
-                        should_process = False
-            else:
-                # For video files - use dynamic frame skipping to maintain target FPS
-                should_process = True
-                if processed_frames > 0:
+            # Dynamic frame skipping to maintain target FPS
+            should_process = True
+            if processed_frames > 0:
+                # Determine skip behavior based on source type
+                if is_webcam:
+                    if args.webcam_mode:
+                        # In webcam mode with real-time optimization,
+                        # we don't need dynamic skipping as VideoSource handles it
+                        skip_target = 0
+                    else:
+                        # For webcam without real-time mode, use fixed skip rate
+                        skip_target = args.skip_frames
+                else:
+                    # For video files, use dynamic skipping to maintain target fps
+                    if elapsed < frame_time_budget:
+                        # We're ahead of schedule, use requested skip rate
+                        skip_target = args.skip_frames
+                    else:
+                        # We're behind schedule, calculate required skip
+                        # Skip more frames to catch up
+                        skip_target = max(args.skip_frames, int(elapsed / frame_time_budget))
+                        if skip_target > 10:  # Cap maximum skip to prevent huge jumps
+                            skip_target = 10
                     # If processing is taking too long, increase skipping
                     if elapsed < frame_time_budget:
                         # We're ahead of schedule, use requested skip rate

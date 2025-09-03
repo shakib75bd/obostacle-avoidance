@@ -21,24 +21,39 @@ class VideoSource:
         self.is_file = isinstance(source, (str, Path)) and Path(source).exists()
         self.buffer_size = 8  # Number of frames to buffer for smoother processing
         self.webcam_mode = webcam_mode
-        
-        # For webcam mode with skipping
+
+        # For timing control
         self.last_read_time = time.time()
-        self.min_read_interval = 1/30.0  # Limit max read rate to 30fps
         self.last_frame = None
-        
+        self.native_fps = 30  # Default, will be updated when opening the source
+        self.frame_interval = 1.0 / self.native_fps  # Time between frames
+
     def __enter__(self):
         """Context manager entry"""
         print(f"Opening video source: {self.source}")
         self.cap = cv2.VideoCapture(self.source)
         if not self.cap.isOpened():
             raise ValueError(f"Failed to open video source {self.source}")
-        
+
+        # Get native fps for timing control
+        self.native_fps = self.cap.get(cv2.CAP_PROP_FPS)
+        if self.native_fps <= 0 or self.native_fps > 120:  # Invalid or unrealistic fps
+            self.native_fps = 30  # Default fallback
+
+        self.frame_interval = 1.0 / self.native_fps
+
         # Print video information
         if self.is_file:
             frame_count = self.cap.get(cv2.CAP_PROP_FRAME_COUNT)
-            fps = self.cap.get(cv2.CAP_PROP_FPS)
-            print(f"Video info: {frame_count} frames, {fps} fps")
+            print(f"Video info: {frame_count} frames, {self.native_fps} fps")
+            print(f"Frame interval: {self.frame_interval*1000:.1f} ms")
+        else:
+            # For webcam, try to get its properties
+            webcam_width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
+            webcam_height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
+            print(f"Webcam native resolution: {webcam_width}x{webcam_height}")
+            print(f"Webcam native fps: {self.native_fps}")
+            print(f"Using resolution: {self.low_res_size[0]}x{self.low_res_size[1]}")
 
         # Set resolution for webcam (won't affect video files)
         if not self.is_file:
@@ -60,23 +75,40 @@ class VideoSource:
         """Read a frame from the video source"""
         if not self.cap or not self.cap.isOpened():
             return False, None
-            
-        # For webcam in real-time mode, we might want to skip frames 
-        # if we're reading too fast
-        if self.webcam_mode and not self.is_file:
-            current_time = time.time()
-            elapsed = current_time - self.last_read_time
-            
-            # If reading too quickly, skip frames until we reach our target interval
-            if elapsed < self.min_read_interval:
-                # For webcams, we can just return the last frame we got
-                # to avoid stalling the UI
-                if self.last_frame is not None:
-                    return True, self.last_frame
-                
-            self.last_read_time = current_time
 
-        # Read frame from source
+        # Handle frame timing based on source type
+        current_time = time.time()
+        elapsed = current_time - self.last_read_time
+
+        if self.is_file:
+            # For video files, we want to maintain the original video's timing
+            # if we're processing faster than real-time
+            if not self.webcam_mode and elapsed < self.frame_interval:
+                # We're processing too fast, return the previous frame
+                # to maintain the original video's fps
+                if self.last_frame is not None:
+                    # Artificial delay to match original video timing
+                    # Only add small delay to avoid blocking UI
+                    sleep_time = min(0.001, self.frame_interval - elapsed)
+                    if sleep_time > 0:
+                        time.sleep(sleep_time)
+                    return True, self.last_frame
+        else:
+            # For webcam in real-time mode
+            if self.webcam_mode:
+                # Always process at native webcam fps
+                # If we're processing faster than the webcam can provide new frames,
+                # just get the latest one
+                pass
+            else:
+                # For webcam in normal mode, maintain steady fps
+                if elapsed < self.frame_interval:
+                    # We're processing too fast
+                    if self.last_frame is not None:
+                        return True, self.last_frame
+
+        # Read a new frame
+        self.last_read_time = current_time
         ret, frame = self.cap.read()
         if not ret:
             return False, None
@@ -84,13 +116,12 @@ class VideoSource:
         # Resize if not already at target resolution
         if frame.shape[1] != self.low_res_size[0] or frame.shape[0] != self.low_res_size[1]:
             frame = cv2.resize(frame, self.low_res_size, interpolation=cv2.INTER_AREA)
-            
-        # Store last frame for webcam mode
-        if self.webcam_mode:
-            self.last_frame = frame.copy()
+
+        # Store the frame for potential reuse
+        self.last_frame = frame.copy()
 
         return True, frame
-        
+
     def get_fps(self):
         """Get the FPS of the video source"""
         if self.cap:
