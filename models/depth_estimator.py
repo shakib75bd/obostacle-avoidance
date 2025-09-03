@@ -18,14 +18,28 @@ class DepthEstimator:
 
         Args:
             model_type: MiDaS model version ("MiDaS_small" or "DPT_Hybrid")
-            device: torch device (will use cuda if available when None)
+            device: torch device (will use cuda/mps if available when None)
             num_samples: Number of MC dropout samples for uncertainty
             dropout_rate: Dropout rate for uncertainty estimation
         """
         self.model_type = model_type
-        self.device = device if device else torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        # Check for MPS (Metal Performance Shaders) on macOS
+        if device:
+            self.device = device
+        else:
+            if torch.backends.mps.is_available():
+                self.device = torch.device("mps")
+            elif torch.cuda.is_available():
+                self.device = torch.device("cuda")
+            else:
+                self.device = torch.device("cpu")
+
         self.num_samples = num_samples
         self.dropout_rate = dropout_rate
+
+        # Cache for previously processed frames
+        self.cache = {}
+        self.cache_size = 5  # Keep the last 5 frames to avoid reprocessing
 
         print(f"Using device: {self.device}")
 
@@ -51,7 +65,8 @@ class DepthEstimator:
 
         # Model-specific transforms
         if model_type == "MiDaS_small":
-            self.img_size = (256, 256)  # Model input size
+            # Original model input size
+            self.img_size = (256, 256)
             self.net_w, self.net_h = 256, 256
         else:
             self.img_size = (384, 384)
@@ -101,11 +116,12 @@ class DepthEstimator:
         img = cv2.resize(img, self.img_size, interpolation=cv2.INTER_CUBIC)
 
         # Normalize
-        mean = torch.tensor([0.485, 0.456, 0.406])
-        std = torch.tensor([0.229, 0.224, 0.225])
-        img = (torch.from_numpy(img).permute(2, 0, 1) - mean[:, None, None]) / std[:, None, None]
+        mean = torch.tensor([0.485, 0.456, 0.406], dtype=torch.float32)
+        std = torch.tensor([0.229, 0.224, 0.225], dtype=torch.float32)
+        img = torch.from_numpy(img).permute(2, 0, 1).float()  # Ensure float32
+        img = (img - mean[:, None, None]) / std[:, None, None]
 
-        return img.unsqueeze(0).to(self.device).float()
+        return img.unsqueeze(0).to(self.device)
 
     def _process_output(self, depth, original_size):
         """Process model output to usable depth map"""
@@ -146,19 +162,35 @@ class DepthEstimator:
         """
         h, w = img.shape[:2]
         original_size = (h, w)  # PyTorch expects (height, width) format
+
+        # Calculate a hash for the image to use for caching
+        img_hash = hash(img.tobytes())
+
+        # Check if we've processed this frame before
+        if img_hash in self.cache:
+            return self.cache[img_hash]
+
         input_tensor = self._prepare_input(img)
 
         # Run multiple forward passes with dropout enabled
         with torch.no_grad():
             self.model.eval()
-            depth_samples = []
 
-            for _ in range(self.num_samples):
-                prediction = self.model(input_tensor)
-                depth_samples.append(prediction)
-
-            # Stack all samples
-            depth_samples = torch.stack(depth_samples)
+            # For MPS optimization, run in batched mode if possible
+            if self.device.type == 'mps' and self.num_samples > 1:
+                # Create a batch of identical inputs
+                batch_input = input_tensor.repeat(self.num_samples, 1, 1, 1)
+                # Run inference in one batch
+                batch_output = self.model(batch_input)
+                depth_samples = batch_output.unsqueeze(1)  # Add a dimension to match the expected shape
+            else:
+                # Run samples sequentially
+                depth_samples = []
+                for _ in range(self.num_samples):
+                    prediction = self.model(input_tensor)
+                    depth_samples.append(prediction)
+                # Stack all samples
+                depth_samples = torch.stack(depth_samples)
 
             # Calculate mean depth
             mean_depth = torch.mean(depth_samples, dim=0)
@@ -170,7 +202,7 @@ class DepthEstimator:
             depth_map = self._process_output(mean_depth, original_size)
             uncertainty_map = self._process_output(uncertainty, original_size)
 
-            # Create colored depth map for visualization
+            # Create colored depth map for visualization - use a faster colormap
             colored_depth = cv2.applyColorMap(
                 np.clip((depth_map * 255), 0, 255).astype(np.uint8),
                 cv2.COLORMAP_INFERNO
@@ -182,4 +214,13 @@ class DepthEstimator:
                 cv2.COLORMAP_JET
             )
 
-            return depth_map, uncertainty_map, colored_depth, colored_uncertainty
+            # Cache the results
+            result = (depth_map, uncertainty_map, colored_depth, colored_uncertainty)
+            self.cache[img_hash] = result
+
+            # Maintain cache size
+            if len(self.cache) > self.cache_size:
+                # Remove oldest item
+                self.cache.pop(next(iter(self.cache)))
+
+            return result

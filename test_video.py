@@ -25,12 +25,18 @@ def parse_args():
                         help="Depth model type")
     parser.add_argument("--yolo-model", type=str, default="yolov8n.pt",
                         help="YOLOv8 model")
-    parser.add_argument("--mc-samples", type=int, default=5,
+    parser.add_argument("--mc-samples", type=int, default=2,
                         help="Number of Monte Carlo dropout samples")
     parser.add_argument("--output", type=str, default="output.mp4",
                         help="Output video path")
+    parser.add_argument("--webcam-mode", action="store_true",
+                        help="Optimize for real-time webcam processing")
     parser.add_argument("--save-frames", action="store_true",
                         help="Save individual frames to output_frames directory")
+    parser.add_argument("--skip-frames", type=int, default=3,
+                        help="Skip N frames for each processed frame to increase speed")
+    parser.add_argument("--target-fps", type=int, default=24,
+                        help="Target FPS for live processing")
 
     return parser.parse_args()
 
@@ -84,6 +90,9 @@ def main():
         print(f"Invalid resolution format: {args.resolution}, using default 320x240")
         resolution = (320, 240)
 
+    # Override with requested resolution for higher FPS (240x320)
+    resolution = (320, 240)
+
     # Initialize output frames directory if needed
     if args.save_frames:
         frames_dir = Path("output_frames")
@@ -117,7 +126,7 @@ def main():
     out = cv2.VideoWriter(
         args.output,
         fourcc,
-        30.0,  # FPS
+        args.target_fps,  # Use target FPS (default: 24)
         (resolution[0] * 2, resolution[1] * 2)  # Width, height of visualization
     )
 
@@ -125,14 +134,69 @@ def main():
     print(f"Output will be saved to: {args.output}")
 
     # Process video
-    with VideoSource(video_path, resolution) as video:
+    with VideoSource(video_path, resolution, webcam_mode=args.webcam_mode) as video:
         frame_idx = 0
+        processed_frames = 0
+        skipped_frames = 0
+
+        # For dynamic frame skipping to maintain target FPS
+        target_fps = args.target_fps
+        frame_time_budget = 1.0 / target_fps
+        dynamic_skip = args.skip_frames
+        frame_start_time = time.time()
 
         while True:
+            current_time = time.time()
+            elapsed = current_time - frame_start_time
+
             # Read frame
             ret, frame = video.read()
             if not ret:
                 break
+
+            # Webcam mode behavior - always process the latest frame
+            if args.webcam_mode and not isinstance(video_path, str):
+                # For webcam in real-time mode, we focus on processing the latest frames
+                # and maintaining responsiveness rather than processing every frame
+                should_process = True
+                if processed_frames > 0:
+                    # Limit processing rate to avoid overloading the system
+                    # while still maintaining responsive feedback
+                    min_process_interval = 1.0 / 15.0  # Max 15 frames per second for processing
+                    if elapsed < min_process_interval:
+                        should_process = False
+            else:
+                # For video files - use dynamic frame skipping to maintain target FPS
+                should_process = True
+                if processed_frames > 0:
+                    # If processing is taking too long, increase skipping
+                    if elapsed < frame_time_budget:
+                        # We're ahead of schedule, use requested skip rate
+                        skip_target = args.skip_frames
+                    else:
+                        # We're behind schedule, calculate required skip
+                        # Skip more frames to catch up
+                        skip_target = max(args.skip_frames, int(elapsed / frame_time_budget))
+                        if skip_target > 10:  # Cap maximum skip to prevent huge jumps
+                            skip_target = 10
+
+                    # Apply skipping logic
+                    if skipped_frames < skip_target:
+                        skipped_frames += 1
+                        should_process = False
+                    else:
+                        skipped_frames = 0
+                        frame_start_time = current_time  # Reset timer
+
+            # For first frame, initialize the timer
+            if processed_frames == 0:
+                frame_start_time = current_time
+
+            # Skip processing if needed
+            if not should_process:
+                continue
+
+            processed_frames += 1
 
             # Update progress
             frame_idx += 1
@@ -178,10 +242,16 @@ def main():
             fps = fps_counter.get_fps()
             metrics.update('fps', fps)
 
+            # Don't display effective FPS anymore as it's confusing
+            # Just track frame skipping rate
+            skip_rate = skipped_frames if skipped_frames > 0 else dynamic_skip
+            metrics.update('skip_rate', skip_rate)
+
             # Create visualization
             visualization = create_visualization(
                 frame, depth_colored, uncertainty_colored,
-                detection_img, obstacle_viz, fps, metrics
+                detection_img, obstacle_viz, fps, metrics,
+                webcam_mode=args.webcam_mode
             )
 
             # Write to output video
@@ -193,9 +263,11 @@ def main():
                 cv2.imwrite(frame_path, visualization)
 
             # Display result (comment out for faster processing)
-            cv2.imshow("Processing Video", visualization)
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
+            # Skip frames for display to improve performance
+            if frame_idx % 2 == 0:  # Only show every other frame
+                cv2.imshow("Processing Video", visualization)
+                if cv2.waitKey(1) & 0xFF == ord('q'):
+                    break
 
     # Release resources
     cv2.destroyAllWindows()

@@ -26,6 +26,10 @@ class ObstacleMapGenerator:
         self.max_obstacle_depth = max_obstacle_depth
         self.box_dilation_factor = box_dilation_factor
 
+        # Cache for obstacle maps
+        self.obstacle_cache = {}
+        self.cache_size = 5
+
     def generate_obstacle_map(self, depth_map, uncertainty_map, detections, img_shape):
         """
         Generate obstacle likelihood map by fusing depth and detections
@@ -40,34 +44,60 @@ class ObstacleMapGenerator:
             obstacle_map: Obstacle likelihood map (0-1)
             visualization: Visualization of the obstacle map
         """
+        # Create a cache key based on inputs
+        cache_key = (
+            hash(depth_map.tobytes()),
+            hash(uncertainty_map.tobytes()),
+            hash(str(detections))  # Simple hash of detections
+        )
+
+        # Check cache first
+        if cache_key in self.obstacle_cache:
+            return self.obstacle_cache[cache_key]
+
         h, w = img_shape[:2]
 
+        # Use lower resolution for processing to speed up
+        scale_factor = 0.5
+        process_h, process_w = int(h * scale_factor), int(w * scale_factor)
+
+        # Resize inputs for faster processing
+        depth_small = cv2.resize(depth_map, (process_w, process_h), interpolation=cv2.INTER_AREA)
+        uncertainty_small = cv2.resize(uncertainty_map, (process_w, process_h), interpolation=cv2.INTER_AREA)
+
         # Initialize obstacle map
-        obstacle_map = np.zeros((h, w), dtype=np.float32)
+        obstacle_map = np.zeros((process_h, process_w), dtype=np.float32)
 
         # Create binary masks for confidence regions
-        high_confidence = uncertainty_map < self.uncertainty_threshold
+        high_confidence = uncertainty_small < self.uncertainty_threshold
         low_confidence = ~high_confidence
 
         # 1. In high confidence regions, use depth map
         # Objects closer to camera (smaller depth) are more likely to be obstacles
         # We invert the depth map so closer objects have higher values
-        depth_obstacle_likelihood = 1.0 - depth_map.copy()
+        depth_obstacle_likelihood = 1.0 - depth_small.copy()
 
         # Only consider depths in a certain range as obstacles
         # Very close (could be noise) and very far objects are less relevant
-        depth_obstacle_likelihood[(depth_map < self.min_obstacle_depth) |
-                                 (depth_map > self.max_obstacle_depth)] = 0
+        depth_obstacle_likelihood[(depth_small < self.min_obstacle_depth) |
+                                 (depth_small > self.max_obstacle_depth)] = 0
 
         # Apply to high confidence regions
         obstacle_map[high_confidence] = depth_obstacle_likelihood[high_confidence]
 
         # 2. In low confidence regions, rely more on object detections
         # Create mask from detections
-        detection_mask = np.zeros((h, w), dtype=np.float32)
+        detection_mask = np.zeros((process_h, process_w), dtype=np.float32)
 
+        # Scale detection boxes for the smaller processing size
         for det in detections:
             x1, y1, x2, y2 = det['box']
+
+            # Scale box coordinates to smaller size
+            x1 = int(x1 * scale_factor)
+            y1 = int(y1 * scale_factor)
+            x2 = int(x2 * scale_factor)
+            y2 = int(y2 * scale_factor)
 
             # Dilate box slightly
             box_width, box_height = x2 - x1, y2 - y1
@@ -77,8 +107,8 @@ class ObstacleMapGenerator:
             # Ensure coordinates are within image bounds
             x1 = max(0, x1 - dilation_x)
             y1 = max(0, y1 - dilation_y)
-            x2 = min(w, x2 + dilation_x)
-            y2 = min(h, y2 + dilation_y)
+            x2 = min(process_w, x2 + dilation_x)
+            y2 = min(process_h, y2 + dilation_y)
 
             # Weight by confidence
             confidence = det['conf']
@@ -94,8 +124,28 @@ class ObstacleMapGenerator:
         if obstacle_map.max() > 0:
             obstacle_map = obstacle_map / obstacle_map.max()
 
-        # Apply Gaussian blur for smoothing
-        obstacle_map = cv2.GaussianBlur(obstacle_map, (7, 7), 1.5)
+        # Apply smaller kernel for speed
+        obstacle_map = cv2.GaussianBlur(obstacle_map, (5, 5), 1.0)
+
+        # Resize back to original size
+        obstacle_map_full = cv2.resize(obstacle_map, (w, h), interpolation=cv2.INTER_LINEAR)
+
+        # Create visualization - colored heatmap
+        colored_map = cv2.applyColorMap(
+            (obstacle_map_full * 255).astype(np.uint8),
+            cv2.COLORMAP_JET
+        )
+
+        # Cache the result
+        result = (obstacle_map_full, colored_map)
+        self.obstacle_cache[cache_key] = result
+
+        # Maintain cache size
+        if len(self.obstacle_cache) > self.cache_size:
+            # Remove oldest item
+            self.obstacle_cache.pop(next(iter(self.obstacle_cache)))
+
+        return result
 
         # Create visualization
         visualization = cv2.applyColorMap(

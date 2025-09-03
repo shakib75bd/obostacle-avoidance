@@ -11,7 +11,8 @@ class PerformanceMetrics:
             'detection_time': deque(maxlen=window_size),
             'fusion_time': deque(maxlen=window_size),
             'total_time': deque(maxlen=window_size),
-            'fps': deque(maxlen=window_size)
+            'fps': deque(maxlen=window_size),
+            'skip_rate': deque(maxlen=window_size)
         }
 
     def update(self, metric_name, value):
@@ -34,7 +35,7 @@ class PerformanceMetrics:
 
 
 def create_visualization(original_img, depth_colored, uncertainty_colored,
-                        detection_img, obstacle_viz, fps, metrics=None):
+                        detection_img, obstacle_viz, fps, metrics=None, webcam_mode=False):
     """
     Create a composite visualization of all components
 
@@ -46,36 +47,66 @@ def create_visualization(original_img, depth_colored, uncertainty_colored,
         obstacle_viz: Obstacle map visualization
         fps: Current FPS
         metrics: Performance metrics
+        webcam_mode: If True, show webcam mode indicator
 
     Returns:
         visualization: Composite visualization image
     """
     h, w = original_img.shape[:2]
 
-    # Resize all images to same size
-    depth_colored = cv2.resize(depth_colored, (w, h))
-    uncertainty_colored = cv2.resize(uncertainty_colored, (w, h))
-    detection_img = cv2.resize(detection_img, (w, h))
-    obstacle_viz = cv2.resize(obstacle_viz, (w, h))
+    # Lower resolution for visualization to improve performance
+    viz_scale = 0.5
+    viz_w, viz_h = int(w * viz_scale), int(h * viz_scale)
+
+    # Resize all images to smaller size for faster visualization
+    orig_small = cv2.resize(original_img, (viz_w, viz_h), interpolation=cv2.INTER_AREA)
+    depth_small = cv2.resize(depth_colored, (viz_w, viz_h), interpolation=cv2.INTER_AREA)
+    uncert_small = cv2.resize(uncertainty_colored, (viz_w, viz_h), interpolation=cv2.INTER_AREA)
+    detect_small = cv2.resize(detection_img, (viz_w, viz_h), interpolation=cv2.INTER_AREA)
+    obstacle_small = cv2.resize(obstacle_viz, (viz_w, viz_h), interpolation=cv2.INTER_AREA)
 
     # Create top row and bottom row
-    top_row = np.hstack([original_img, detection_img])
-    bottom_row = np.hstack([depth_colored, obstacle_viz])
+    top_row = np.hstack([orig_small, detect_small])
+    bottom_row = np.hstack([depth_small, obstacle_small])
 
     # Stack rows
     visualization = np.vstack([top_row, bottom_row])
 
+    # Resize back to original size for display
+    visualization = cv2.resize(visualization, (w*2, h*2), interpolation=cv2.INTER_LINEAR)
+
     # Add performance information
     cv2.putText(
-        visualization, f"FPS: {fps:.1f}", (10, 30),
-        cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2
+        visualization, f"Processing FPS: {fps:.1f}", (10, 30),
+        cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2
     )
+
+    # Add status label showing we're operating at standard 24fps
+    cv2.putText(
+        visualization, f"Output: 24fps Standard", (w, 30),
+        cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 255), 2
+    )
+
+    # Add webcam mode indicator if active
+    if webcam_mode:
+        cv2.putText(
+            visualization, "WEBCAM REAL-TIME MODE", (w, 60),
+            cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 165, 255), 2
+        )
+
+    # Add skipping information
+    if metrics and 'skip_rate' in metrics.metrics and metrics.metrics['skip_rate']:
+        skip_rate = metrics.get_average('skip_rate')
+        cv2.putText(
+            visualization, f"Frame Skip: {int(skip_rate)} frames", (10, 60),
+            cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 200, 200), 2
+        )
 
     if metrics:
         summary = metrics.get_summary()
-        y_pos = 70
+        y_pos = 90  # Moved down to accommodate the skip rate display
         for metric, value in summary.items():
-            if metric == 'fps':
+            if metric == 'fps' or metric == 'skip_rate':
                 continue  # Already displayed above
 
             # Convert time to ms

@@ -20,9 +20,24 @@ class ObjectDetector:
         self.conf_threshold = conf_threshold
         self.device = device
 
+        # Cache for detection results
+        self.detection_cache = {}
+        self.cache_size = 5
+
+        # Set device for YOLO
+        if device is None:
+            # Check if MPS is available (for macOS)
+            if torch.backends.mps.is_available():
+                self.device = "mps"
+            # Otherwise use CUDA or CPU
+            else:
+                self.device = "cuda" if torch.cuda.is_available() else "cpu"
+
         # Load YOLO model
-        print(f"Loading YOLOv8 model: {model_name}")
+        print(f"Loading YOLOv8 model: {model_name} on device: {self.device}")
         self.model = YOLO(model_name)
+        # Set the device for the model
+        self.model.to(self.device)
 
         # Get class names
         self.class_names = self.model.names
@@ -38,13 +53,34 @@ class ObjectDetector:
             results: YOLOv8 results object
             annotated_img: Image with bounding boxes
         """
-        # Run inference
-        results = self.model(img, conf=self.conf_threshold)
+        # Generate a hash for caching
+        img_hash = hash(img.tobytes())
+
+        # Check cache first
+        if img_hash in self.detection_cache:
+            return self.detection_cache[img_hash]
+
+        # Run inference with specific device and half precision if on GPU
+        results = self.model(img,
+                            conf=self.conf_threshold,
+                            device=self.device,
+                            half=self.device != 'cpu',  # Use half precision (FP16) for GPU/MPS
+                            verbose=False,              # Reduce output for speed
+                            imgsz=320)                  # Smaller inference size for speed
 
         # Create annotated image
         annotated_img = results[0].plot()
 
-        return results[0], annotated_img
+        # Cache the results
+        result = (results[0], annotated_img)
+        self.detection_cache[img_hash] = result
+
+        # Maintain cache size
+        if len(self.detection_cache) > self.cache_size:
+            # Remove oldest item
+            self.detection_cache.pop(next(iter(self.detection_cache)))
+
+        return result
 
     def get_relevant_obstacles(self, results, relevant_classes=None):
         """
