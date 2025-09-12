@@ -64,7 +64,7 @@ class EvolutionMetricsLogger:
 
         # Extract detection metrics
         detection_count = len(obstacles) if obstacles else 0
-        confidence_scores = [obs.get('confidence', 0.0) for obs in obstacles] if obstacles else []
+        confidence_scores = [obs.get('conf', 0.0) for obs in obstacles] if obstacles else []
         avg_confidence = np.mean(confidence_scores) if confidence_scores else 0.0
 
         # Calculate depth quality metrics
