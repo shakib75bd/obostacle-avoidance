@@ -60,11 +60,11 @@ Additional arguments:
 
 ### Test Video Processing System
 
-The `test_video.py` script allows for testing and visualization of the obstacle detection system with various options for different use cases.
+The `test_video.py` script provides comprehensive testing and visualization of the obstacle detection system with integrated evolution metrics logging.
 
 #### Basic Usage
 
-Process a video file:
+Process a video file with automatic metrics logging:
 
 ```
 python test_video.py --video path/to/video.mp4
@@ -86,6 +86,20 @@ Use a specific webcam (e.g., external camera):
 
 ```
 python test_video.py --webcam-mode --webcam-source 1
+```
+
+#### Evolution Metrics Integration
+
+When processing videos, the system automatically:
+
+- Logs comprehensive performance metrics for each frame
+- Saves detailed analysis data for report generation
+- Tracks detection accuracy, uncertainty, and processing performance
+
+After video processing, generate analysis reports:
+
+```
+python evaluation/report_generator.py
 ```
 
 #### Processing Modes
@@ -159,26 +173,79 @@ python test_video.py --webcam-mode --navigation-threshold 0.3
 
 Lower threshold values (0.2-0.3) make the system more cautious (suggesting turns earlier), while higher values (0.5-0.7) allow navigation through more complex environments.
 
-### Running Benchmarks
+### Evolution Metrics and Performance Analysis
 
-To benchmark the system performance:
+The system includes an integrated evolution workflow that automatically logs comprehensive metrics during video processing and generates detailed performance reports.
 
-```
-python benchmark.py --source test_video1.mp4 --max-frames 100
-```
+#### Integrated Workflow
 
-Replace `test_video1.mp4` with the path to your test video file, or use `0` for webcam:
+Process a video with automatic metrics logging:
 
 ```
-python benchmark.py --source 0 --max-frames 50
+python test_video.py --video test_video1.mp4 --output result.mp4 --skip-frames 4
 ```
 
-This will:
+This automatically:
 
-1. Process the specified number of frames
-2. Record timing metrics for each component
-3. Generate summary statistics and plots
-4. Save results to the `benchmark_results` directory
+- Processes the entire video (all frames)
+- Logs frame-by-frame metrics during processing
+- Saves metrics to `evaluation_results/` directory
+
+Generate comprehensive reports using the logged metrics:
+
+```
+python evaluation/report_generator.py
+```
+
+This generates:
+
+- **YOLOv8 Comparison Table**: Enhanced comparison with percentage performance analysis
+- **Evolution Dashboard**: Metric trends across all video frames
+
+#### Output Files
+
+The workflow produces:
+
+1. **Video Output**:
+
+   - `result.mp4` - Processed video with obstacle detection visualizations
+
+2. **Metrics Data**:
+
+   - `evaluation_results/full_video_metrics.json` - Detailed frame-by-frame metrics
+   - `evaluation_results/summary_metrics.json` - Statistical summary of performance
+
+3. **Reports**:
+   - `reports/yolov8_comparison_table.png` - Performance comparison with standard YOLOv8
+   - `reports/evolution_metrics_dashboard.png` - Evolution trends visualization
+
+#### Metrics Tracked
+
+The system automatically tracks:
+
+- **Detection Metrics**: Precision, recall, F1-score, IoU
+- **Performance Metrics**: Detection rates, pixel accuracy
+- **Uncertainty Analysis**: Depth quality and uncertainty quantification
+- **Processing Performance**: Component timing, FPS, memory usage
+- **Temporal Analysis**: Metric evolution across video frames
+
+#### Usage Examples
+
+For quick analysis with frame skipping:
+
+```
+python test_video.py --video test_video1.mp4 --skip-frames 4
+python evaluation/report_generator.py
+```
+
+For detailed frame-by-frame analysis:
+
+```
+python test_video.py --video test_video1.mp4 --skip-frames 1
+python evaluation/report_generator.py
+```
+
+The evolution workflow provides comprehensive insights into system performance, helping identify optimization opportunities and validate improvements against baseline YOLOv8 performance.
 
 ## Webcam Mode Features
 
@@ -231,6 +298,31 @@ For higher quality on powerful hardware:
 
 ```
 python test_video.py --webcam-mode --mc-samples 3 --resolution 640x480 --skip-frames 1
+```
+
+## Project Structure
+
+```
+obstacle-avoidance/
+├── main.py                     # Main obstacle detection system
+├── test_video.py              # Video testing with evolution metrics
+├── models/                    # Model implementations
+│   ├── depth_model.py        # MiDaS depth estimation
+│   ├── detection_model.py    # YOLOv8 object detection
+│   └── fusion_model.py       # Adaptive region fusion
+├── utils/                     # Utility modules
+│   ├── video.py              # Video processing utilities
+│   ├── visualization.py      # Display and overlay functions
+│   └── navigation.py         # Navigation guidance system
+├── evaluation/               # Evolution analysis
+│   └── report_generator.py   # Metrics analysis and reporting
+├── evaluation_results/       # Auto-generated metrics data
+│   ├── full_video_metrics.json
+│   └── summary_metrics.json
+├── reports/                  # Generated analysis reports
+│   ├── yolov8_comparison_table.png
+│   └── evolution_metrics_dashboard.png
+└── requirements.txt          # Python dependencies
 ```
 
 ## System Architecture

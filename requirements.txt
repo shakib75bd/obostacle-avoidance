@@ -8,4 +8,7 @@ pillow
 pyyaml
 scipy
 ultralytics
-timm # For MiDaS
+timm
+pandas
+scikit-learn
+seaborn # For MiDaS
