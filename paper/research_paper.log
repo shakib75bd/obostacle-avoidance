@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025/Homebrew) (preloaded format=pdflatex 2025.3.15)  14 SEP 2025 14:45
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025/Homebrew) (preloaded format=pdflatex 2025.3.15)  14 SEP 2025 15:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -585,7 +585,7 @@ ap/pdftex.map}{/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/e
 nc/dvips/cm-super/cm-super-t1.enc}]
 
 [2]
-<system_architecture.png, id=474, 715.473pt x 426.393pt>
+<system_architecture.png, id=434, 715.473pt x 426.393pt>
 File: system_architecture.png Graphic file (type png)
 <use system_architecture.png>
 Package pdftex.def Info: system_architecture.png  used on input line 105.
@@ -624,36 +624,36 @@ dels/object_detector.py\T1/cmr/m/n/10 ): The \T1/cmtt/m/n/10 ObjectDetector \T1
 [12]
 
 [13]
-
-[14]
-<timing_breakdown.png, id=611, 570.4512pt x 425.1885pt>
+<timing_breakdown.png, id=564, 570.4512pt x 425.1885pt>
 File: timing_breakdown.png Graphic file (type png)
 <use timing_breakdown.png>
-Package pdftex.def Info: timing_breakdown.png  used on input line 791.
+Package pdftex.def Info: timing_breakdown.png  used on input line 765.
 (pdftex.def)             Requested size: 328.82707pt x 245.09782pt.
 
 
-[15 <./timing_breakdown.png>]
-<uncertainty_analysis.png, id=622, 714.9912pt x 425.4294pt>
+[14]
+<uncertainty_analysis.png, id=572, 714.9912pt x 425.4294pt>
 File: uncertainty_analysis.png Graphic file (type png)
 <use uncertainty_analysis.png>
-Package pdftex.def Info: uncertainty_analysis.png  used on input line 810.
+Package pdftex.def Info: uncertainty_analysis.png  used on input line 784.
 (pdftex.def)             Requested size: 328.82707pt x 195.66093pt.
-<safety_analysis.png, id=624, 714.9912pt x 424.9476pt>
+<safety_analysis.png, id=574, 714.9912pt x 424.9476pt>
 File: safety_analysis.png Graphic file (type png)
 <use safety_analysis.png>
-Package pdftex.def Info: safety_analysis.png  used on input line 832.
+Package pdftex.def Info: safety_analysis.png  used on input line 806.
 (pdftex.def)             Requested size: 328.82707pt x 195.43935pt.
 
 
-[16 <./uncertainty_analysis.png>]
-Overfull \hbox (7.81082pt too wide) in paragraph at lines 897--908
+[15 <./timing_breakdown.png>]
+
+[16 <./uncertainty_analysis.png> <./safety_analysis.png>]
+Overfull \hbox (7.81082pt too wide) in paragraph at lines 871--882
  [][] 
  []
 
 
 
-[17 <./safety_analysis.png>]
+[17]
 
 [18]
 
@@ -667,92 +667,49 @@ Overfull \hbox (7.81082pt too wide) in paragraph at lines 897--908
 
 [23]
 
-[24]
-
-[25]
-
-[26]
-Overfull \hbox (1.57799pt too wide) in paragraph at lines 1354--1355
-[]\T1/cmr/m/n/10 The multi-platform val-i-da-tion demon-strates the sys-tem's p
-orta-bil-ity and scal-a-bil-ity across the au-tonomous
- []
-
-
-Overfull \hbox (207.41295pt too wide) in paragraph at lines 1368--1369
-\T1/cmr/m/n/10 The com-plete source code, ex-per-i-men-tal data, and sup-ple-me
-n-tary ma-te-ri-als are avail-able at: \T1/cmtt/m/n/10 https://github.com/usern
-ame/obstacle-avoidance-system\T1/cmr/m/n/10 .
- []
-
-
-
-[27]
-
-[28] (./research_paper.aux)
+[24] (./research_paper.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-
-Package rerunfilecheck Warning: File `research_paper.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `research_paper.out':
-(rerunfilecheck)             Before: B07F56D784A0D6DC1515EF7DD937B95B;23479
-(rerunfilecheck)             After:  B0235DEBA7541D3DDF9C5E0B1F7FF430;24195.
+Package rerunfilecheck Info: File `research_paper.out' has not changed.
+(rerunfilecheck)             Checksum: 2A5BE7B39A32374C88CF23060AC7A821;21939.
  ) 
 Here is how much of TeX's memory you used:
- 13360 strings out of 473190
- 211915 string characters out of 5704335
- 617574 words of memory out of 5000000
- 36193 multiletter control sequences out of 15000+600000
+ 13319 strings out of 473190
+ 211352 string characters out of 5704335
+ 617582 words of memory out of 5000000
+ 36182 multiletter control sequences out of 15000+600000
  575757 words of font info for 77 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,10n,79p,1275b,662s stack positions out of 10000i,1000n,20000p,200000b,200000s
-
-pdfTeX warning (dest): name{figure.caption.6} has been referenced but does not 
-exist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{subsubsection.5.9.2} has been referenced but does n
-ot exist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{subsubsection.5.9.1} has been referenced but does n
-ot exist, replaced by a fixed one
-
-</opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmex10.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmmi10.pfb></opt/homebrew/Cellar/texlive/2025030
-8_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></opt/homebrew/Ce
-llar/texlive/20250308_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.p
-fb></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmr10.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmr7.pfb></opt/homebrew/Cellar/texlive/2025030
-8_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></opt/homebrew/C
-ellar/texlive/20250308_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.
-pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/publi
-c/cm-super/sfbx0900.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-di
-st/fonts/type1/public/cm-super/sfbx1000.pfb></opt/homebrew/Cellar/texlive/20250
-308_1/share/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></opt/homebrew/
-Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/public/cm-super/sfbx1440
+</opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmex10.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmmi10.pfb></opt/homebrew/Cellar/texlive/20250
+308_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></opt/homebrew/
+Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7
 .pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/publ
-ic/cm-super/sfbx1728.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-d
-ist/fonts/type1/public/cm-super/sfrm0900.pfb></opt/homebrew/Cellar/texlive/2025
-0308_1/share/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></opt/homebrew
-/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/public/cm-super/sfrm120
-0.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/pub
-lic/cm-super/sfti1000.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-
-dist/fonts/type1/public/cm-super/sftt1000.pfb>
-Output written on research_paper.pdf (28 pages, 1075665 bytes).
+ic/amsfonts/cm/cmr10.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmr7.pfb></opt/homebrew/Cellar/texlive/20250
+308_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></opt/homebrew
+/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
+7.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/pub
+lic/cm-super/sfbx0900.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-
+dist/fonts/type1/public/cm-super/sfbx1000.pfb></opt/homebrew/Cellar/texlive/202
+50308_1/share/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></opt/homebre
+w/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/public/cm-super/sfbx14
+40.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/pu
+blic/cm-super/sfbx1728.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texmf
+-dist/fonts/type1/public/cm-super/sfrm0900.pfb></opt/homebrew/Cellar/texlive/20
+250308_1/share/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></opt/homebr
+ew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/public/cm-super/sfrm1
+200.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/p
+ublic/cm-super/sfti1000.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texm
+f-dist/fonts/type1/public/cm-super/sftt1000.pfb>
+Output written on research_paper.pdf (24 pages, 1060788 bytes).
 PDF statistics:
- 843 PDF objects out of 1000 (max. 8388607)
- 760 compressed objects within 8 object streams
- 245 named destinations out of 1000 (max. 500000)
- 869 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 760 PDF objects out of 1000 (max. 8388607)
+ 682 compressed objects within 7 object streams
+ 215 named destinations out of 1000 (max. 500000)
+ 789 words of extra memory for PDF output out of 10000 (max. 10000000)
 
