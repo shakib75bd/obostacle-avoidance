@@ -57,11 +57,31 @@ python evaluation/report_generator.py
 ```
 ├── main.py              # Real-time obstacle detection
 ├── test_video.py        # Testing with navigation metrics
+├── paper/               # Research paper and documentation
+│   ├── research_paper.tex   # LaTeX source (25 pages)
+│   ├── research_paper.pdf   # Compiled paper
+│   ├── *.png                # Paper figures
+│   └── README.md            # Paper documentation
 ├── evaluation/
 │   └── report_generator.py  # Performance reports
 ├── models/              # MiDaS depth + YOLOv8 detection
 ├── utils/               # Video processing utilities
 └── reports/             # Generated analysis
+```
+
+## 📄 Research Paper
+
+A comprehensive 25-page academic paper documenting the uncertainty-guided adaptive region fusion approach is available in the [`paper/`](paper/) folder. The paper includes:
+
+- **Methodology**: Detailed system architecture and algorithms
+- **Experimental Results**: Performance analysis across 250+ scenarios
+- **Safety Analysis**: Comprehensive evaluation of navigation safety
+- **Implementation Details**: Complete codebase documentation
+
+To compile the paper:
+```bash
+cd paper/
+pdflatex research_paper.tex
 ```
 
 ## Navigation Metrics
