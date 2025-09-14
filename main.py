@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import torch
 import argparse
 import time
 import os
@@ -30,6 +31,9 @@ def parse_args():
                         help="Uncertainty threshold for confidence regions")
     parser.add_argument("--show-fps", action="store_true",
                         help="Display FPS counter")
+    parser.add_argument("--device", type=str, default="auto",
+                        choices=["auto", "cpu", "cuda", "mps"],
+                        help="Device to use for inference (auto, cpu, cuda, mps)")
 
     return parser.parse_args()
 
@@ -51,16 +55,31 @@ def main():
     # Initialize models
     print("Initializing models...")
 
+    # Device selection
+    if args.device == "auto":
+        if torch.backends.mps.is_available():
+            device = torch.device("mps")
+        elif torch.cuda.is_available():
+            device = torch.device("cuda")
+        else:
+            device = torch.device("cpu")
+    else:
+        device = torch.device(args.device)
+
+    print(f"Using device: {device}")
+
     # Depth estimator with Monte Carlo dropout
     depth_model = DepthEstimator(
         model_type=args.depth_model,
-        num_samples=args.mc_samples
+        num_samples=args.mc_samples,
+        device=device
     )
 
     # YOLOv8 object detector
     detector = ObjectDetector(
         model_name=args.yolo_model,
-        conf_threshold=0.25
+        conf_threshold=0.25,
+        device=device
     )
 
     # Obstacle map generator
