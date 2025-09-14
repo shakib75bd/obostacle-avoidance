@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1757832325.92588 "/Users/neon/Documents/Thesis/obstacle-avoidance/paper/research_paper.tex" "research_paper.pdf" "research_paper" 1757832327.72303 0
-  "/Users/neon/Documents/Thesis/obstacle-avoidance/paper/research_paper.tex" 1757832323.71539 79701 ca71deee9af225f48d41618924b7894d ""
+["pdflatex"] 1757833235.33868 "/Users/neon/Documents/Thesis/obstacle-avoidance/paper/research_paper.tex" "research_paper.pdf" "research_paper" 1757833237.11102 0
+  "/Users/neon/Documents/Thesis/obstacle-avoidance/paper/research_paper.tex" 1757833235.11618 79461 a93997643d30a6671e60974eb7790638 ""
   "/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1741388039 2971 def0b6c1f0b107b3b936def894055589 ""
   "/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1741388039 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/map/fontname/texfonts.map" 1741388039 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -125,9 +125,9 @@
   "/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/xcolor/xcolor.sty" 1741388039 55384 b454dec21c2d9f45ec0b793f0995b992 ""
   "/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/web2c/texmf.cnf" 1741388039 42151 79f67285bdd95beca4d137b380b4b9e5 ""
   "/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-var/web2c/pdftex/pdflatex.fmt" 1741388039 3346141 1288109d02d1c772df65535881471649 ""
-  "research_paper.aux" 1757832327.61131 22658 1cc152f61e73f6cc3be5c6469ea8b62f "pdflatex"
-  "research_paper.out" 1757832327.61301 23479 b07f56d784a0d6dc1515ef7dd937b95b "pdflatex"
-  "research_paper.tex" 1757832323.71539 79701 ca71deee9af225f48d41618924b7894d ""
+  "research_paper.aux" 1757833236.99251 22658 1cc152f61e73f6cc3be5c6469ea8b62f "pdflatex"
+  "research_paper.out" 1757833236.99386 23479 b07f56d784a0d6dc1515ef7dd937b95b "pdflatex"
+  "research_paper.tex" 1757833235.11618 79461 a93997643d30a6671e60974eb7790638 ""
   "safety_analysis.png" 1757828504.28584 211979 7191a1609f8daa904eabefdd94a12286 ""
   "system_architecture.png" 1757828458.0482 168341 cc6ba447611310d8a32c020bc1b5d030 ""
   "timing_breakdown.png" 1757828458.2507 193793 5d340f8c447c55d6f1627a88da71342c ""

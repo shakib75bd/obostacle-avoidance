@@ -79,6 +79,7 @@ A comprehensive 25-page academic paper documenting the uncertainty-guided adapti
 - **Implementation Details**: Complete codebase documentation
 
 To compile the paper:
+
 ```bash
 cd paper/
 pdflatex research_paper.tex

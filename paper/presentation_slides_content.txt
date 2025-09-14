@@ -1,0 +1,313 @@
+PRESENTATION SLIDES CONTENT
+Uncertainty-Guided Adaptive Fusion for Real-Time Monocular Obstacle Avoidance
+=============================================================================
+
+SLIDE 1: TITLE SLIDE
+====================
+Title: Uncertainty-Guided Adaptive Fusion for Real-Time Monocular Obstacle Avoidance
+Subtitle: A Novel Multi-Modal Approach for Autonomous Navigation
+
+Key Points:
+- Present the complete title
+- Your name and affiliation
+- Date: September 2025
+- Brief tagline: "Enhancing autonomous navigation safety through intelligent sensor fusion"
+
+Visual Elements:
+- Clean, professional title layout
+- Possibly include a representative image from your system architecture
+- Institution logo if applicable
+
+
+SLIDE 2: PROBLEM STATEMENT & MOTIVATION
+=======================================
+Title: The Challenge of Autonomous Navigation
+
+Key Points:
+- Traditional obstacle detection relies on expensive sensor suites (LiDAR, stereo cameras)
+- Single-modal approaches have fundamental limitations:
+  * Object detection: Struggles with depth perception
+  * Depth estimation: Poor performance in low-texture environments
+- Need for cost-effective, robust solution using single camera
+- Safety-critical applications require reliability and real-time performance
+
+Statistics to Highlight:
+- Cost reduction potential with monocular vision
+- Performance gaps in existing single-modal systems
+
+Visual Elements:
+- Comparison chart: Traditional vs. Monocular approaches
+- Images showing challenging scenarios (farm paths, daylight navigation)
+
+
+SLIDE 3: PROPOSED SOLUTION OVERVIEW
+===================================
+Title: Uncertainty-Guided Adaptive Fusion Approach
+
+Key Points:
+- Novel combination of object detection + depth estimation
+- Monte Carlo dropout for uncertainty quantification
+- Adaptive fusion weights based on uncertainty levels
+- Real-time processing on consumer hardware
+
+Core Innovation:
+"Dynamic sensor fusion that adapts based on confidence levels"
+
+Key Benefits:
+- 63.2% navigation accuracy (vs. 49.8% single-modal)
+- 3.6% false safe rate (critical for safety)
+- 25.8 FPS real-time performance
+
+Visual Elements:
+- High-level system diagram
+- Before/after comparison showing improvement
+- Flow chart of adaptive fusion process
+
+
+SLIDE 4: SYSTEM ARCHITECTURE
+============================
+Title: Technical Architecture & Components
+
+Key Components:
+1. **YOLOv8 Object Detection Module**
+   - Real-time obstacle detection
+   - Bounding box generation
+   - Confidence scoring
+
+2. **MiDaS Depth Estimation Module**
+   - Monocular depth prediction
+   - Relative depth maps
+   - Spatial understanding
+
+3. **Monte Carlo Dropout Uncertainty Quantification**
+   - Multiple forward passes
+   - Uncertainty estimation
+   - Confidence measurement
+
+4. **Adaptive Fusion Engine**
+   - Dynamic weight calculation
+   - Multi-modal integration
+   - Navigation decision output
+
+Visual Elements:
+- Detailed system architecture diagram (use your system_architecture.png)
+- Data flow arrows showing information processing
+- Module interconnections
+
+
+SLIDE 5: UNCERTAINTY QUANTIFICATION METHODOLOGY
+===============================================
+Title: Monte Carlo Dropout for Uncertainty Estimation
+
+Key Concepts:
+- **Problem**: How confident is our system in its predictions?
+- **Solution**: Monte Carlo dropout during inference
+- **Process**:
+  * Multiple forward passes (MC=5 iterations)
+  * Variance calculation across predictions
+  * Uncertainty-based weighting
+
+Mathematical Foundation:
+- Uncertainty = Variance across MC iterations
+- Higher uncertainty → Lower fusion weight
+- Adaptive confidence scoring
+
+Benefits:
+- Quantifies model confidence
+- Enables intelligent fusion decisions
+- Improves safety through conservative choices
+
+Visual Elements:
+- Uncertainty analysis visualization (use your uncertainty_analysis.png)
+- Flow diagram of MC dropout process
+- Example uncertainty maps
+
+
+SLIDE 6: EXPERIMENTAL SETUP & TESTING PLATFORMS
+===============================================
+Title: Multi-Platform Evaluation Framework
+
+Testing Hardware:
+1. **MacBook Air M1 (Development & Testing)**
+   - Apple Silicon with MPS acceleration
+   - 55.8% navigation accuracy
+   - 28.1 FPS, 12W power consumption
+
+2. **NVIDIA Jetson TX2 (Edge Deployment)**
+   - Embedded computing platform
+   - 52.1% navigation accuracy
+   - 18.5 FPS, 15W power consumption
+
+Testing Scenarios:
+1. **Simple Daylight Path Navigation (60% of tests)**
+   - Clear outdoor paths, minimal obstacles
+   - 72.7% accuracy, 1.8% false safe rate
+
+2. **Agricultural Vegetable Farm Navigation (40% of tests)**
+   - Crop rows, uneven terrain, variable lighting
+   - 48.5% accuracy, 6.9% false safe rate
+
+Visual Elements:
+- Platform comparison table
+- Photos of testing environments
+- Hardware specifications comparison
+
+
+SLIDE 7: PERFORMANCE RESULTS & ANALYSIS
+=======================================
+Title: Comprehensive Performance Evaluation
+
+Key Results:
+**Overall Performance:**
+- Navigation Accuracy: 63.2% (vs 49.8% baseline)
+- False Safe Rate: 3.6% (critical safety metric)
+- Processing Speed: 25.8 FPS (real-time capable)
+
+**Scenario-Specific Results:**
+- Simple Daylight: 72.7% accuracy, 28.3 FPS
+- Agriculture Farm: 48.5% accuracy, 21.7 FPS
+
+**Platform Performance:**
+- MacBook Air M1: Superior development platform
+- Jetson TX2: Viable edge deployment solution
+
+**Safety Improvements:**
+- 96.4% overall safety score
+- Significant reduction in false safe rates
+- Conservative approach prioritizing safety
+
+Visual Elements:
+- Performance comparison charts
+- Safety analysis visualization (use your safety_analysis.png)
+- Platform performance comparison
+
+
+SLIDE 8: TECHNICAL INNOVATIONS & CONTRIBUTIONS
+==============================================
+Title: Novel Contributions to Autonomous Navigation
+
+Key Innovations:
+
+1. **Uncertainty-Guided Adaptive Fusion**
+   - First application of MC dropout for real-time sensor fusion
+   - Dynamic weighting based on prediction confidence
+   - Adaptive decision-making framework
+
+2. **Multi-Platform Optimization**
+   - Efficient implementation for Apple Silicon (MPS)
+   - Edge computing deployment on Jetson TX2
+   - Cross-platform performance validation
+
+3. **Agricultural Robotics Application**
+   - Specialized testing in vegetable farm environments
+   - Real-world validation in challenging outdoor conditions
+   - Cost-effective solution for agricultural automation
+
+4. **Safety-First Design Philosophy**
+   - Conservative navigation with uncertainty consideration
+   - Prioritizes false unsafe over false safe outcomes
+   - Quantified safety metrics and validation
+
+Research Impact:
+- Advances in uncertainty quantification for robotics
+- Practical multi-modal fusion methodology
+- Real-world agricultural robotics validation
+
+
+SLIDE 9: APPLICATIONS & FUTURE IMPACT
+=====================================
+Title: Real-World Applications & Market Potential
+
+Primary Applications:
+
+1. **Agricultural Robotics**
+   - Autonomous crop row navigation
+   - Precision farming equipment
+   - Cost-effective farm automation
+
+2. **Autonomous Vehicles**
+   - Supplementary safety systems
+   - Emergency obstacle avoidance
+   - Backup navigation systems
+
+3. **Outdoor Mobile Platforms**
+   - Delivery robots
+   - Inspection systems
+   - Autonomous maintenance vehicles
+
+4. **Edge Computing Applications**
+   - Resource-constrained environments
+   - Battery-powered systems
+   - Remote operation scenarios
+
+Market Advantages:
+- Significant cost reduction vs. traditional sensor suites
+- Consumer-grade hardware compatibility
+- Real-time processing capabilities
+- Proven safety performance
+
+Future Directions:
+- Integration with GPS-denied navigation
+- Advanced uncertainty quantification methods
+- Multi-camera system extensions
+
+
+SLIDE 10: CONCLUSIONS & FUTURE WORK
+===================================
+Title: Summary & Next Steps
+
+Key Achievements:
+✓ **Successful uncertainty-guided fusion implementation**
+  - 63.2% navigation accuracy achieved
+  - Real-time performance on consumer hardware
+
+✓ **Multi-platform validation completed**
+  - MacBook Air M1 and Jetson TX2 testing
+  - Scalable from development to edge deployment
+
+✓ **Real-world scenario validation**
+  - Agricultural farm and daylight path testing
+  - Safety-critical performance demonstrated
+
+✓ **Open-source contribution**
+  - Complete implementation available
+  - Reproducible research results
+
+Future Research Directions:
+- Advanced uncertainty quantification techniques
+- Multi-camera system integration
+- Weather condition adaptability
+- Dynamic environment handling
+- Integration with path planning systems
+
+Impact Statement:
+"This research demonstrates that intelligent sensor fusion can make autonomous navigation both safer and more accessible, opening new possibilities for cost-effective robotics applications."
+
+Call to Action:
+- Collaboration opportunities
+- Implementation partnerships
+- Further research directions
+
+==============================================================================
+
+PRESENTATION DELIVERY TIPS:
+===========================
+
+1. **Timing**: Allocate 2-3 minutes per slide for 20-25 minute presentation
+2. **Visual Flow**: Use consistent color scheme and fonts throughout
+3. **Technical Balance**: Balance technical depth with accessibility
+4. **Demo Consideration**: Consider including video demonstrations of system in action
+5. **Interactive Elements**: Prepare for Q&A about specific technical details
+6. **Key Messages**: Emphasize safety, real-time performance, and practical applications
+
+RECOMMENDED SLIDE TRANSITIONS:
+- Problem → Solution → Technical Details → Results → Impact
+- Maintain narrative flow emphasizing practical value
+- Use your actual experimental results and figures where possible
+
+FILES TO REFERENCE FOR VISUALS:
+- system_architecture.png
+- uncertainty_analysis.png
+- safety_analysis.png
+- timing_breakdown.png
+- Any additional figures from your paper

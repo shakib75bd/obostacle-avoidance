@@ -5,17 +5,20 @@ This folder contains all files related to the academic research paper on uncerta
 ## 📄 Paper Files
 
 ### Main Documents
+
 - `research_paper.tex` - Main LaTeX source file (25 pages, single-column format)
 - `research_paper.pdf` - Compiled PDF version of the paper
 - `README_PAPER.md` - Detailed documentation about the paper structure and content
 
 ### Supporting Documents
+
 - `obstacle-avoidance.pdf` - Original project document
 - `obstacle-avoidance.txt` - Original project text description
 
 ## 🖼️ Figures and Images
 
 All figures used in the research paper:
+
 - `system_architecture.png` - Overall system architecture diagram
 - `timing_breakdown.png` - Processing time distribution analysis
 - `uncertainty_analysis.png` - Uncertainty quantification performance
@@ -25,6 +28,7 @@ All figures used in the research paper:
 ## 🔧 LaTeX Compilation Files
 
 Generated during compilation (can be safely deleted):
+
 - `research_paper.aux` - Auxiliary file for cross-references
 - `research_paper.fdb_latexmk` - LaTeXmk database file
 - `research_paper.fls` - File list for LaTeX
@@ -42,6 +46,7 @@ pdflatex research_paper.tex
 ```
 
 For complete compilation with references:
+
 ```bash
 pdflatex research_paper.tex
 pdflatex research_paper.tex
@@ -77,6 +82,7 @@ pdflatex research_paper.tex
 ## 🔗 Dependencies
 
 Required for LaTeX compilation:
+
 - LaTeX distribution (TeX Live, MiKTeX, or MacTeX)
 - Packages: amsmath, graphicx, booktabs, algorithm, hyperref, etc.
 
