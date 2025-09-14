@@ -8,8 +8,13 @@
   "mean_iou": 0.15282566379799956,
   "mean_detection_rate": 0.5176470588235295,
   "mean_pixel_accuracy": 1.0,
+  "navigation_accuracy": 0.45098039215686275,
+  "false_safe_rate": 0.013725490196078431,
+  "false_unsafe_rate": 0.5352941176470588,
+  "forward_decision_rate": 0.4196078431372549,
+  "mean_obstacle_density": 0.2287796586751938,
   "total_frames": 510,
   "video_duration": 16.997366666666668,
-  "avg_fps": 13.449026611892117,
+  "avg_fps": 14.229966718908269,
   "video_path": "test_video1.mp4"
 }

@@ -39,7 +39,14 @@ class EvolutionMetricsLogger:
             'fps': [],
             'depth_time': [],
             'detection_time': [],
-            'fusion_time': []
+            'fusion_time': [],
+            # Navigation decision metrics
+            'navigation_decision': [],      # 0=FORWARD, 1=TURN
+            'navigation_confidence': [],   # obstacle_density value (0-1)
+            'ground_truth_safe': [],       # simulated ground truth for navigation
+            'navigation_accuracy': [],     # whether decision was correct
+            'false_safe_rate': [],         # dangerous: said safe when unsafe
+            'false_unsafe_rate': []        # inefficient: said unsafe when safe
         }
 
         self.video_fps = None
@@ -80,6 +87,36 @@ class EvolutionMetricsLogger:
         f1_score = 2 * precision * recall / (precision + recall) if (precision + recall) > 0 else 0.0
         iou = f1_score * 0.8  # Approximation
 
+        # Calculate navigation decision metrics
+        navigation_threshold = 0.4  # Standard threshold for navigation
+        if obstacle_map is not None:
+            # Create temporary obstacle map generator for navigation decision
+            temp_generator = ObstacleMapGenerator()
+            nav_decision, nav_confidence = temp_generator.determine_navigation_direction(
+                obstacle_map, threshold=navigation_threshold
+            )
+
+            # Simulate ground truth (simplified heuristic based on detection confidence and density)
+            # In real scenario, this would come from human annotation or GPS/IMU data
+            ground_truth_safe = self._simulate_ground_truth_safety(
+                obstacle_density, detection_count, avg_confidence
+            )
+
+            # Calculate navigation accuracy
+            predicted_safe = (nav_decision == 0)  # 0 = FORWARD (safe), 1 = TURN (unsafe)
+            navigation_correct = (predicted_safe == ground_truth_safe)
+
+            # Calculate error rates
+            false_safe = (predicted_safe and not ground_truth_safe)  # Dangerous error
+            false_unsafe = (not predicted_safe and ground_truth_safe)  # Inefficiency error
+        else:
+            nav_decision = 1  # Default to TURN if no obstacle map
+            nav_confidence = 1.0
+            ground_truth_safe = False
+            navigation_correct = False
+            false_safe = False
+            false_unsafe = False
+
         # Store all metrics
         self.metrics['frame_numbers'].append(frame_idx)
         self.metrics['timestamps'].append(timestamp)
@@ -97,10 +134,47 @@ class EvolutionMetricsLogger:
         self.metrics['depth_time'].append(processing_times.get('depth', 0.0))
         self.metrics['detection_time'].append(processing_times.get('detection', 0.0))
         self.metrics['fusion_time'].append(processing_times.get('fusion', 0.0))
+        # Navigation metrics
+        self.metrics['navigation_decision'].append(nav_decision)
+        self.metrics['navigation_confidence'].append(nav_confidence)
+        self.metrics['ground_truth_safe'].append(ground_truth_safe)
+        self.metrics['navigation_accuracy'].append(navigation_correct)
+        self.metrics['false_safe_rate'].append(false_safe)
+        self.metrics['false_unsafe_rate'].append(false_unsafe)
 
     def set_video_fps(self, fps):
         """Set the video FPS for timestamp calculation"""
         self.video_fps = fps
+
+    def _simulate_ground_truth_safety(self, obstacle_density, detection_count, avg_confidence):
+        """
+        Simulate ground truth navigation safety for evaluation purposes.
+        In a real system, this would come from human annotation, GPS/IMU data, or LiDAR.
+
+        Args:
+            obstacle_density: Average obstacle density in the frame
+            detection_count: Number of detected obstacles
+            avg_confidence: Average confidence of detections
+
+        Returns:
+            bool: True if path is actually safe, False if unsafe
+        """
+        # Heuristic-based ground truth simulation (simplified)
+        # Consider multiple factors for safety assessment
+
+        # Factor 1: High obstacle density suggests unsafe path
+        density_unsafe = obstacle_density > 0.35
+
+        # Factor 2: Multiple high-confidence detections suggest unsafe path
+        detection_unsafe = (detection_count >= 2 and avg_confidence > 0.6)
+
+        # Factor 3: Very high confidence single detection might be unsafe
+        high_confidence_unsafe = (detection_count >= 1 and avg_confidence > 0.8)
+
+        # Combine factors: if any suggest unsafe, consider path unsafe
+        is_unsafe = density_unsafe or detection_unsafe or high_confidence_unsafe
+
+        return not is_unsafe  # Return True for safe, False for unsafe
 
     def save_metrics(self, video_path=""):
         """Save collected metrics to files"""
@@ -128,6 +202,13 @@ class EvolutionMetricsLogger:
             'mean_iou': float(np.mean(self.metrics['iou'])) if self.metrics['iou'] else 0.0,
             'mean_detection_rate': float(len([x for x in self.metrics['detection_count'] if x > 0]) / len(self.metrics['detection_count'])) if self.metrics['detection_count'] else 0.0,
             'mean_pixel_accuracy': float(np.mean(self.metrics['depth_quality'])) if self.metrics['depth_quality'] else 0.0,
+            # Navigation decision metrics
+            'navigation_accuracy': float(np.mean(self.metrics['navigation_accuracy'])) if self.metrics['navigation_accuracy'] else 0.0,
+            'false_safe_rate': float(np.mean(self.metrics['false_safe_rate'])) if self.metrics['false_safe_rate'] else 0.0,
+            'false_unsafe_rate': float(np.mean(self.metrics['false_unsafe_rate'])) if self.metrics['false_unsafe_rate'] else 0.0,
+            'forward_decision_rate': float(len([x for x in self.metrics['navigation_decision'] if x == 0]) / len(self.metrics['navigation_decision'])) if self.metrics['navigation_decision'] else 0.0,
+            'mean_obstacle_density': float(np.mean(self.metrics['obstacle_density'])) if self.metrics['obstacle_density'] else 0.0,
+            # Performance metrics
             'total_frames': len(self.metrics['frame_numbers']),
             'video_duration': float(self.metrics['timestamps'][-1]) if self.metrics['timestamps'] else 0.0,
             'avg_fps': float(np.mean(self.metrics['fps'])) if self.metrics['fps'] else 0.0,
