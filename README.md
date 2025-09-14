@@ -31,8 +31,11 @@ python test_video.py --video test_video1.mp4
 # Process with custom output and frame skipping for faster analysis
 python test_video.py --video test_video1.mp4 --output test_navigation_metrics.mp4 --skip-frames 4
 
-# Real-time webcam testing
+# Real-time webcam testing (default camera)
 python test_video.py --webcam-mode
+
+# Select specific webcam source (0=default, 1=external, 2=second external, etc.)
+python test_video.py --webcam-mode --webcam-source 1
 ```
 
 ### Report Generation
