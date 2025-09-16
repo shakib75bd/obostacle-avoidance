@@ -1,0 +1,9 @@
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces System architecture showing the integration of MiDaS depth estimation, YOLOv8 object detection, and uncertainty-guided adaptive region fusion for real-time obstacle avoidance. The modular design enables parallel processing and efficient resource utilization across multiple computational devices (MPS/CUDA acceleration). The pipeline processes input frames through depth estimation and object detection pathways simultaneously, with uncertainty maps guiding the adaptive fusion process to generate robust obstacle maps for navigation decisions. The architecture supports various deployment scenarios from consumer hardware (MacBook Air M1) to edge computing systems (NVIDIA Jetson TX2).}}{19}{figure.caption.7}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Detailed processing time breakdown showing computational distribution. Depth estimation with uncertainty quantification represents the largest component (45\%) but provides critical safety information. Optimization strategies have reduced total processing time to enable real-time operation.}}{35}{figure.caption.12}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Navigation accuracy as a function of average scene uncertainty. Higher uncertainty scenes benefit significantly from adaptive fusion approach, demonstrating the effectiveness of uncertainty-guided decision making. The performance gap increases with uncertainty, validating our approach.}}{36}{figure.caption.13}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Distribution of safety events showing false safe rate (critical) and false unsafe rate (efficiency) across different environmental conditions. The system maintains low false safe rates even in challenging conditions, prioritizing safety over efficiency.}}{37}{figure.caption.14}%
+\addvspace {10\p@ }

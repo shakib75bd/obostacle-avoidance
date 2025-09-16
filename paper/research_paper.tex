@@ -1,4 +1,4 @@
-\documentclass[12pt]{article}
+\documentclass[12pt,oneside]{book}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath,amsfonts,amssymb}
@@ -17,9 +17,23 @@
 \usepackage{needspace}
 \usepackage{hyperref}
 
-% Section formatting
+% Front matter formatting
 \usepackage{titlesec}
-\newcommand{\sectionbreak}{\clearpage}
+\usepackage{titleps}
+\usepackage{setspace}
+\usepackage{datetime}
+
+% Page number formatting
+\pagestyle{plain}
+\makeatletter
+\renewcommand{\@evenfoot}{\hfil\thepage\hfil}
+\renewcommand{\@oddfoot}{\hfil\thepage\hfil}
+\makeatother
+
+% Section formatting
+\titleformat{\chapter}[display]
+{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{50pt}{40pt}
 \titlespacing*{\section}{0pt}{12pt}{6pt}
 \titlespacing*{\subsection}{0pt}{12pt}{6pt}
 
@@ -32,32 +46,119 @@
 \newcommand{\tabref}[1]{Table~\ref{#1}}
 \newcommand{\secref}[1]{Section~\ref{#1}}
 
-\title{\LARGE \bf
-Real-Time Obstacle Avoidance Using \\
-Uncertainty-Guided Adaptive Region Fusion \\
-for Autonomous Navigation using Monocular Vision
-}
-
-\author{
-\normalsize Md. Shakib Hossen\\
-\normalsize Department of Computer Science and Engineering\\
-\normalsize Begum Rokeya University, Rangpur\\
-\normalsize \texttt{shakib.1905017@student.brur.ac.bd}
-}
+% Thesis information
+\newcommand{\thesistitle}{Real-Time Obstacle Avoidance Using Uncertainty-Guided Adaptive Region Fusion\\for Autonomous Navigation using Monocular Vision}
+\newcommand{\theauthor}{Md. Shakib Hossen}
+\newcommand{\thedegree}{Bachelor of Science}
+\newcommand{\themajor}{Computer Science and Engineering}
+\newcommand{\thesupervisor}{Md. Mizanur Rahoman}
+\newcommand{\thesupervisortitle}{Professor}
+\newcommand{\thedepartment}{Department of Computer Science and Engineering}
+\newcommand{\theuniversity}{Begum Rokeya University, Rangpur}
+\newcommand{\theyear}{2025}
 
 \begin{document}
 
-\maketitle
+% Import title page
+\input{titlepage}
 
-\begin{abstract}
+\thispagestyle{empty}
+\vspace*{1cm}
+
+\begin{center}
+    {\Large\bfseries DECLARATION}
+\end{center}
+
+\vspace{0.8cm}
+
+I, \textbf{\theauthor}, student of Bachelor of Science in Computer Science and Engineering, ID: 1905017, hereby declare that this thesis entitled \textbf{``\thesistitle''} is a record of original work done by me under the supervision of \textbf{\thesupervisortitle~\thesupervisor}, Department of Computer Science and Engineering, Begum Rokeya University, Rangpur.
+
+\vspace{0.8cm}
+
+I further declare that this work has not been submitted elsewhere for any degree or diploma. The contents of this thesis are based on my own research work and the sources of information have been duly acknowledged.
+
+\vspace{2cm}
+
+\begin{flushright}
+    \textbf{\theauthor}\\
+    Student ID: 1905017\\
+    Department of Computer Science and Engineering\\
+    Begum Rokeya University, Rangpur\\
+    \today
+\end{flushright}
+
+\clearpage
+
+% Approval page
+\chapter*{Approval}
+\thispagestyle{empty}
+This is to certify that the thesis entitled ``\thesistitle'' submitted by \theauthor\ (ID: 1905017) has been accepted as satisfactory in partial fulfillment of the requirements for the degree of \thedegree\ in \themajor.
+
+\vspace{3cm}
+\noindent
+\rule{7cm}{0.5pt}\\
+\thesupervisor\\
+\thesupervisortitle\\
+\thedepartment\\
+\theuniversity
+
+
+% Dedication
+\newpage
+\thispagestyle{empty}
+\vspace*{3cm}
+
+\begin{center}
+    {\Large \textbf{Dedication}}
+
+    \vspace{2cm}
+
+    \begin{minipage}{0.8\textwidth}
+    \large
+    \textit{To my beloved parents,}
+
+    \vspace{0.5cm}
+
+    whose unwavering love, endless support, and countless sacrifices have made all my achievements possible. Your belief in me has been my greatest strength throughout this journey.
+
+    \vspace{0.5cm}
+
+    \textit{And to all dreamers who dare to innovate.}
+    \end{minipage}
+\end{center}
+\clearpage
+
+% Acknowledgments
+\chapter*{Acknowledgments}
+\addcontentsline{toc}{chapter}{Acknowledgments}
+I would like to express my sincere gratitude to my supervisor, \thesupervisor, for his invaluable guidance, continuous support, and encouragement throughout this research work. His expertise and insights have been instrumental in shaping this thesis.
+
+I am also grateful to the Department of Computer Science and Engineering at Begum Rokeya University, Rangpur, for providing the resources and environment conducive to research. Special thanks to my fellow researchers and the open-source community for their contributions and support.
+
+\clearpage
+
+% Table of contents
+\tableofcontents
+\clearpage
+
+% List of figures
+\listoffigures
+\clearpage
+
+% List of tables
+\listoftables
+\clearpage
+
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
 Autonomous navigation in complex environments requires robust obstacle detection and avoidance capabilities that can operate in real-time with limited computational resources. This paper presents a novel uncertainty-guided adaptive region fusion approach for monocular obstacle avoidance that demonstrates \textbf{substantial performance improvements over existing methods}. Our system combines MiDaS depth estimation with YOLOv8 object detection through intelligent uncertainty-guided fusion, achieving \textbf{7.4\% higher navigation accuracy} compared to single-modal baselines and \textbf{13.9\% improvement} over depth-only approaches in challenging indoor environments.
 
 \textbf{Key Performance Achievements:} The proposed method delivers \textbf{58.2\% navigation accuracy in indoor scenarios} and \textbf{72.0\% in outdoor conditions}, while maintaining critical safety performance with \textbf{4.8\% false safe rate} — representing a \textbf{41\% reduction} compared to fixed fusion methods (8.2\%). Real-time processing at \textbf{24.5 FPS on consumer hardware} (MacBook Air M1) and validated performance on edge devices (Jetson TX2: \textbf{31.4 FPS}) demonstrates practical viability.
 
 \textbf{Technical Innovation:} Our uncertainty quantification through Monte Carlo dropout with only \textbf{15\% computational overhead} enables adaptive fusion that automatically adjusts to environmental conditions. Comprehensive evaluation across \textbf{1,192 test frames} spanning diverse scenarios validates the approach's robustness and deployment readiness for autonomous navigation applications.
-\end{abstract}
+\clearpage
 
-\section{Introduction}
+\chapter{Introduction}
 
 Autonomous navigation systems require robust perception capabilities to safely navigate complex environments while maintaining real-time performance constraints. Traditional obstacle detection approaches rely primarily on expensive sensor suites including LiDAR, stereo cameras, and radar systems. However, the growing demand for cost-effective autonomous solutions has driven research toward monocular vision-based approaches that can achieve comparable performance with significantly reduced hardware requirements.
 
@@ -75,7 +176,7 @@ This paper addresses these challenges by proposing a novel uncertainty-guided ad
 
 The proposed system achieves navigation decision accuracy between 45--65\% while maintaining processing speeds of 20--30 FPS on consumer hardware. Most importantly, the system demonstrates a false safe rate below 5\%, meeting critical safety requirements for autonomous navigation applications.
 
-\section{Related Work}
+\chapter{Background and Literature Review}
 
 \subsection{Monocular Depth Estimation}
 
@@ -326,7 +427,7 @@ Modern autonomous systems must balance comprehensive mapping with immediate obst
 
 Our approach prioritizes immediate obstacle avoidance while maintaining computational efficiency, targeting scenarios where rapid deployment and instant operation are critical. This design philosophy acknowledges the complementary nature of SLAM and reactive avoidance while optimizing for real-world deployment constraints.
 
-\section{Methodology}
+\chapter{Methodology}
 
 \subsection{System Architecture and Design Philosophy}
 
@@ -871,7 +972,7 @@ Comprehensive resource monitoring including:
 \item Cache hit rates and optimization effectiveness
 \end{itemize}
 
-\section{Results and Performance Analysis}
+\chapter{Results and Discussion}
 
 \subsection{Comprehensive Dual-Platform, Dual-Scenario Evaluation Methodology}
 
@@ -1408,7 +1509,7 @@ Several directions for future research emerge from this work:
 
 \textbf{Edge Deployment}: Optimization for edge computing platforms (e.g., NVIDIA Jetson, mobile processors) would enable broader deployment in autonomous systems.
 
-\section{Conclusion}
+\chapter{Conclusion and Future Work}
 
 This research presents a comprehensive uncertainty-guided obstacle avoidance system that advances monocular navigation through adaptive sensor fusion. Through extensive evaluation across multiple hardware platforms and real-world scenarios, we have demonstrated the robustness and practical applicability of our approach.
 
