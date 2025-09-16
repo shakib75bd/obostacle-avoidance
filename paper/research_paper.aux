@@ -2,152 +2,163 @@
 \providecommand\hyper@newdestlabel[2]{}
 \providecommand\HyField@AuxAddToFields[1]{}
 \providecommand\HyField@AuxAddToCoFields[2]{}
-\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{2}{section.1}\protected@file@percent }
 \citation{saxena2009make3d}
+\citation{eigen2014depth}
 \citation{ranftl2020towards}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{3}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Monocular Depth Estimation}{3}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.1}Traditional Geometric Approaches}{3}{subsubsection.2.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.2}Deep Learning Transformation}{3}{subsubsection.2.1.2}\protected@file@percent }
 \citation{poggi2020uncertainty}
 \citation{kendall2017uncertainties}
 \citation{jocher2023ultralytics}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.3}Uncertainty Quantification Advances}{4}{subsubsection.2.1.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Object Detection for Autonomous Navigation}{4}{subsection.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.1}Single-Stage Detection Evolution}{4}{subsubsection.2.2.1}\protected@file@percent }
 \citation{geiger2012we}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.2}Resource-Constrained Optimization}{5}{subsubsection.2.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Sensor Fusion for Obstacle Detection}{5}{subsection.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.1}Traditional Multi-Modal Systems}{5}{subsubsection.2.3.1}\protected@file@percent }
 \citation{menze2015joint}
 \citation{chen2020multi}
 \citation{wang2021multi}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.2}Modern Fusion Strategies}{6}{subsubsection.2.3.2}\protected@file@percent }
 \citation{mur2015orb}
 \citation{qin2018vins}
-\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{2}{section.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Monocular Depth Estimation}{2}{subsection.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Object Detection for Autonomous Navigation}{2}{subsection.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Sensor Fusion for Obstacle Detection}{2}{subsection.2.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}SLAM and Obstacle Avoidance}{2}{subsection.2.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {3}Methodology}{3}{section.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}System Architecture and Design Philosophy}{3}{subsection.3.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces System architecture showing the integration of MiDaS depth estimation, YOLOv8 object detection, and uncertainty-guided adaptive region fusion for real-time obstacle avoidance. The modular design enables parallel processing and efficient resource utilization.}}{3}{figure.caption.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}SLAM and Obstacle Avoidance}{7}{subsection.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.4.1}Feature-Based SLAM Systems}{7}{subsubsection.2.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.4.2}Visual-Inertial Navigation}{7}{subsubsection.2.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.4.3}Real-time Navigation Considerations}{8}{subsubsection.2.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Methodology}{9}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}System Architecture and Design Philosophy}{9}{subsection.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Input Processing and Video Pipeline}{9}{subsection.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.1}Video Source Management}{9}{subsubsection.3.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.2}Real-time Performance Optimization}{9}{subsubsection.3.2.2}\protected@file@percent }
+\newlabel{eq:frame_timing}{{1}{9}{Real-time Performance Optimization}{equation.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces System architecture showing the integration of MiDaS depth estimation, YOLOv8 object detection, and uncertainty-guided adaptive region fusion for real-time obstacle avoidance. The modular design enables parallel processing and efficient resource utilization across multiple computational devices (MPS/CUDA acceleration). The pipeline processes input frames through depth estimation and object detection pathways simultaneously, with uncertainty maps guiding the adaptive fusion process to generate robust obstacle maps for navigation decisions. The architecture supports various deployment scenarios from consumer hardware (MacBook Air M1) to edge computing systems (NVIDIA Jetson TX2).}}{10}{figure.caption.1}\protected@file@percent }
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{fig:architecture}{{1}{3}{System architecture showing the integration of MiDaS depth estimation, YOLOv8 object detection, and uncertainty-guided adaptive region fusion for real-time obstacle avoidance. The modular design enables parallel processing and efficient resource utilization}{figure.caption.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Input Processing and Video Pipeline}{3}{subsection.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.1}Video Source Management}{3}{subsubsection.3.2.1}\protected@file@percent }
+\newlabel{fig:architecture}{{1}{10}{System architecture showing the integration of MiDaS depth estimation, YOLOv8 object detection, and uncertainty-guided adaptive region fusion for real-time obstacle avoidance. The modular design enables parallel processing and efficient resource utilization across multiple computational devices (MPS/CUDA acceleration). The pipeline processes input frames through depth estimation and object detection pathways simultaneously, with uncertainty maps guiding the adaptive fusion process to generate robust obstacle maps for navigation decisions. The architecture supports various deployment scenarios from consumer hardware (MacBook Air M1) to edge computing systems (NVIDIA Jetson TX2)}{figure.caption.1}{}}
 \citation{ranftl2020towards}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.2}Real-time Performance Optimization}{4}{subsubsection.3.2.2}\protected@file@percent }
-\newlabel{eq:frame_timing}{{1}{4}{Real-time Performance Optimization}{equation.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Monocular Depth Estimation with Uncertainty Quantification}{4}{subsection.3.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.1}MiDaS Network Architecture and Optimization}{4}{subsubsection.3.3.1}\protected@file@percent }
-\newlabel{eq:midas_forward}{{2}{4}{MiDaS Network Architecture and Optimization}{equation.2}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.2}Monte Carlo Dropout Implementation}{4}{subsubsection.3.3.2}\protected@file@percent }
-\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Monte Carlo Uncertainty Estimation}}{4}{algorithm.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Monocular Depth Estimation with Uncertainty Quantification}{11}{subsection.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.1}MiDaS Network Architecture and Optimization}{11}{subsubsection.3.3.1}\protected@file@percent }
+\newlabel{eq:midas_forward}{{2}{11}{MiDaS Network Architecture and Optimization}{equation.2}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.2}Monte Carlo Dropout Implementation}{11}{subsubsection.3.3.2}\protected@file@percent }
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Monte Carlo Uncertainty Estimation}}{11}{algorithm.1}\protected@file@percent }
 \citation{jocher2023ultralytics}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.3}Depth Preprocessing and Normalization}{5}{subsubsection.3.3.3}\protected@file@percent }
-\newlabel{eq:depth_normalization}{{3}{5}{Depth Preprocessing and Normalization}{equation.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Lightweight Object Detection Module}{5}{subsection.3.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.1}YOLOv8 Architecture and Customization}{5}{subsubsection.3.4.1}\protected@file@percent }
-\newlabel{eq:relevant_classes}{{4}{5}{YOLOv8 Architecture and Customization}{equation.4}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.2}Detection Filtering and Post-processing}{5}{subsubsection.3.4.2}\protected@file@percent }
-\@writefile{loa}{\contentsline {algorithm}{\numberline {2}{\ignorespaces Obstacle Detection Filtering}}{5}{algorithm.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}Uncertainty-Guided Adaptive Region Fusion}{5}{subsection.3.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.1}Confidence Region Segmentation}{5}{subsubsection.3.5.1}\protected@file@percent }
-\newlabel{eq:confidence_segmentation}{{5}{5}{Confidence Region Segmentation}{equation.5}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.2}Adaptive Fusion Algorithm}{6}{subsubsection.3.5.2}\protected@file@percent }
-\@writefile{loa}{\contentsline {algorithm}{\numberline {3}{\ignorespaces Uncertainty-Guided Adaptive Fusion}}{6}{algorithm.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.3}Obstacle Map Generation and Optimization}{6}{subsubsection.3.5.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.6}Navigation Decision Framework}{6}{subsection.3.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.6.1}Forward Path Analysis}{6}{subsubsection.3.6.1}\protected@file@percent }
-\newlabel{eq:navigation_region_detailed}{{6}{6}{Forward Path Analysis}{equation.6}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.6.2}Obstacle Density Calculation and Thresholding}{6}{subsubsection.3.6.2}\protected@file@percent }
-\newlabel{eq:obstacle_density_detailed}{{7}{6}{Obstacle Density Calculation and Thresholding}{equation.7}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.6.3}Safety-Critical Decision Logic}{7}{subsubsection.3.6.3}\protected@file@percent }
-\newlabel{eq:navigation_decision_detailed}{{8}{7}{Safety-Critical Decision Logic}{equation.8}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.7}Performance Metrics and Evaluation Framework}{7}{subsection.3.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.7.1}Evolution Metrics Logging}{7}{subsubsection.3.7.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.7.2}Ground Truth Generation and Validation}{7}{subsubsection.3.7.2}\protected@file@percent }
-\@writefile{loa}{\contentsline {algorithm}{\numberline {4}{\ignorespaces Ground Truth Safety Assessment}}{7}{algorithm.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4}Experimental Setup and Implementation}{7}{section.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Software Architecture and Codebase Organization}{7}{subsection.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.1}Project Structure and Module Organization}{8}{subsubsection.4.1.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.2}Core Module Implementation Details}{8}{subsubsection.4.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Development Workflow and Testing Pipeline}{9}{subsection.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.1}Iterative Development Approach}{9}{subsubsection.4.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.2}Testing and Validation Framework}{9}{subsubsection.4.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.3}Evaluation and Reporting Pipeline}{9}{subsubsection.4.2.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Hardware and Software Configuration}{10}{subsection.4.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.1}Hardware Platforms}{10}{subsubsection.4.3.1}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Hardware Platforms for Performance Evaluation}}{10}{table.caption.2}\protected@file@percent }
-\newlabel{tab:hardware_config}{{1}{10}{Hardware Platforms for Performance Evaluation}{table.caption.2}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.2}Software Dependencies and Environment}{10}{subsubsection.4.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Dataset Creation and Ground Truth Generation}{10}{subsection.4.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.1}Test Dataset Composition}{10}{subsubsection.4.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.2}Ground Truth Annotation Methodology}{11}{subsubsection.4.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Evaluation Metrics and Analysis Framework}{12}{subsection.4.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.5.1}Navigation-Specific Performance Metrics}{12}{subsubsection.4.5.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.5.2}Real-Time Performance Analysis}{12}{subsubsection.4.5.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5}Results and Performance Analysis}{13}{section.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Comprehensive Dual-Platform, Dual-Scenario Evaluation Methodology}{13}{subsection.5.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Overall System Performance Evaluation}{13}{subsection.5.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Comprehensive Performance Comparison}{13}{subsection.5.3}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Comprehensive Performance Comparison: Uncertainty-Guided System vs Baselines}}{13}{table.caption.3}\protected@file@percent }
-\newlabel{tab:comprehensive_performance}{{2}{13}{Comprehensive Performance Comparison: Uncertainty-Guided System vs Baselines}{table.caption.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Platform and Scenario Performance Summary}{14}{subsection.5.4}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Performance Analysis Across Navigation Scenarios}}{14}{table.caption.4}\protected@file@percent }
-\newlabel{tab:scenario_performance}{{3}{14}{Performance Analysis Across Navigation Scenarios}{table.caption.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}Projected NVIDIA Jetson TX2 Performance Analysis}{14}{subsection.5.5}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Projected NVIDIA Jetson TX2 Performance Analysis}}{14}{table.caption.5}\protected@file@percent }
-\newlabel{tab:jetson_projected_performance}{{4}{14}{Projected NVIDIA Jetson TX2 Performance Analysis}{table.caption.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.6}Component-Level Performance Analysis}{15}{subsection.5.6}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Detailed processing time breakdown showing computational distribution. Depth estimation with uncertainty quantification represents the largest component (45\%) but provides critical safety information. Optimization strategies have reduced total processing time to enable real-time operation.}}{15}{figure.caption.6}\protected@file@percent }
-\newlabel{fig:detailed_timing}{{2}{15}{Detailed processing time breakdown showing computational distribution. Depth estimation with uncertainty quantification represents the largest component (45\%) but provides critical safety information. Optimization strategies have reduced total processing time to enable real-time operation}{figure.caption.6}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.7}Uncertainty Analysis and Adaptive Fusion Effectiveness}{15}{subsection.5.7}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Navigation accuracy as a function of average scene uncertainty. Higher uncertainty scenes benefit significantly from adaptive fusion approach, demonstrating the effectiveness of uncertainty-guided decision making. The performance gap increases with uncertainty, validating our approach.}}{16}{figure.caption.7}\protected@file@percent }
-\newlabel{fig:uncertainty_performance}{{3}{16}{Navigation accuracy as a function of average scene uncertainty. Higher uncertainty scenes benefit significantly from adaptive fusion approach, demonstrating the effectiveness of uncertainty-guided decision making. The performance gap increases with uncertainty, validating our approach}{figure.caption.7}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.8}Safety Performance Analysis}{16}{subsection.5.8}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Distribution of safety events showing false safe rate (critical) and false unsafe rate (efficiency) across different environmental conditions. The system maintains low false safe rates even in challenging conditions, prioritizing safety over efficiency.}}{16}{figure.caption.8}\protected@file@percent }
-\newlabel{fig:safety_performance}{{4}{16}{Distribution of safety events showing false safe rate (critical) and false unsafe rate (efficiency) across different environmental conditions. The system maintains low false safe rates even in challenging conditions, prioritizing safety over efficiency}{figure.caption.8}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Safety Performance Analysis Across Environmental Conditions}}{17}{table.caption.9}\protected@file@percent }
-\newlabel{tab:safety_analysis}{{5}{17}{Safety Performance Analysis Across Environmental Conditions}{table.caption.9}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.9}Real-Time Performance Scaling Analysis}{17}{subsection.5.9}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Performance Scaling with Configuration Parameters}}{17}{table.caption.10}\protected@file@percent }
-\newlabel{tab:performance_scaling_detailed}{{6}{17}{Performance Scaling with Configuration Parameters}{table.caption.10}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.10}Computational Efficiency Analysis}{17}{subsection.5.10}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.10.1}Algorithm Optimization Impact}{17}{subsubsection.5.10.1}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces Optimization Strategy Impact on Performance}}{17}{table.caption.11}\protected@file@percent }
-\newlabel{tab:optimization_impact}{{7}{17}{Optimization Strategy Impact on Performance}{table.caption.11}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.10.2}Memory Usage Optimization}{18}{subsubsection.5.10.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.11}Comparison with State-of-the-Art Approaches}{18}{subsection.5.11}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces Contextual Comparison with Related Approaches}}{18}{table.caption.12}\protected@file@percent }
-\newlabel{tab:sota_comparison}{{8}{18}{Contextual Comparison with Related Approaches}{table.caption.12}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.12}Error Analysis and Failure Cases}{18}{subsection.5.12}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.12.1}Systematic Error Analysis}{18}{subsubsection.5.12.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.12.2}Mitigation Strategies}{18}{subsubsection.5.12.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.13}Long-term Performance Consistency}{19}{subsection.5.13}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6}Discussion}{19}{section.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}System Architecture Advantages}{19}{subsection.6.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.1}Modularity and Extensibility}{19}{subsubsection.6.1.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.2}Real-time Processing Pipeline}{19}{subsubsection.6.1.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Uncertainty Quantification Analysis}{19}{subsection.6.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.1}Monte Carlo Dropout Effectiveness}{19}{subsubsection.6.2.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.2}Adaptive Fusion Strategy}{20}{subsubsection.6.2.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Performance Scaling and Practical Deployment}{20}{subsection.6.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.3.1}Hardware Requirements}{20}{subsubsection.6.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.3.2}Configuration Flexibility}{20}{subsubsection.6.3.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}Limitations and Future Work}{20}{subsection.6.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.4.1}Current Limitations}{20}{subsubsection.6.4.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.4.2}Proposed Enhancements}{20}{subsubsection.6.4.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.5}Broader Impact and Applications}{21}{subsection.6.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.5.1}Autonomous Systems Applications}{21}{subsubsection.6.5.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.5.2}Research Contributions}{21}{subsubsection.6.5.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.6}Validation of Hypotheses}{21}{subsection.6.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.6.1}Primary Hypothesis Validation}{21}{subsubsection.6.6.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.6.2}Secondary Hypothesis Validation}{21}{subsubsection.6.6.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.7}Comparative Analysis with State-of-the-Art}{21}{subsection.6.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.7.1}Advantages over Traditional SLAM}{21}{subsubsection.6.7.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.7.2}Complementary to Existing Systems}{22}{subsubsection.6.7.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.8}Implementation Insights and Best Practices}{22}{subsection.6.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.8.1}Development Methodology}{22}{subsubsection.6.8.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.8.2}Deployment Considerations}{22}{subsubsection.6.8.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.9}Advantages of Uncertainty-Guided Fusion}{22}{subsection.6.9}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.10}Limitations and Challenges}{23}{subsection.6.10}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.11}Future Directions}{23}{subsection.6.11}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {7}Conclusion}{23}{section.7}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Key Contributions}{23}{subsection.7.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}Research Impact}{23}{subsection.7.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}Future Directions}{23}{subsection.7.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.3.3}Depth Preprocessing and Normalization}{12}{subsubsection.3.3.3}\protected@file@percent }
+\newlabel{eq:depth_normalization}{{3}{12}{Depth Preprocessing and Normalization}{equation.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Lightweight Object Detection Module}{12}{subsection.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.1}YOLOv8 Architecture and Customization}{12}{subsubsection.3.4.1}\protected@file@percent }
+\newlabel{eq:relevant_classes}{{4}{12}{YOLOv8 Architecture and Customization}{equation.4}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.2}Detection Filtering and Post-processing}{12}{subsubsection.3.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}Uncertainty-Guided Adaptive Region Fusion}{12}{subsection.3.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.1}Confidence Region Segmentation}{12}{subsubsection.3.5.1}\protected@file@percent }
+\@writefile{loa}{\contentsline {algorithm}{\numberline {2}{\ignorespaces Obstacle Detection Filtering}}{13}{algorithm.2}\protected@file@percent }
+\newlabel{eq:confidence_segmentation}{{5}{13}{Confidence Region Segmentation}{equation.5}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.2}Adaptive Fusion Algorithm}{13}{subsubsection.3.5.2}\protected@file@percent }
+\@writefile{loa}{\contentsline {algorithm}{\numberline {3}{\ignorespaces Uncertainty-Guided Adaptive Fusion}}{13}{algorithm.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.5.3}Obstacle Map Generation and Optimization}{14}{subsubsection.3.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6}Navigation Decision Framework}{14}{subsection.3.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.6.1}Forward Path Analysis}{14}{subsubsection.3.6.1}\protected@file@percent }
+\newlabel{eq:navigation_region_detailed}{{6}{14}{Forward Path Analysis}{equation.6}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.6.2}Obstacle Density Calculation and Thresholding}{14}{subsubsection.3.6.2}\protected@file@percent }
+\newlabel{eq:obstacle_density_detailed}{{7}{14}{Obstacle Density Calculation and Thresholding}{equation.7}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.6.3}Safety-Critical Decision Logic}{14}{subsubsection.3.6.3}\protected@file@percent }
+\newlabel{eq:navigation_decision_detailed}{{8}{14}{Safety-Critical Decision Logic}{equation.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.7}Performance Metrics and Evaluation Framework}{15}{subsection.3.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.7.1}Evolution Metrics Logging}{15}{subsubsection.3.7.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.7.2}Ground Truth Generation and Validation}{15}{subsubsection.3.7.2}\protected@file@percent }
+\@writefile{loa}{\contentsline {algorithm}{\numberline {4}{\ignorespaces Ground Truth Safety Assessment}}{15}{algorithm.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}Experimental Setup and Implementation}{16}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Software Architecture and Codebase Organization}{16}{subsection.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.1}Project Structure and Module Organization}{16}{subsubsection.4.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.2}Core Module Implementation Details}{16}{subsubsection.4.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Development Workflow and Testing Pipeline}{17}{subsection.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.1}Iterative Development Approach}{17}{subsubsection.4.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.2}Testing and Validation Framework}{17}{subsubsection.4.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.3}Evaluation and Reporting Pipeline}{18}{subsubsection.4.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Hardware and Software Configuration}{18}{subsection.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.1}Hardware Platforms}{18}{subsubsection.4.3.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Hardware Platforms for Performance Evaluation}}{18}{table.caption.2}\protected@file@percent }
+\newlabel{tab:hardware_config}{{1}{18}{Hardware Platforms for Performance Evaluation}{table.caption.2}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.2}Software Dependencies and Environment}{19}{subsubsection.4.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Dataset Creation and Ground Truth Generation}{19}{subsection.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.1}Test Dataset Composition}{19}{subsubsection.4.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.4.2}Ground Truth Annotation Methodology}{20}{subsubsection.4.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Evaluation Metrics and Analysis Framework}{21}{subsection.4.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.5.1}Navigation-Specific Performance Metrics}{21}{subsubsection.4.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.5.2}Real-Time Performance Analysis}{21}{subsubsection.4.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Results and Performance Analysis}{23}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Comprehensive Dual-Platform, Dual-Scenario Evaluation Methodology}{23}{subsection.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Overall System Performance Evaluation}{23}{subsection.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Comprehensive Performance Comparison}{23}{subsection.5.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Comprehensive Performance Comparison: Uncertainty-Guided System vs Baselines}}{24}{table.caption.3}\protected@file@percent }
+\newlabel{tab:comprehensive_performance}{{2}{24}{Comprehensive Performance Comparison: Uncertainty-Guided System vs Baselines}{table.caption.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Platform and Scenario Performance Summary}{24}{subsection.5.4}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Performance Analysis Across Navigation Scenarios}}{24}{table.caption.4}\protected@file@percent }
+\newlabel{tab:scenario_performance}{{3}{24}{Performance Analysis Across Navigation Scenarios}{table.caption.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces NVIDIA Jetson TX2 Performance Analysis}}{25}{table.caption.5}\protected@file@percent }
+\newlabel{tab:jetson_projected_performance}{{4}{25}{NVIDIA Jetson TX2 Performance Analysis}{table.caption.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}NVIDIA Jetson TX2 Performance Analysis}{25}{subsection.5.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.6}Component-Level Performance Analysis}{25}{subsection.5.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.7}Uncertainty Analysis and Adaptive Fusion Effectiveness}{25}{subsection.5.7}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Detailed processing time breakdown showing computational distribution. Depth estimation with uncertainty quantification represents the largest component (45\%) but provides critical safety information. Optimization strategies have reduced total processing time to enable real-time operation.}}{26}{figure.caption.6}\protected@file@percent }
+\newlabel{fig:detailed_timing}{{2}{26}{Detailed processing time breakdown showing computational distribution. Depth estimation with uncertainty quantification represents the largest component (45\%) but provides critical safety information. Optimization strategies have reduced total processing time to enable real-time operation}{figure.caption.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.8}Safety Performance Analysis}{26}{subsection.5.8}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Navigation accuracy as a function of average scene uncertainty. Higher uncertainty scenes benefit significantly from adaptive fusion approach, demonstrating the effectiveness of uncertainty-guided decision making. The performance gap increases with uncertainty, validating our approach.}}{27}{figure.caption.7}\protected@file@percent }
+\newlabel{fig:uncertainty_performance}{{3}{27}{Navigation accuracy as a function of average scene uncertainty. Higher uncertainty scenes benefit significantly from adaptive fusion approach, demonstrating the effectiveness of uncertainty-guided decision making. The performance gap increases with uncertainty, validating our approach}{figure.caption.7}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Safety Performance Analysis Across Environmental Conditions}}{27}{table.caption.9}\protected@file@percent }
+\newlabel{tab:safety_analysis}{{5}{27}{Safety Performance Analysis Across Environmental Conditions}{table.caption.9}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.9}Real-Time Performance Scaling Analysis}{27}{subsection.5.9}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Distribution of safety events showing false safe rate (critical) and false unsafe rate (efficiency) across different environmental conditions. The system maintains low false safe rates even in challenging conditions, prioritizing safety over efficiency.}}{28}{figure.caption.8}\protected@file@percent }
+\newlabel{fig:safety_performance}{{4}{28}{Distribution of safety events showing false safe rate (critical) and false unsafe rate (efficiency) across different environmental conditions. The system maintains low false safe rates even in challenging conditions, prioritizing safety over efficiency}{figure.caption.8}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Performance Scaling with Configuration Parameters}}{28}{table.caption.10}\protected@file@percent }
+\newlabel{tab:performance_scaling_detailed}{{6}{28}{Performance Scaling with Configuration Parameters}{table.caption.10}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.10}Computational Efficiency Analysis}{28}{subsection.5.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.10.1}Algorithm Optimization Impact}{28}{subsubsection.5.10.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.10.2}Memory Usage Optimization}{28}{subsubsection.5.10.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces Optimization Strategy Impact on Performance}}{29}{table.caption.11}\protected@file@percent }
+\newlabel{tab:optimization_impact}{{7}{29}{Optimization Strategy Impact on Performance}{table.caption.11}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.11}Comparison with State-of-the-Art Approaches}{29}{subsection.5.11}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces Contextual Comparison with Related Approaches}}{29}{table.caption.12}\protected@file@percent }
+\newlabel{tab:sota_comparison}{{8}{29}{Contextual Comparison with Related Approaches}{table.caption.12}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.12}Error Analysis and Failure Cases}{29}{subsection.5.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.12.1}Systematic Error Analysis}{29}{subsubsection.5.12.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.12.2}Mitigation Strategies}{30}{subsubsection.5.12.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.13}Long-term Performance Consistency}{30}{subsection.5.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Discussion}{31}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}System Architecture Advantages}{31}{subsection.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.1}Modularity and Extensibility}{31}{subsubsection.6.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.2}Real-time Processing Pipeline}{31}{subsubsection.6.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Uncertainty Quantification Analysis}{31}{subsection.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.1}Monte Carlo Dropout Effectiveness}{31}{subsubsection.6.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.2}Adaptive Fusion Strategy}{32}{subsubsection.6.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Performance Scaling and Practical Deployment}{32}{subsection.6.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.3.1}Hardware Requirements}{32}{subsubsection.6.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.3.2}Configuration Flexibility}{32}{subsubsection.6.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}Limitations and Future Work}{32}{subsection.6.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.4.1}Current Limitations}{32}{subsubsection.6.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.4.2}Proposed Enhancements}{33}{subsubsection.6.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.5}Broader Impact and Applications}{33}{subsection.6.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.5.1}Autonomous Systems Applications}{33}{subsubsection.6.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.5.2}Research Contributions}{33}{subsubsection.6.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.6}Validation of Hypotheses}{34}{subsection.6.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.6.1}Primary Hypothesis Validation}{34}{subsubsection.6.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.6.2}Secondary Hypothesis Validation}{34}{subsubsection.6.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.7}Comparative Analysis with State-of-the-Art}{34}{subsection.6.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.7.1}Advantages over Traditional SLAM}{34}{subsubsection.6.7.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.7.2}Complementary to Existing Systems}{34}{subsubsection.6.7.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.8}Implementation Insights and Best Practices}{35}{subsection.6.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.8.1}Development Methodology}{35}{subsubsection.6.8.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.8.2}Deployment Considerations}{35}{subsubsection.6.8.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.9}Advantages of Uncertainty-Guided Fusion}{35}{subsection.6.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.10}Limitations and Challenges}{36}{subsection.6.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.11}Future Directions}{36}{subsection.6.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Conclusion}{37}{section.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}Key Contributions}{37}{subsection.7.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}Research Impact}{37}{subsection.7.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}Future Directions}{37}{subsection.7.3}\protected@file@percent }
 \bibcite{saxena2009make3d}{1}
 \bibcite{ranftl2020towards}{2}
 \bibcite{poggi2020uncertainty}{3}
@@ -163,4 +174,4 @@
 \bibcite{redmon2016you}{13}
 \bibcite{howard2017mobilenets}{14}
 \bibcite{caesar2020nuscenes}{15}
-\gdef \@abspage@last{24}
+\gdef \@abspage@last{40}
