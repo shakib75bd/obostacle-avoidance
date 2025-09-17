@@ -51,12 +51,29 @@
   \noindent\textbf{TABLE~\Roman{table}}~#1\dotfill#2}
 \makeatother
 
+% Load additional packages for better page breaks
+\usepackage{needspace}
+\usepackage{etoolbox}
+
 % Section formatting
 \titleformat{\chapter}[display]
 {\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
 \titlespacing*{\chapter}{0pt}{50pt}{40pt}
+
+% Make sections start on new page
+\titleformat{\section}
+{\normalfont\Large\bfseries}{\thesection}{1em}{}
 \titlespacing*{\section}{0pt}{12pt}{6pt}
-\titlespacing*{\subsection}{0pt}{12pt}{6pt}
+\newcommand{\sectionbreak}{\clearpage}
+
+% Subsection formatting with strict spacing
+\titleformat{\subsection}
+{\normalfont\large\bfseries}{\thesubsection}{1em}{}
+\titlespacing*{\subsection}{0pt}{36pt}{12pt}
+
+% Ensure minimum space for subsections or force page break
+\BeforeBeginEnvironment{subsection}{\needspace{0.3\textheight}}
+\pretocmd{\subsection}{\ifnum\value{page}=1\else\ifdim\pagetotal>0.7\textheight\newpage\fi\fi}{}{}
 
 % Define colors
 \definecolor{darkblue}{RGB}{0,51,102}
@@ -217,8 +234,7 @@ This paper addresses these challenges by proposing a novel uncertainty-guided ad
 
 \item \textbf{Comprehensive Performance Analysis}: An extensive evaluation framework comparing navigation-specific metrics rather than traditional computer vision metrics, providing insights relevant to autonomous driving applications.
 \end{enumerate}
-
-The proposed system achieves navigation decision accuracy between 45--65\% while maintaining processing speeds of 20--30 FPS on consumer hardware. Most importantly, the system demonstrates a false safe rate below 5\%, meeting critical safety requirements for autonomous navigation applications.
+\vspace{3cm}The proposed system achieves navigation decision accuracy between 45--65\% while maintaining processing speeds of 20--30 FPS on consumer hardware. Most importantly, the system demonstrates a false safe rate below 5\%, meeting critical safety requirements for autonomous navigation applications.
 
 \vspace{12pt}
 The next chapter provides a comprehensive review of existing literature in monocular depth estimation, object detection, and sensor fusion techniques, establishing the foundation for our research.
@@ -1252,245 +1268,62 @@ Extended testing over continuous operation periods demonstrates system stability
 \item \textbf{Thermal Performance}: Stable operation under thermal stress
 \item \textbf{Model Consistency}: Consistent detection and depth estimation performance
 \end{itemize}
-
 \section{Discussion}
 
-The experimental results demonstrate that uncertainty-guided adaptive fusion represents a significant advancement in monocular obstacle avoidance systems. Our approach achieves 7.4\% better navigation accuracy than YOLOv8-only baselines while reducing false safe rates by 3.4\%, validating the effectiveness of dynamic fusion based on depth estimation uncertainty. The system maintains real-time performance (24.5 FPS) with only 15% computational overhead for uncertainty quantification.
+Our results show that uncertainty-guided adaptive fusion significantly improves monocular obstacle avoidance. The system achieves 7.4\% higher navigation accuracy and 3.4\% fewer false safe cases than YOLOv8-only baselines, while sustaining real-time performance (24.5 FPS) with minimal overhead.
 
 \subsection{System Architecture Advantages}
 
-\subsubsection{Modularity and Extensibility}
-
-The modular architecture enables several key advantages:
+The modular, asynchronous design provides efficiency and flexibility:
 
 \begin{itemize}
-\item \textbf{Component Independence}: Each processing module can be optimized or replaced independently
-\item \textbf{Hardware Scalability}: Processing requirements can be adjusted based on available computational resources
-\item \textbf{Sensor Adaptability}: The framework can incorporate additional sensors (IMU, stereo cameras) without architectural changes
-\item \textbf{Algorithm Evolution}: New depth estimation or detection models can be integrated with minimal system modifications
+\item \textbf{Modularity}: Components and models can be updated independently
+\item \textbf{Scalability}: Adapts to available hardware and sensors
+\item \textbf{Parallelism}: Depth and detection run concurrently with reduced redundancy
+\item \textbf{Robustness}: Operates under resource constraints via graceful degradation
 \end{itemize}
 
-\subsubsection{Real-time Processing Pipeline}
+\subsection{Uncertainty Quantification and Fusion}
 
-The asynchronous processing architecture enables efficient resource utilization:
+Monte Carlo dropout enables efficient, model-agnostic uncertainty estimation that correlates with prediction errors. Region-based adaptive fusion leverages these estimates to assign weights dynamically, improving robustness across environments and maintaining interpretability.
 
-\begin{itemize}
-\item \textbf{Parallel Execution}: Depth estimation and object detection operate concurrently
-\item \textbf{Memory Optimization}: Intelligent caching reduces redundant computations
-\item \textbf{Load Balancing}: Processing distribution prevents bottlenecks
-\item \textbf{Graceful Degradation}: System maintains operation under computational constraints
-\end{itemize}
+\subsection{Deployment and Performance}
 
-\subsection{Uncertainty Quantification Analysis}
-
-\subsubsection{Monte Carlo Dropout Effectiveness}
-
-The Monte Carlo dropout approach provides several advantages over deterministic methods:
-
-\begin{itemize}
-\item \textbf{Computational Efficiency}: Uncertainty quantification with minimal additional overhead
-\item \textbf{Model Agnostic}: Applicable to existing pre-trained models without retraining
-\item \textbf{Calibrated Uncertainty}: Uncertainty estimates correlate with actual prediction errors
-\item \textbf{Dynamic Adaptation}: Uncertainty-guided fusion adapts to varying scene conditions
-\end{itemize}
-
-\subsubsection{Adaptive Fusion Strategy}
-
-The region-based adaptive fusion demonstrates superior performance compared to fixed fusion strategies:
-
-\begin{itemize}
-\item \textbf{Context Sensitivity}: Fusion weights adapt to local scene characteristics
-\item \textbf{Robustness}: System maintains performance across diverse environmental conditions
-\item \textbf{Optimality}: Each region uses the most reliable information source
-\item \textbf{Interpretability}: Decision process remains transparent and analyzable
-\end{itemize}
-
-\subsection{Performance Scaling and Practical Deployment}
-
-\subsubsection{Hardware Requirements}
-
-The system's hardware requirements are validated on our testing platforms:
-
-\begin{itemize}
-\item \textbf{Apple Silicon}: MacBook Air M1 with MPS GPU acceleration for development and testing
-\item \textbf{Edge Computing}: NVIDIA Jetson TX2 for embedded deployment scenarios
-\item \textbf{Memory Efficiency}: 1.8GB GPU memory enables deployment on resource-constrained devices
-\item \textbf{Power Consumption}: Optimized for battery-powered autonomous systems
-\end{itemize}
-
-\subsubsection{Configuration Flexibility}
-
-The configurable architecture enables deployment across diverse applications:
-
-\begin{itemize}
-\item \textbf{Edge Devices}: Ultra-fast configuration (MC=1, 160$\times$120) for IoT applications
-\item \textbf{Consumer Robotics}: Balanced configuration (MC=2, 320$\times$240) for domestic robots
-\item \textbf{Professional Systems}: High-quality configuration (MC=5, 640$\times$480) for commercial applications
-\item \textbf{Safety-Critical}: Maximum accuracy configuration for autonomous vehicles
-\end{itemize}
+Validated on MacBook Air M1 and Jetson TX2, the system runs with 1.8GB GPU memory and low power needs, enabling edge deployment. Configurations scale from ultra-fast (IoT) to high-accuracy (autonomous vehicles).
 
 \subsection{Limitations and Future Work}
 
-\subsubsection{Current Limitations}
+Key limitations include scale ambiguity in monocular depth, lighting sensitivity, transparent or fast-moving objects, and lack of semantic behavior modeling. Future work should explore multi-modal fusion (e.g., IMU), temporal consistency, semantic integration, and optimized edge deployment.
 
-Several limitations require consideration for practical deployment:
+\subsection{Broader Impact and Contributions}
 
-\begin{itemize}
-\item \textbf{Monocular Depth Estimation}: Scale ambiguity inherent to single-camera systems
-\item \textbf{Lighting Sensitivity}: Performance degradation in extreme lighting conditions
-\item \textbf{Transparent Objects}: Difficulty detecting glass and transparent obstacles
-\item \textbf{Dynamic Obstacles}: Limited handling of fast-moving objects
-\item \textbf{Semantic Understanding}: Lack of object-specific behavioral models
-\end{itemize}
-
-\subsubsection{Proposed Enhancements}
-
-Future development should address the following areas:
+Applications span indoor robotics, vehicles, warehouses, and outdoor platforms. Contributions include:
 
 \begin{itemize}
-\item \textbf{Multi-Modal Fusion}: Integration of IMU data for scale recovery and motion compensation
-\item \textbf{Temporal Consistency}: Multi-frame analysis for improved stability and accuracy
-\item \textbf{Semantic Integration}: Object-specific navigation strategies based on classification
-\item \textbf{Learning-Based Adaptation}: Online learning for environment-specific optimization
-\item \textbf{Edge Deployment}: Optimization for mobile and embedded platforms
+\item Real-time uncertainty quantification for navigation
+\item Novel adaptive fusion strategy
+\item Robust and efficient obstacle avoidance framework
 \end{itemize}
 
-\subsection{Broader Impact and Applications}
+\subsection{Validation and Comparison}
 
-\subsubsection{Autonomous Systems Applications}
+The primary hypothesis is confirmed with +7.4\% accuracy over detection-only and +13.1\% over depth-only baselines. Real-time feasibility is validated at 24.5 FPS. Compared to SLAM, the approach is faster, memory-efficient, requires no mapping, and serves as a complementary safety layer.
 
-The developed system has broad applicability across autonomous systems:
+\subsection{Conclusion}
 
-\begin{itemize}
-\item \textbf{Indoor Service Robotics}: Navigation in complex indoor environments with dense obstacles
-\item \textbf{Autonomous Vehicles}: Supplementary safety system for collision avoidance
-\item \textbf{Outdoor Mobile Platforms}: Navigation assistance for outdoor autonomous systems
-\item \textbf{Warehouse Automation}: Indoor navigation through confined spaces and equipment
-\item \textbf{Edge Computing Applications}: Efficient processing on embedded platforms like Jetson TX2
-\end{itemize}
-
-\subsubsection{Research Contributions}
-
-This work contributes to several research areas:
-
-\begin{itemize}
-\item \textbf{Uncertainty Quantification}: Practical application of Monte Carlo dropout in real-time systems
-\item \textbf{Sensor Fusion}: Novel uncertainty-guided adaptive fusion methodology
-\item \textbf{Obstacle Avoidance}: Comprehensive evaluation framework for navigation systems
-\item \textbf{Real-time Processing}: Optimization strategies for computational efficiency
-\item \textbf{Safety Systems}: Integration of uncertainty for enhanced autonomous system safety
-\end{itemize}
-
-\subsection{Validation of Hypotheses}
-
-\subsubsection{Primary Hypothesis Validation}
-
-Our primary hypothesis that uncertainty-guided adaptive fusion improves navigation accuracy compared to single-modal approaches is strongly supported by the experimental results. The 7.4\% improvement over detection-only and 13.1\% improvement over depth-only approaches demonstrate the effectiveness of adaptive multi-modal fusion.
-
-\subsubsection{Secondary Hypothesis Validation}
-
-The secondary hypothesis regarding computational feasibility for real-time applications is validated by the 24.5 FPS performance on consumer hardware. This frame rate exceeds the typical requirements for autonomous navigation (15-20 FPS) while providing enhanced safety through uncertainty quantification.
-
-\subsection{Comparative Analysis with State-of-the-Art}
-
-\subsubsection{Advantages over Traditional SLAM}
-
-Compared to traditional SLAM approaches, our system offers several advantages:
-
-\begin{itemize}
-\item \textbf{Computational Efficiency}: 2--3$\times$ faster processing for obstacle avoidance tasks
-\item \textbf{Reduced Complexity}: No map maintenance or loop closure requirements
-\item \textbf{Immediate Deployment}: No initialization or mapping phase required
-\item \textbf{Memory Efficiency}: Constant memory usage regardless of environment size
-\item \textbf{Robustness}: No cumulative error accumulation over time
-\end{itemize}
-
-\subsubsection{Complementary to Existing Systems}
-
-Rather than replacing comprehensive SLAM systems, our approach provides a complementary capability:
-
-\begin{itemize}
-\item \textbf{Safety Layer}: Additional safety system for SLAM-based navigation
-\item \textbf{Fallback System}: Backup navigation when SLAM fails or is unavailable
-\item \textbf{Real-time Safety}: Immediate obstacle detection without mapping delays
-\item \textbf{Resource Optimization}: Efficient use of available computational resources
-\end{itemize}
-
-\subsection{Implementation Insights and Best Practices}
-
-\subsubsection{Development Methodology}
-
-The iterative development approach provided several insights:
-
-\begin{itemize}
-\item \textbf{Modular Testing}: Component-level validation essential for complex systems
-\item \textbf{Performance Profiling}: Continuous optimization throughout development lifecycle
-\item \textbf{Safety-First Design}: Conservative defaults with configurable aggressiveness
-\item \textbf{Visualization Integration}: Real-time visualization crucial for development and debugging
-\item \textbf{Configuration Management}: Flexible parameter systems enable diverse deployment scenarios
-\end{itemize}
-
-\subsubsection{Deployment Considerations}
-
-Practical deployment requires consideration of several factors:
-
-\begin{itemize}
-\item \textbf{Environmental Calibration}: System tuning for specific deployment environments
-\item \textbf{Safety Validation}: Comprehensive testing across operational scenarios
-\item \textbf{Performance Monitoring}: Real-time performance tracking for system health
-\item \textbf{Graceful Degradation}: Fallback behaviors for component failures
-\item \textbf{Update Mechanisms}: Safe system updates without service interruption
-\end{itemize}
-
-\subsection{Advantages of Uncertainty-Guided Fusion}
-
-The experimental results demonstrate several key advantages of our uncertainty-guided adaptive fusion approach:
-
-\textbf{Improved Safety}: The 3.4\% reduction in false safe rate compared to detection-only baselines represents a significant improvement in safety-critical scenarios. This improvement is achieved through intelligent fusion that leverages depth information where reliable and falls back to object detection in uncertain regions.
-
-\textbf{Robust Performance}: Unlike traditional approaches that rely on single modalities, our adaptive fusion provides robustness across diverse environmental conditions. The system automatically adapts to scenarios where depth estimation is unreliable (e.g., low-texture regions, lighting variations) by emphasizing object detection information.
-
-\textbf{Real-Time Feasibility}: Despite the additional computational overhead of uncertainty quantification, the system maintains real-time performance (20-30 FPS) suitable for autonomous navigation applications.
-
-\subsection{Limitations and Challenges}
-
-Several limitations should be acknowledged:
-
-\textbf{Relative Depth}: MiDaS produces relative rather than metric depth, requiring careful calibration for absolute distance estimation. Our obstacle detection approach mitigates this limitation by focusing on obstacle likelihood rather than precise distance measurements.
-
-\textbf{Monte Carlo Overhead}: Uncertainty quantification through Monte Carlo dropout introduces computational overhead. However, our experiments demonstrate that even 2-3 samples provide sufficient uncertainty estimates for effective fusion.
-
-\textbf{Ground Truth Challenges}: The lack of comprehensive ground truth datasets for monocular obstacle avoidance evaluation limits quantitative analysis. Our heuristic-based ground truth generation provides reasonable evaluation but may not capture all edge cases.
-
-\subsection{Future Directions}
-
-Several directions for future research emerge from this work:
-
-\textbf{Temporal Integration}: Incorporating temporal information could improve stability and reduce noise in navigation decisions. Video-based approaches could leverage motion cues for enhanced obstacle detection.
-
-\textbf{Adaptive Thresholds}: Dynamic adjustment of uncertainty and navigation thresholds based on environmental conditions could further improve performance.
-
-\textbf{Multi-Scale Analysis}: Processing multiple resolution scales could provide better trade-offs between computational efficiency and detection accuracy.
-
-\textbf{Edge Deployment}: Optimization for edge computing platforms (e.g., NVIDIA Jetson, mobile processors) would enable broader deployment in autonomous systems.
-
-\vspace{12pt}
-In the concluding chapter, we summarize our key contributions, present final thoughts on the impact of our work, and outline promising directions for future research.
+Uncertainty-guided adaptive fusion enhances safety, robustness, and real-time feasibility in monocular obstacle avoidance, providing a practical and extensible framework for autonomous systems.
 
 \chapter{Conclusion and Future Work}
 
 This research presents a comprehensive uncertainty-guided obstacle avoidance system that advances monocular navigation through adaptive sensor fusion. Through extensive evaluation across multiple hardware platforms and real-world scenarios, we have demonstrated the robustness and practical applicability of our approach.
 
-\subsection{Key Contributions}
-
-Our primary contributions include: (1) An uncertainty-guided adaptive fusion approach that dynamically adjusts fusion weights based on depth estimation uncertainty, achieving 7.4\% improvement in navigation accuracy; (2) Multi-platform validation across MacBook Air M1 and NVIDIA Jetson TX2, demonstrating scalability from consumer to edge computing systems; (3) Real-world scenario testing showing adaptability across outdoor (72.0\% accuracy) and indoor (58.2\% accuracy) environments; (4) Safety-critical performance with low false safe rates (4.8-15.2\%) meeting autonomous system requirements.
-
-\subsection{Research Impact}
-
-This work contributes to uncertainty quantification in autonomous systems through practical Monte Carlo dropout implementation, multi-modal sensor fusion via uncertainty-guided adaptive strategies, and autonomous navigation safety through conservative decision-making with minimal performance impact (15\% computational overhead for uncertainty estimation).
-
-\subsection{Future Directions}
-
+\textbf{\\Key Contributions}
+\\Our primary contributions include: (1) An uncertainty-guided adaptive fusion approach that dynamically adjusts fusion weights based on depth estimation uncertainty, achieving 7.4\% improvement in navigation accuracy; (2) Multi-platform validation across MacBook Air M1 and NVIDIA Jetson TX2, demonstrating scalability from consumer to edge computing systems; (3) Real-world scenario testing showing adaptability across outdoor (72.0\% accuracy) and indoor (58.2\% accuracy) environments; (4) Safety-critical performance with low false safe rates (4.8-15.2\%) meeting autonomous system requirements.
+\vspace{2cm}
+\textbf{\\Research Impact}
+\\This work contributes to uncertainty quantification in autonomous systems through practical Monte Carlo dropout implementation, multi-modal sensor fusion via uncertainty-guided adaptive strategies, and autonomous navigation safety through conservative decision-making with minimal performance impact (15\% computational overhead for uncertainty estimation).
+\vspace{2cm}
+\textbf{Future Directions}
 Promising research directions include multi-modal integration with IMU/stereo cameras, learning-based environment adaptation, semantic integration for object-specific navigation strategies, and edge computing optimization for resource-constrained autonomous systems.
 
 \section*{Acknowledgments}
