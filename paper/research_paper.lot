@@ -1,13 +1,13 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3.1}{\ignorespaces Hardware Platforms for Performance Evaluation}}{27}{table.caption.8}%
+\contentsline {table}{\numberline {I}{\ignorespaces Hardware platform specifications for system deployment and performance evaluation}}{27}{table.caption.8}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces Comprehensive Performance Comparison: Uncertainty-Guided System vs Baselines}}{33}{table.caption.9}%
-\contentsline {table}{\numberline {4.2}{\ignorespaces Performance Analysis Across Navigation Scenarios}}{33}{table.caption.10}%
-\contentsline {table}{\numberline {4.3}{\ignorespaces NVIDIA Jetson TX2 Performance Analysis}}{34}{table.caption.11}%
-\contentsline {table}{\numberline {4.4}{\ignorespaces Safety Performance Analysis Across Environmental Conditions}}{36}{table.caption.15}%
-\contentsline {table}{\numberline {4.5}{\ignorespaces Performance Scaling with Configuration Parameters}}{37}{table.caption.16}%
-\contentsline {table}{\numberline {4.6}{\ignorespaces Optimization Strategy Impact on Performance}}{38}{table.caption.17}%
-\contentsline {table}{\numberline {4.7}{\ignorespaces Contextual Comparison with Related Approaches}}{38}{table.caption.18}%
+\contentsline {table}{\numberline {I}{\ignorespaces Performance metrics comparison between uncertainty-guided system and baseline approaches}}{31}{table.caption.9}%
+\contentsline {table}{\numberline {II}{\ignorespaces Performance Analysis Across Navigation Scenarios}}{32}{table.caption.10}%
+\contentsline {table}{\numberline {III}{\ignorespaces NVIDIA Jetson TX2 Performance Analysis}}{32}{table.caption.11}%
+\contentsline {table}{\numberline {IV}{\ignorespaces Safety Performance Analysis Across Environmental Conditions}}{34}{table.caption.15}%
+\contentsline {table}{\numberline {V}{\ignorespaces Performance Scaling with Configuration Parameters}}{35}{table.caption.16}%
+\contentsline {table}{\numberline {VI}{\ignorespaces Optimization Strategy Impact on Performance}}{35}{table.caption.17}%
+\contentsline {table}{\numberline {VII}{\ignorespaces Contextual Comparison with Related Approaches}}{36}{table.caption.18}%
 \addvspace {10\p@ }
