@@ -182,9 +182,8 @@ Autonomous navigation systems are becoming increasingly essential in robotics, f
 
 This thesis presents a novel uncertainty-guided adaptive region fusion approach for monocular obstacle avoidance, designed specifically for edge computing platforms. Our system combines MiDaS depth estimation with YOLOv8 object detection through intelligent uncertainty-guided fusion, enabling robust navigation using only a single camera. By quantifying uncertainty through Monte Carlo dropout with minimal computational overhead (15\%), our approach automatically adapts to varying environmental conditions.
 
-\vspace{1cm}\textbf{Key Performance Achievements:} The proposed method delivers \textbf{58.2\% navigation accuracy in indoor scenarios} and \textbf{72.0\% in outdoor conditions}, while maintaining critical safety performance with \textbf{4.8\% false safe rate} — representing a \textbf{41\% reduction} compared to fixed fusion methods (8.2\%). Real-time processing at \textbf{24.5 FPS on consumer hardware} (MacBook Air M1) and validated performance on edge devices (Jetson TX2: \textbf{31.4 FPS}) demonstrates practical viability.
-
-\textbf{Technical Innovation:} Our uncertainty quantification through Monte Carlo dropout with only \textbf{15\% computational overhead} enables adaptive fusion that automatically adjusts to environmental conditions. Comprehensive evaluation across \textbf{1,192 test frames} spanning diverse scenarios validates the approach's robustness and deployment readiness for autonomous navigation applications.
+\vspace{1cm}The proposed method delivers \textbf{58.2\% navigation accuracy in indoor scenarios} and \textbf{72.0\% in outdoor conditions}, while maintaining critical safety performance with \textbf{4.8\% false safe rate} — representing a \textbf{41\% reduction} compared to fixed fusion methods (8.2\%). Real-time processing at \textbf{24.5 FPS on consumer hardware} (MacBook Air M1) and validated performance on edge devices (Jetson TX2: \textbf{31.4 FPS}) demonstrates practical viability.
+\\Our uncertainty quantification through Monte Carlo dropout with only \textbf{15\% computational overhead} enables adaptive fusion that automatically adjusts to environmental conditions. Comprehensive evaluation across \textbf{1,192 test frames} spanning diverse scenarios validates the approach's robustness and deployment readiness for autonomous navigation applications.
 
 \clearpage
 
@@ -223,14 +222,14 @@ This thesis presents a novel uncertainty-guided adaptive region fusion approach 
 \let\oldsection\section
 \renewcommand{\section}[1]{\oldsection*{#1}}
 
-\section{Background and Motivation}
+\subsection{Background and Motivation}
 Autonomous navigation has emerged as one of the most critical capabilities in modern robotics, enabling systems to independently perceive, reason, and act in dynamic environments without human intervention. From self-driving cars and delivery drones to warehouse automation and assistive robots, reliable navigation forms the foundation for safe and effective operation. The ability to avoid obstacles, plan feasible trajectories, and adapt to uncertain surroundings directly determines the usability and trustworthiness of autonomous systems.
 
 Traditionally, autonomous navigation systems have relied on rich sensor suites including LiDAR, stereo cameras, radar, and multiple depth sensors. These sensors provide precise depth information and high-resolution 3D maps of the environment, significantly reducing perception uncertainty. However, they come with several limitations: high cost, large form factor, high power consumption, and substantial computational requirements. As a result, such systems are often unsuitable for low-cost consumer applications, small mobile platforms, and edge-deployed robots where efficiency and affordability are critical.
 
 In contrast, monocular cameras offer an attractive alternative. They are inexpensive, lightweight, energy-efficient, and widely available. A single camera can be deployed on compact robots, drones, or mobile devices without the need for additional hardware. This makes monocular vision-based navigation a promising direction for scaling autonomous technology to everyday applications. However, the shift from multi-sensor to monocular perception introduces significant technical challenges that must be addressed to ensure safety and reliability.
 
-\section{Challenges in Monocular Obstacle Detection}
+\subsection{Challenges in Monocular Obstacle Detection}
 The most fundamental challenge of monocular navigation lies in depth perception. Unlike stereo vision or LiDAR, monocular cameras cannot directly measure distance to objects. This creates an inherent scale ambiguity: an object may appear large because it is close or because it is physically large and farther away. Resolving this ambiguity requires sophisticated reasoning, often combining contextual cues, prior knowledge of object sizes, and learned depth priors. Recent advances in deep learning have introduced monocular depth estimation models that infer relative depth directly from single images. While these models—such as MiDaS—have demonstrated remarkable progress, their predictions remain inconsistent under varying conditions such as extreme lighting, low-texture surfaces, reflective floors, or transparent obstacles like glass doors and windows.
 
 Another major challenge is uncertainty. Predictions from deep networks are inherently probabilistic and not uniformly reliable across the entire image. Some regions, particularly with clear geometric cues or high texture, yield high-confidence depth estimates, whereas others may produce noisy or unstable results. If these unreliable predictions are treated equally in navigation planning, the system can make critical mistakes. A false safe decision—classifying a hazardous area as safe—can result in collisions, damage to property, or even pose safety risks to humans. Therefore, it is crucial to explicitly quantify uncertainty and integrate it into navigation decisions, ensuring that the robot acts conservatively in ambiguous scenarios.
@@ -238,7 +237,7 @@ Another major challenge is uncertainty. Predictions from deep networks are inher
 Finally, real-time performance is a strict requirement in robotics. Navigation decisions must be computed with minimal latency to maintain responsiveness in dynamic environments. Deep neural networks for depth estimation and object detection are computationally expensive, making real-time deployment on resource-constrained edge devices challenging. Balancing accuracy, robustness, and computational efficiency remains an open problem, especially for platforms like small drones, mobile robots, and embedded devices such as the Jetson TX2.
 
 
-\section{Research Objectives and Approach}
+\subsection{Research Objectives and Approach}
 This thesis addresses these challenges by proposing a novel \textbf{uncertainty-guided adaptive region fusion framework} for monocular obstacle avoidance. The framework’s primary goal is to combine depth estimation with object detection while explicitly modeling uncertainty to produce a reliable, real-time obstacle map. Unlike conventional fusion methods that treat all data equally, this approach assigns adaptive weights to different inputs based on local reliability, dynamically emphasizing the most trustworthy information.
 
 The approach consists of three major components:
@@ -248,7 +247,7 @@ The approach consists of three major components:
     \item \textbf{Uncertainty Quantification and Fusion:} Monte Carlo dropout is used to estimate region-level uncertainty, producing a confidence map that highlights reliable versus uncertain areas. An adaptive fusion algorithm then combines depth and detection outputs, weighting them according to uncertainty to construct a robust, navigable obstacle map suitable for real-time decision-making.
 \end{enumerate}
 
-\section{Contributions}
+\subsection{Contributions}
 The main contributions of this thesis include the following innovations and practical achievements:
 \begin{itemize}
     \item \textbf{Novel Uncertainty-Guided Fusion:} A unique adaptive fusion algorithm that integrates depth and object detection with local uncertainty estimation, enhancing safety and reducing false safe errors.
@@ -260,17 +259,12 @@ The main contributions of this thesis include the following innovations and prac
 % Keep the following three sections together
 \begin{samepage}
 
-\section{Performance Summary}
-The proposed uncertainty-guided fusion framework demonstrates significant improvements over traditional monocular approaches. Experimental results indicate navigation decision accuracy of \textbf{58.2\% in indoor scenarios} and \textbf{72.0\% in outdoor environments}. The \textbf{false safe rate is reduced to just 4.8\%}, a substantial improvement over fixed-fusion baselines (8.2\%), corresponding to a \textbf{41\% reduction in unsafe decisions}. These improvements are particularly critical for safety-critical robotics applications.
-
-Furthermore, the system maintains real-time processing speeds of \textbf{24.5 FPS on a MacBook Air M1} and \textbf{31.4 FPS on a Jetson TX2}, highlighting the framework’s efficiency and suitability for deployment on resource-constrained edge devices. The combination of robustness, safety, and real-time performance demonstrates the practical viability of this approach for a wide range of autonomous navigation scenarios.
-
-\section{Significance and Impact}
-The proposed system addresses a critical gap between low-cost monocular navigation and high-reliability, safety-critical applications. By integrating uncertainty-aware fusion, the framework improves robustness without compromising efficiency, making monocular navigation suitable for deployment in real-world scenarios.
-
-The research makes both theoretical and practical contributions. Theoretically, it advances uncertainty modeling in perception systems and demonstrates its practical relevance to autonomous decision-making. Practically, the system is deployable on affordable hardware, enabling widespread use in applications such as domestic service robots, drones, automated wheelchairs, warehouse robots, and low-cost autonomous vehicles. Ultimately, this framework supports the development of safe, reliable, and cost-effective autonomous systems that can operate under diverse environmental conditions.
-
-\section{Thesis Organization}
+\subsection{Performance Summary}
+The proposed uncertainty-guided fusion framework achieves \textbf{58.2\% indoor} and \textbf{72.0\% outdoor} navigation accuracy, reducing the \textbf{false safe rate to 4.8\%}—a \textbf{41\% improvement} over fixed-fusion baselines—demonstrating enhanced safety for autonomous systems.
+Furthermore, the system maintains real-time processing speeds of \textbf{24.5 FPS on a MacBook Air M1} and \textbf{31.4 FPS on a Jetson TX2}, highlighting the framework’s efficiency and suitability for deployment on resource-constrained edge devices. The combination of robustness, safety, and real-time performance demonstrates the practical viability of this approach for a wide range of autonomous navigation scenarios. \\ \\
+\textbf{Significance and Impact}
+: The proposed system bridges the gap between low-cost monocular navigation and safety-critical applications. By incorporating uncertainty-aware fusion, it enhances robustness without compromising efficiency, enabling deployment on affordable hardware. This framework supports safe, reliable, and cost-effective autonomous systems for applications such as service robots, drones, automated wheelchairs, and warehouse vehicles.
+\subsection{Thesis Organization}
 The remainder of this thesis is organized as follows:
 \begin{itemize}
     \item Chapter~2 presents a detailed literature review of monocular depth estimation, object detection, uncertainty modeling, and sensor fusion methods.
@@ -283,7 +277,7 @@ The remainder of this thesis is organized as follows:
 \end{samepage}
 
 In summary, this thesis proposes a novel, uncertainty-aware monocular navigation framework that advances the state of real-time, affordable, and safe autonomous navigation systems.
-\vspace{2cm}\\
+\vspace{1cm}\\
 Chapter 2 provides a comprehensive review of related work in monocular depth estimation, object detection, uncertainty modeling, and sensor fusion techniques.
 % Restore normal section behavior for subsequent chapters
 \let\section\oldsection

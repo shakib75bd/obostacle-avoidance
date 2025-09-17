@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025/Homebrew) (preloaded format=pdflatex 2025.3.15)  17 SEP 2025 19:41
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025/Homebrew) (preloaded format=pdflatex 2025.3.15)  17 SEP 2025 19:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -661,7 +661,7 @@ Package hyperref Info: Link coloring OFF on input line 98.
 -english.def
 File: fc-english.def 2016/01/12
 ) (./titlepage.tex
-<BRUR_Logo.svg.png, id=192, 513.92pt x 665.48625pt>
+<BRUR_Logo.svg.png, id=217, 513.92pt x 665.48625pt>
 File: BRUR_Logo.svg.png Graphic file (type png)
 <use BRUR_Logo.svg.png>
 Package pdftex.def Info: BRUR_Logo.svg.png  used on input line 9.
@@ -816,224 +816,215 @@ Overfull \hbox (288.07928pt too wide) in paragraph at lines 12--13
 ]
 Chapter 1.
 
+Package hyperref Warning: Difference (2) between bookmark levels is greater 
+(hyperref)                than one, level fixed on input line 225.
+
+
 
 [10
 
 
 ]
 
-[11
-
-]
-
-[12
-
-]
-Overfull \hbox (7.63678pt too wide) in paragraph at lines 256--257
+[11]
+Overfull \hbox (7.63678pt too wide) in paragraph at lines 255--256
 \T1/cmr/m/n/12 pipeline op-ti-mized for real-time op-er-a-tion, ca-pa-ble of ru
 n-ning at 20^^U30 FPS on consumer-
  []
 
 
 
-[13
+[12{/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/enc/dvips/cm
+-super/cm-super-ts1.enc}]
+Underfull \hbox (badness 10000) in paragraph at lines 263--267
 
-{/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/enc/dvips/cm-su
-per/cm-super-ts1.enc}]
+ []
+
+
+
+[13]
+Chapter 2.
+
+Package hyperref Warning: Difference (2) between bookmark levels is greater 
+(hyperref)                than one, level fixed on input line 292.
+
+
+LaTeX Warning: Citation `saxena2009make3d' on page 14 undefined on input line 2
+97.
+
+
 
 [14
 
 ]
 
-[15
-
-]
-
-[16
-
-]
-Chapter 2.
-
-Package hyperref Warning: Difference (2) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 298.
-
-
-LaTeX Warning: Citation `saxena2009make3d' on page 17 undefined on input line 3
-03.
-
-
-
-[17
-
-]
-
-LaTeX Warning: Citation `eigen2014depth' on page 18 undefined on input line 320
+LaTeX Warning: Citation `eigen2014depth' on page 15 undefined on input line 314
 .
+
+
+
+[15]
+
+[16]
+
+LaTeX Warning: Citation `geiger2012we' on page 17 undefined on input line 401.
+
+
+LaTeX Warning: Citation `menze2015joint' on page 17 undefined on input line 419
+.
+
+
+
+[17]
+
+LaTeX Warning: Citation `chen2020multi' on page 18 undefined on input line 438.
+
+
+
+LaTeX Warning: Citation `wang2021multi' on page 18 undefined on input line 448.
+
 
 
 
 [18]
 
+LaTeX Warning: Citation `qin2018vins' on page 19 undefined on input line 477.
+
+
+
 [19]
-
-LaTeX Warning: Citation `geiger2012we' on page 20 undefined on input line 407.
-
-
-LaTeX Warning: Citation `menze2015joint' on page 20 undefined on input line 425
-.
-
-
-
-[20]
-
-LaTeX Warning: Citation `chen2020multi' on page 21 undefined on input line 444.
-
-
-
-LaTeX Warning: Citation `wang2021multi' on page 21 undefined on input line 454.
-
-
-
-
-[21]
-
-LaTeX Warning: Citation `qin2018vins' on page 22 undefined on input line 483.
-
-
-
-[22]
 Chapter 3.
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 496.
+(hyperref)                than one, level fixed on input line 490.
 
-<system_architecture.png, id=406, 770.88pt x 578.16pt>
+<system_architecture.png, id=424, 770.88pt x 578.16pt>
 File: system_architecture.png Graphic file (type png)
 <use system_architecture.png>
-Package pdftex.def Info: system_architecture.png  used on input line 504.
+Package pdftex.def Info: system_architecture.png  used on input line 498.
 (pdftex.def)             Requested size: 469.75385pt x 352.31538pt.
 
 
-[23
+[20
 
 ]
 
-[24 <./system_architecture.png (PNG copy)>]
+[21 <./system_architecture.png (PNG copy)>]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 559.
+put line 553.
 
+
+[22]
+
+[23]
+
+[24]
 
 [25]
-
-[26]
-
-[27]
-
-[28]
 Chapter 4.
 
 
-[29
+[26
 
 ]
 
-[30
+[27
 
 ]
 
-[31]
+[28]
 
-[32]
+[29]
 
-[33]
-<timing_breakdown.png, id=519, 570.4512pt x 425.1885pt>
+[30]
+<timing_breakdown.png, id=537, 570.4512pt x 425.1885pt>
 File: timing_breakdown.png Graphic file (type png)
 <use timing_breakdown.png>
-Package pdftex.def Info: timing_breakdown.png  used on input line 963.
+Package pdftex.def Info: timing_breakdown.png  used on input line 957.
 (pdftex.def)             Requested size: 234.8775pt x 175.06802pt.
 
 
-[34]
-<uncertainty_analysis.png, id=524, 714.9912pt x 425.4294pt>
+[31]
+<uncertainty_analysis.png, id=542, 714.9912pt x 425.4294pt>
 File: uncertainty_analysis.png Graphic file (type png)
 <use uncertainty_analysis.png>
-Package pdftex.def Info: uncertainty_analysis.png  used on input line 980.
+Package pdftex.def Info: uncertainty_analysis.png  used on input line 974.
 (pdftex.def)             Requested size: 328.82707pt x 195.66093pt.
-<safety_analysis.png, id=526, 714.9912pt x 424.9476pt>
+<safety_analysis.png, id=544, 714.9912pt x 424.9476pt>
 File: safety_analysis.png Graphic file (type png)
 <use safety_analysis.png>
-Package pdftex.def Info: safety_analysis.png  used on input line 999.
+Package pdftex.def Info: safety_analysis.png  used on input line 993.
 (pdftex.def)             Requested size: 328.82707pt x 195.43935pt.
 
 
-[35 <./timing_breakdown.png> <./uncertainty_analysis.png>]
+[32 <./timing_breakdown.png> <./uncertainty_analysis.png>]
 
-[36 <./safety_analysis.png>]
-Overfull \hbox (3.95193pt too wide) in paragraph at lines 1039--1049
+[33 <./safety_analysis.png>]
+Overfull \hbox (3.95193pt too wide) in paragraph at lines 1033--1043
  [][] 
  []
 
 
-Overfull \hbox (84.21278pt too wide) in paragraph at lines 1070--1081
- [][] 
- []
-
-
-
-[37]
-Overfull \hbox (4.04227pt too wide) in paragraph at lines 1105--1116
+Overfull \hbox (84.21278pt too wide) in paragraph at lines 1064--1075
  [][] 
  []
 
 
 
-[38]
+[34]
+Overfull \hbox (4.04227pt too wide) in paragraph at lines 1099--1110
+ [][] 
+ []
 
-[39]
 
-[40
+
+[35]
+
+[36]
+
+[37
 
 ]
 
-[41]
+[38]
 Chapter 5.
 
-Overfull \hbox (8.2226pt too wide) in paragraph at lines 1207--1215
+Overfull \hbox (8.2226pt too wide) in paragraph at lines 1201--1209
 \T1/cmr/m/n/12 object-specific nav-i-ga-tion strate-gies, and edge com-put-ing 
 op-ti-miza-tion for resource-constrained
  []
 
 
 
-[42
+[39
 
 ]
 
-[43
+[40
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 1239--1242
+Underfull \hbox (badness 10000) in paragraph at lines 1233--1236
 []\T1/cmr/m/n/12 G. Jocher, A. Chaura-sia, and J. Qiu, ``YOLO by Ul-tr-a-lyt-ic
 s,''
  []
 
 
 
-[44
+[41
 
 ]
 
-[45]
+[42]
 
-[46]
-Overfull \hbox (14.63635pt too wide) in paragraph at lines 1405--1406
+[43]
+Overfull \hbox (14.63635pt too wide) in paragraph at lines 1399--1400
 []\T1/cmr/m/n/12 For de-tailed doc-u-men-ta-tion and us-age in-struc-tions, ple
 ase re-fer to the repos-i-tory's README
  []
 
 
 
-[47
+[44
 
 ] (./research_paper.aux)
  ***********
@@ -1045,13 +1036,13 @@ L3 programming layer <2025-01-18>
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `research_paper.out' has not changed.
-(rerunfilecheck)             Checksum: B7EE5555BF2DBABDE35A374B19EE5FE8;9117.
+(rerunfilecheck)             Checksum: E6ABD70A30DFB5FD292CDB17D6073E21;10295.
  ) 
 Here is how much of TeX's memory you used:
- 14740 strings out of 473190
- 234806 string characters out of 5704335
+ 14749 strings out of 473190
+ 234989 string characters out of 5704335
  650156 words of memory out of 5000000
- 37564 multiletter control sequences out of 15000+600000
+ 37570 multiletter control sequences out of 15000+600000
  574675 words of font info for 70 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,10n,79p,996b,697s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1079,10 +1070,10 @@ ew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/public/cm-super/sfrm1
 ublic/cm-super/sfti1200.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texm
 f-dist/fonts/type1/public/cm-super/sfti1440.pfb></opt/homebrew/Cellar/texlive/2
 0250308_1/share/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on research_paper.pdf (48 pages, 1085399 bytes).
+Output written on research_paper.pdf (45 pages, 1083775 bytes).
 PDF statistics:
- 743 PDF objects out of 1000 (max. 8388607)
- 638 compressed objects within 7 object streams
- 199 named destinations out of 1000 (max. 500000)
- 402 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 761 PDF objects out of 1000 (max. 8388607)
+ 659 compressed objects within 7 object streams
+ 202 named destinations out of 1000 (max. 500000)
+ 450 words of extra memory for PDF output out of 10000 (max. 10000000)
 

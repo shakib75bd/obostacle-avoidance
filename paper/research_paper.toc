@@ -1,75 +1,81 @@
 \contentsline {chapter}{Acknowledgments}{4}{chapter*.2}%
 \contentsline {chapter}{Abstract}{5}{chapter*.3}%
 \contentsline {chapter}{\numberline {1}Introduction}{10}{chapter.1}%
-\contentsline {chapter}{\numberline {2}Background and Literature Review}{17}{chapter.2}%
-\contentsline {subsection}{\numberline {2.0.1}Monocular Depth Estimation}{17}{subsection.2.0.1}%
-\contentsline {subsubsection}{Traditional Geometric Approaches}{17}{subsection.2.0.1}%
-\contentsline {subsubsection}{Deep Learning Transformation}{18}{subsection.2.0.1}%
-\contentsline {subsubsection}{Uncertainty Quantification Advances}{18}{subsection.2.0.1}%
-\contentsline {subsection}{\numberline {2.0.2}Object Detection for Autonomous Navigation}{19}{subsection.2.0.2}%
-\contentsline {subsubsection}{Single-Stage Detection Evolution}{19}{subsection.2.0.2}%
-\contentsline {subsubsection}{Resource-Constrained Optimization}{20}{subsection.2.0.2}%
-\contentsline {subsection}{\numberline {2.0.3}Sensor Fusion for Obstacle Detection}{20}{subsection.2.0.3}%
-\contentsline {subsubsection}{Traditional Multi-Modal Systems}{20}{subsection.2.0.3}%
-\contentsline {subsubsection}{Modern Fusion Strategies}{21}{subsection.2.0.3}%
-\contentsline {subsection}{\numberline {2.0.4}SLAM and Obstacle Avoidance}{22}{subsection.2.0.4}%
-\contentsline {subsubsection}{Navigation Approaches Comparison}{22}{subsection.2.0.4}%
-\contentsline {chapter}{\numberline {3}Methodology}{23}{chapter.3}%
-\contentsline {subsection}{\numberline {3.0.1}System Architecture and Design Philosophy}{23}{subsection.3.0.1}%
-\contentsline {subsection}{\numberline {3.0.2}Input Processing and Video Pipeline}{25}{subsection.3.0.2}%
-\contentsline {subsubsection}{Video Source Management}{25}{subsection.3.0.2}%
-\contentsline {subsubsection}{Real-time Performance Optimization}{25}{subsection.3.0.2}%
-\contentsline {subsection}{\numberline {3.0.3}Monocular Depth Estimation with Uncertainty Quantification}{25}{subsection.3.0.3}%
-\contentsline {subsubsection}{MiDaS Network}{25}{subsection.3.0.3}%
-\contentsline {subsubsection}{Monte Carlo Dropout}{25}{equation.3.2}%
-\contentsline {subsubsection}{Depth Normalization}{26}{ALC@unique.11}%
-\contentsline {subsection}{\numberline {3.0.4}Lightweight Object Detection}{26}{subsection.3.0.4}%
-\contentsline {subsubsection}{YOLOv8}{26}{subsection.3.0.4}%
-\contentsline {subsubsection}{Filtering}{26}{equation.3.4}%
-\contentsline {subsection}{\numberline {3.0.5}Uncertainty-Guided Fusion}{27}{subsection.3.0.5}%
-\contentsline {subsubsection}{Confidence Segmentation}{27}{subsection.3.0.5}%
-\contentsline {subsubsection}{Fusion Algorithm}{27}{equation.3.5}%
-\contentsline {subsubsection}{Optimizations}{27}{ALC@unique.28}%
-\contentsline {subsection}{\numberline {3.0.6}Navigation Decision Framework}{28}{subsection.3.0.6}%
-\contentsline {subsubsection}{Forward Path}{28}{subsection.3.0.6}%
-\contentsline {subsubsection}{Obstacle Density}{28}{equation.3.6}%
-\contentsline {subsubsection}{Decision Logic}{28}{equation.3.7}%
-\contentsline {subsection}{\numberline {3.0.7}Performance Metrics}{28}{subsection.3.0.7}%
-\contentsline {subsubsection}{Evolution Metrics}{28}{subsection.3.0.7}%
-\contentsline {subsubsection}{Ground Truth Validation}{28}{subsection.3.0.7}%
-\contentsline {chapter}{\numberline {4}Results and Discussion}{29}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Experimental Setup}{30}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}Software Architecture}{30}{subsection.4.1.1}%
-\contentsline {subsection}{\numberline {4.1.2}Development Workflow}{30}{subsection.4.1.2}%
-\contentsline {subsection}{\numberline {4.1.3}Testing Pipeline}{31}{subsection.4.1.3}%
-\contentsline {subsection}{\numberline {4.1.4}Evaluation Framework}{31}{subsection.4.1.4}%
-\contentsline {subsection}{\numberline {4.1.5}Hardware and Software}{31}{subsection.4.1.5}%
-\contentsline {subsection}{\numberline {4.1.6}Dataset and Ground Truth}{32}{subsection.4.1.6}%
-\contentsline {subsection}{\numberline {4.1.7}Evaluation Metrics}{32}{subsection.4.1.7}%
-\contentsline {subsubsection}{Real-time Analysis}{32}{equation.4.3}%
-\contentsline {subsection}{\numberline {4.1.8}Dual-Platform, Dual-Scenario Evaluation}{33}{subsection.4.1.8}%
-\contentsline {subsection}{\numberline {4.1.9}Performance Comparison}{33}{subsection.4.1.9}%
-\contentsline {subsection}{\numberline {4.1.10}Scenario Performance}{34}{subsection.4.1.10}%
-\contentsline {subsection}{\numberline {4.1.11}Edge Device Performance}{34}{subsection.4.1.11}%
-\contentsline {subsection}{\numberline {4.1.12}Component-Level Analysis}{34}{subsection.4.1.12}%
-\contentsline {subsection}{\numberline {4.1.13}Uncertainty Analysis}{35}{subsection.4.1.13}%
-\contentsline {subsection}{\numberline {4.1.14}Safety Performance Analysis}{36}{subsection.4.1.14}%
-\contentsline {subsection}{\numberline {4.1.15}Real-Time Performance Scaling Analysis}{37}{subsection.4.1.15}%
-\contentsline {subsection}{\numberline {4.1.16}Computational Efficiency Analysis}{37}{subsection.4.1.16}%
-\contentsline {subsubsection}{Algorithm Optimization Impact}{37}{subsection.4.1.16}%
-\contentsline {subsubsection}{Memory Usage Optimization}{38}{table.caption.17}%
-\contentsline {subsection}{\numberline {4.1.17}Comparison with State-of-the-Art Approaches}{38}{subsection.4.1.17}%
-\contentsline {subsection}{\numberline {4.1.18}Error Analysis and Failure Cases}{39}{subsection.4.1.18}%
-\contentsline {subsubsection}{Systematic Error Analysis}{39}{subsection.4.1.18}%
-\contentsline {subsubsection}{Mitigation Strategies}{39}{subsection.4.1.18}%
-\contentsline {subsection}{\numberline {4.1.19}Long-term Performance Consistency}{39}{subsection.4.1.19}%
-\contentsline {section}{\numberline {4.2}Discussion}{40}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}System Architecture Advantages}{40}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Uncertainty Quantification and Fusion}{40}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Deployment and Performance}{40}{subsection.4.2.3}%
-\contentsline {subsection}{\numberline {4.2.4}Limitations and Future Work}{41}{subsection.4.2.4}%
-\contentsline {subsection}{\numberline {4.2.5}Broader Impact and Contributions}{41}{subsection.4.2.5}%
-\contentsline {subsection}{\numberline {4.2.6}Validation and Comparison}{41}{subsection.4.2.6}%
-\contentsline {subsection}{\numberline {4.2.7}Conclusion}{41}{subsection.4.2.7}%
-\contentsline {chapter}{\numberline {5}Conclusion and Future Work}{42}{chapter.5}%
-\contentsline {chapter}{Annexure}{47}{chapter*.20}%
+\contentsline {subsection}{\numberline {1.0.1}Background and Motivation}{10}{subsection.1.0.1}%
+\contentsline {subsection}{\numberline {1.0.2}Challenges in Monocular Obstacle Detection}{11}{subsection.1.0.2}%
+\contentsline {subsection}{\numberline {1.0.3}Research Objectives and Approach}{11}{subsection.1.0.3}%
+\contentsline {subsection}{\numberline {1.0.4}Contributions}{12}{subsection.1.0.4}%
+\contentsline {subsection}{\numberline {1.0.5}Performance Summary}{13}{subsection.1.0.5}%
+\contentsline {subsection}{\numberline {1.0.6}Thesis Organization}{13}{subsection.1.0.6}%
+\contentsline {chapter}{\numberline {2}Background and Literature Review}{14}{chapter.2}%
+\contentsline {subsection}{\numberline {2.0.1}Monocular Depth Estimation}{14}{subsection.2.0.1}%
+\contentsline {subsubsection}{Traditional Geometric Approaches}{14}{subsection.2.0.1}%
+\contentsline {subsubsection}{Deep Learning Transformation}{15}{subsection.2.0.1}%
+\contentsline {subsubsection}{Uncertainty Quantification Advances}{15}{subsection.2.0.1}%
+\contentsline {subsection}{\numberline {2.0.2}Object Detection for Autonomous Navigation}{16}{subsection.2.0.2}%
+\contentsline {subsubsection}{Single-Stage Detection Evolution}{16}{subsection.2.0.2}%
+\contentsline {subsubsection}{Resource-Constrained Optimization}{17}{subsection.2.0.2}%
+\contentsline {subsection}{\numberline {2.0.3}Sensor Fusion for Obstacle Detection}{17}{subsection.2.0.3}%
+\contentsline {subsubsection}{Traditional Multi-Modal Systems}{17}{subsection.2.0.3}%
+\contentsline {subsubsection}{Modern Fusion Strategies}{18}{subsection.2.0.3}%
+\contentsline {subsection}{\numberline {2.0.4}SLAM and Obstacle Avoidance}{19}{subsection.2.0.4}%
+\contentsline {subsubsection}{Navigation Approaches Comparison}{19}{subsection.2.0.4}%
+\contentsline {chapter}{\numberline {3}Methodology}{20}{chapter.3}%
+\contentsline {subsection}{\numberline {3.0.1}System Architecture and Design Philosophy}{20}{subsection.3.0.1}%
+\contentsline {subsection}{\numberline {3.0.2}Input Processing and Video Pipeline}{22}{subsection.3.0.2}%
+\contentsline {subsubsection}{Video Source Management}{22}{subsection.3.0.2}%
+\contentsline {subsubsection}{Real-time Performance Optimization}{22}{subsection.3.0.2}%
+\contentsline {subsection}{\numberline {3.0.3}Monocular Depth Estimation with Uncertainty Quantification}{22}{subsection.3.0.3}%
+\contentsline {subsubsection}{MiDaS Network}{22}{subsection.3.0.3}%
+\contentsline {subsubsection}{Monte Carlo Dropout}{22}{equation.3.2}%
+\contentsline {subsubsection}{Depth Normalization}{23}{ALC@unique.11}%
+\contentsline {subsection}{\numberline {3.0.4}Lightweight Object Detection}{23}{subsection.3.0.4}%
+\contentsline {subsubsection}{YOLOv8}{23}{subsection.3.0.4}%
+\contentsline {subsubsection}{Filtering}{23}{equation.3.4}%
+\contentsline {subsection}{\numberline {3.0.5}Uncertainty-Guided Fusion}{24}{subsection.3.0.5}%
+\contentsline {subsubsection}{Confidence Segmentation}{24}{subsection.3.0.5}%
+\contentsline {subsubsection}{Fusion Algorithm}{24}{equation.3.5}%
+\contentsline {subsubsection}{Optimizations}{24}{ALC@unique.28}%
+\contentsline {subsection}{\numberline {3.0.6}Navigation Decision Framework}{25}{subsection.3.0.6}%
+\contentsline {subsubsection}{Forward Path}{25}{subsection.3.0.6}%
+\contentsline {subsubsection}{Obstacle Density}{25}{equation.3.6}%
+\contentsline {subsubsection}{Decision Logic}{25}{equation.3.7}%
+\contentsline {subsection}{\numberline {3.0.7}Performance Metrics}{25}{subsection.3.0.7}%
+\contentsline {subsubsection}{Evolution Metrics}{25}{subsection.3.0.7}%
+\contentsline {subsubsection}{Ground Truth Validation}{25}{subsection.3.0.7}%
+\contentsline {chapter}{\numberline {4}Results and Discussion}{26}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Experimental Setup}{27}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Software Architecture}{27}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Development Workflow}{27}{subsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.1.3}Testing Pipeline}{28}{subsection.4.1.3}%
+\contentsline {subsection}{\numberline {4.1.4}Evaluation Framework}{28}{subsection.4.1.4}%
+\contentsline {subsection}{\numberline {4.1.5}Hardware and Software}{28}{subsection.4.1.5}%
+\contentsline {subsection}{\numberline {4.1.6}Dataset and Ground Truth}{29}{subsection.4.1.6}%
+\contentsline {subsection}{\numberline {4.1.7}Evaluation Metrics}{29}{subsection.4.1.7}%
+\contentsline {subsubsection}{Real-time Analysis}{29}{equation.4.3}%
+\contentsline {subsection}{\numberline {4.1.8}Dual-Platform, Dual-Scenario Evaluation}{30}{subsection.4.1.8}%
+\contentsline {subsection}{\numberline {4.1.9}Performance Comparison}{30}{subsection.4.1.9}%
+\contentsline {subsection}{\numberline {4.1.10}Scenario Performance}{31}{subsection.4.1.10}%
+\contentsline {subsection}{\numberline {4.1.11}Edge Device Performance}{31}{subsection.4.1.11}%
+\contentsline {subsection}{\numberline {4.1.12}Component-Level Analysis}{31}{subsection.4.1.12}%
+\contentsline {subsection}{\numberline {4.1.13}Uncertainty Analysis}{32}{subsection.4.1.13}%
+\contentsline {subsection}{\numberline {4.1.14}Safety Performance Analysis}{33}{subsection.4.1.14}%
+\contentsline {subsection}{\numberline {4.1.15}Real-Time Performance Scaling Analysis}{34}{subsection.4.1.15}%
+\contentsline {subsection}{\numberline {4.1.16}Computational Efficiency Analysis}{34}{subsection.4.1.16}%
+\contentsline {subsubsection}{Algorithm Optimization Impact}{34}{subsection.4.1.16}%
+\contentsline {subsubsection}{Memory Usage Optimization}{35}{table.caption.17}%
+\contentsline {subsection}{\numberline {4.1.17}Comparison with State-of-the-Art Approaches}{35}{subsection.4.1.17}%
+\contentsline {subsection}{\numberline {4.1.18}Error Analysis and Failure Cases}{36}{subsection.4.1.18}%
+\contentsline {subsubsection}{Systematic Error Analysis}{36}{subsection.4.1.18}%
+\contentsline {subsubsection}{Mitigation Strategies}{36}{subsection.4.1.18}%
+\contentsline {subsection}{\numberline {4.1.19}Long-term Performance Consistency}{36}{subsection.4.1.19}%
+\contentsline {section}{\numberline {4.2}Discussion}{37}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}System Architecture Advantages}{37}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Uncertainty Quantification and Fusion}{37}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Deployment and Performance}{37}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}Limitations and Future Work}{38}{subsection.4.2.4}%
+\contentsline {subsection}{\numberline {4.2.5}Broader Impact and Contributions}{38}{subsection.4.2.5}%
+\contentsline {subsection}{\numberline {4.2.6}Validation and Comparison}{38}{subsection.4.2.6}%
+\contentsline {subsection}{\numberline {4.2.7}Conclusion}{38}{subsection.4.2.7}%
+\contentsline {chapter}{\numberline {5}Conclusion and Future Work}{39}{chapter.5}%
+\contentsline {chapter}{Annexure}{44}{chapter*.20}%

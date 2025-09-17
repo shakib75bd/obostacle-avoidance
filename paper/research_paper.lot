@@ -2,12 +2,12 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {I}{\ignorespaces Hardware platforms}}{31}{table.caption.8}%
-\contentsline {table}{\numberline {II}{\ignorespaces Performance metrics comparison between uncertainty-guided system and baseline approaches}}{33}{table.caption.9}%
-\contentsline {table}{\numberline {III}{\ignorespaces Performance Analysis Across Navigation Scenarios}}{34}{table.caption.10}%
-\contentsline {table}{\numberline {IV}{\ignorespaces NVIDIA Jetson TX2 Performance Analysis}}{34}{table.caption.11}%
-\contentsline {table}{\numberline {V}{\ignorespaces Safety Performance Analysis Across Environmental Conditions}}{36}{table.caption.15}%
-\contentsline {table}{\numberline {VI}{\ignorespaces Performance Scaling with Configuration Parameters}}{37}{table.caption.16}%
-\contentsline {table}{\numberline {VII}{\ignorespaces Optimization Strategy Impact on Performance}}{37}{table.caption.17}%
-\contentsline {table}{\numberline {VIII}{\ignorespaces Contextual Comparison with Related Approaches}}{38}{table.caption.18}%
+\contentsline {table}{\numberline {I}{\ignorespaces Hardware platforms}}{28}{table.caption.8}%
+\contentsline {table}{\numberline {II}{\ignorespaces Performance metrics comparison between uncertainty-guided system and baseline approaches}}{30}{table.caption.9}%
+\contentsline {table}{\numberline {III}{\ignorespaces Performance Analysis Across Navigation Scenarios}}{31}{table.caption.10}%
+\contentsline {table}{\numberline {IV}{\ignorespaces NVIDIA Jetson TX2 Performance Analysis}}{31}{table.caption.11}%
+\contentsline {table}{\numberline {V}{\ignorespaces Safety Performance Analysis Across Environmental Conditions}}{33}{table.caption.15}%
+\contentsline {table}{\numberline {VI}{\ignorespaces Performance Scaling with Configuration Parameters}}{34}{table.caption.16}%
+\contentsline {table}{\numberline {VII}{\ignorespaces Optimization Strategy Impact on Performance}}{34}{table.caption.17}%
+\contentsline {table}{\numberline {VIII}{\ignorespaces Contextual Comparison with Related Approaches}}{35}{table.caption.18}%
 \addvspace {10\p@ }
