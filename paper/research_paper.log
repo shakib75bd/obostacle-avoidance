@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025/Homebrew) (preloaded format=pdflatex 2025.3.15)  17 SEP 2025 11:32
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025/Homebrew) (preloaded format=pdflatex 2025.3.15)  17 SEP 2025 12:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -664,8 +664,8 @@ File: fc-english.def 2016/01/12
 <BRUR_Logo.svg.png, id=213, 513.92pt x 665.48625pt>
 File: BRUR_Logo.svg.png Graphic file (type png)
 <use BRUR_Logo.svg.png>
-Package pdftex.def Info: BRUR_Logo.svg.png  used on input line 48.
-(pdftex.def)             Requested size: 56.9055pt x 73.68097pt.
+Package pdftex.def Info: BRUR_Logo.svg.png  used on input line 9.
+(pdftex.def)             Requested size: 71.13188pt x 92.10121pt.
 
 
 [1
@@ -995,7 +995,7 @@ Package rerunfilecheck Info: File `research_paper.out' has not changed.
 Here is how much of TeX's memory you used:
  14711 strings out of 473190
  234039 string characters out of 5704335
- 655797 words of memory out of 5000000
+ 656797 words of memory out of 5000000
  37536 multiletter control sequences out of 15000+600000
  574675 words of font info for 70 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1026,7 +1026,7 @@ f-dist/fonts/type1/public/cm-super/sfti1200.pfb></opt/homebrew/Cellar/texlive/2
 0250308_1/share/texmf-dist/fonts/type1/public/cm-super/sfti1440.pfb></opt/homeb
 rew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/public/cm-super/sftt
 1200.pfb>
-Output written on research_paper.pdf (49 pages, 1179810 bytes).
+Output written on research_paper.pdf (49 pages, 1179814 bytes).
 PDF statistics:
  785 PDF objects out of 1000 (max. 8388607)
  676 compressed objects within 7 object streams
