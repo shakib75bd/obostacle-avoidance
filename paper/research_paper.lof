@@ -1,9 +1,9 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {I}{\ignorespaces Modular system architecture integrating depth estimation, object detection, and uncertainty-guided fusion for real-time obstacle avoidance}}{19}{figure.caption.7}%
+\contentsline {figure}{\numberline {I}{\ignorespaces System architecture combining depth, detection, and uncertainty-guided fusion for real-time obstacle avoidance}}{19}{figure.caption.7}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {I}{\ignorespaces Processing time distribution across components.}}{35}{figure.caption.12}%
-\contentsline {figure}{\numberline {II}{\ignorespaces Navigation accuracy vs scene uncertainty.}}{35}{figure.caption.13}%
-\contentsline {figure}{\numberline {III}{\ignorespaces Safety performance analysis demonstrating false safe and unsafe rates across environmental conditions}}{36}{figure.caption.14}%
+\contentsline {figure}{\numberline {I}{\ignorespaces Processing time distribution across components.}}{29}{figure.caption.12}%
+\contentsline {figure}{\numberline {II}{\ignorespaces Navigation accuracy vs scene uncertainty.}}{29}{figure.caption.13}%
+\contentsline {figure}{\numberline {III}{\ignorespaces Safety performance analysis demonstrating false safe and unsafe rates across environmental conditions}}{30}{figure.caption.14}%
 \addvspace {10\p@ }

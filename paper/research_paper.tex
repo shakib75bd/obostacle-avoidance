@@ -85,7 +85,7 @@
 \newcommand{\secref}[1]{Section~\ref{#1}}
 
 % Thesis information
-\newcommand{\thesistitle}{Real-Time Obstacle Avoidance Using Uncertainty-Guided Adaptive Region Fusion\\for Autonomous Navigation using Monocular Vision}
+\newcommand{\thesistitle}{Real-Time Obstacle Avoidance Using Uncertainty-Guided Adaptive Region Fusion for Autonomous Navigation using Monocular Vision}
 \newcommand{\theauthor}{Md. Shakib Hossen}
 \newcommand{\thedegree}{Bachelor of Science}
 \newcommand{\themajor}{Computer Science and Engineering}
@@ -126,11 +126,10 @@ I further declare that this work has not been submitted elsewhere for any degree
 \end{flushright}
 
 \clearpage
-
 % Approval page
 \chapter*{Approval}
 \thispagestyle{empty}
-This is to certify that the thesis entitled ``\thesistitle'' submitted by \theauthor\ (ID: 1905017) has been accepted as satisfactory in partial fulfillment of the requirements for the degree of \thedegree\ in \themajor.
+This is to certify that the thesis entitled ``\thesistitle'' submitted by \textbf{ \theauthor\  (ID: 1905017)} has been thoroughly reviewed and is hereby approved as an excellent and satisfactory work. The thesis fulfills all the requirements for the degree of \thedegree\ in \themajor, and reflects the author’s dedication, originality, and scholarly contribution.
 
 \vspace{3cm}
 \noindent
@@ -139,6 +138,7 @@ This is to certify that the thesis entitled ``\thesistitle'' submitted by \theau
 \thesupervisortitle\\
 \thedepartment\\
 \theuniversity
+
 
 
 % Dedication
@@ -437,262 +437,230 @@ The following chapter details our methodology, presenting the system architectur
 
 \chapter{Methodology}
 
-Our methodology stems from a comprehensive analysis of existing monocular navigation approaches, with particular emphasis on their adaptability to edge computing constraints. After evaluating various fusion techniques and uncertainty quantification methods, we developed a novel adaptive region fusion framework that intelligently combines depth estimation and object detection.
+Our methodology builds on analysis of monocular navigation methods, emphasizing adaptability to edge computing. After testing fusion and uncertainty quantification approaches, we propose an adaptive region fusion framework that combines depth estimation and object detection.
 
-The proposed approach introduces three key innovations: uncertainty-guided fusion through Monte Carlo dropout, adaptive region selection based on environmental conditions, and an optimized inference pipeline for edge deployment. This chapter details the technical foundations, algorithmic design choices, and implementation considerations that enable robust navigation while maintaining computational efficiency.
+The approach introduces three innovations: uncertainty-guided fusion via Monte Carlo dropout, adaptive region selection under varying conditions, and an optimized inference pipeline for edge deployment. This chapter outlines technical foundations, design choices, and implementation details enabling robust yet efficient navigation.
+
 \subsection{System Architecture and Design Philosophy}
 
-Our obstacle avoidance system is built on a modular architecture that prioritizes real-time performance while maintaining high accuracy for safety-critical navigation decisions. The system design follows a layered approach where each component can operate independently while contributing to the overall navigation decision pipeline.
+The system uses a modular architecture for real-time performance and accuracy in safety-critical navigation. Each component runs independently but contributes to the navigation pipeline.
 
-\figref{fig:architecture} illustrates the complete system pipeline, which processes input images through four main stages: preprocessing and input handling, parallel depth and object detection, uncertainty-guided adaptive fusion, and navigation decision generation. This architecture enables efficient parallel processing while maintaining strict real-time constraints.
+\figref{fig:architecture} shows the pipeline: preprocessing, parallel depth and detection, uncertainty-guided fusion, and navigation decision generation. Parallelism ensures efficiency under real-time constraints.
 
 \begin{figure}[p]
 \centering
 \includegraphics[width=1\textwidth,height=0.85\textheight,keepaspectratio]{system_architecture.png}
 \vspace{1cm}
-\caption{Modular system architecture integrating depth estimation, object detection, and uncertainty-guided fusion for real-time obstacle avoidance}
+\caption{System architecture combining depth, detection, and uncertainty-guided fusion for real-time obstacle avoidance}
 \label{fig:architecture}
 \end{figure}
 
-This figure shows that our system adopts a modular architecture with parallel processing pathways for depth estimation and object detection, integrating them through an uncertainty-guided fusion module to generate robust navigation decisions in real-time, while supporting flexible deployment across different hardware platforms.
-
-The system operates at a target resolution of 320$\times$240 pixels, chosen through extensive performance analysis to balance computational efficiency with sufficient spatial detail for reliable obstacle detection. This resolution enables real-time processing on consumer hardware while maintaining adequate information density for navigation decisions.
+The system runs at 320$\times$240 resolution, chosen to balance speed and detail. This provides real-time processing on consumer hardware with enough spatial density for reliable navigation.
 
 \subsection{Input Processing and Video Pipeline}
 
 \subsubsection{Video Source Management}
 
-Our system implements a robust video input pipeline capable of handling multiple input sources through the \texttt{VideoSource} class in \texttt{utils/video.py}. The implementation supports:
-
+The \texttt{VideoSource} class in \texttt{utils/video.py} supports:
 \begin{itemize}
-\item \textbf{Webcam Input}: Real-time processing with automatic camera detection and optimization
-\item \textbf{Video File Processing}: Offline analysis with frame-accurate processing
-\item \textbf{Multi-camera Support}: Selection between different camera sources (built-in, external)
-\item \textbf{Adaptive Frame Buffering}: Thread-safe frame capture with queue management
+\item \textbf{Webcam Input}: Real-time with automatic camera handling
+\item \textbf{Video File}: Offline, frame-accurate playback
+\item \textbf{Multi-camera}: Selection between sources
+\item \textbf{Adaptive Buffering}: Thread-safe queues with frame skipping
 \end{itemize}
 
-The video pipeline implements sophisticated frame skipping algorithms that maintain processing consistency while adapting to available computational resources. Frame skipping is dynamically adjusted based on processing time measurements, ensuring real-time operation under varying computational loads.
+Frame skipping adapts to computational load, ensuring stable real-time performance.
 
 \subsubsection{Real-time Performance Optimization}
 
-For real-time applications, our system implements several optimization strategies:
+Frame timing is modeled as:
 
 \begin{equation}
 t_{frame} = t_{depth} + t_{detection} + t_{fusion} + t_{visualization}
 \label{eq:frame_timing}
 \end{equation}
 
-where each component is optimized to minimize total frame processing time $t_{frame}$ while maintaining accuracy requirements.
-
-The system employs adaptive processing strategies including:
+Optimizations include:
 \begin{itemize}
-\item \textbf{Dynamic Monte Carlo Sampling}: Reduces uncertainty samples (1-2) for real-time mode
-\item \textbf{Intelligent Caching}: Frame-level caching for repeated processing scenarios
-\item \textbf{Resolution Scaling}: Automatic resolution adjustment based on performance requirements
-\item \textbf{Component Threading}: Parallel processing where computationally feasible
+\item Dynamic Monte Carlo sampling (1–2 in real-time mode)
+\item Frame-level caching
+\item Automatic resolution scaling
+\item Component threading
 \end{itemize}
 
 \subsection{Monocular Depth Estimation with Uncertainty Quantification}
 
-\subsubsection{MiDaS Network Architecture and Optimization}
+\subsubsection{MiDaS Network}
 
-Our depth estimation module builds upon the MiDaS-small architecture~\cite{ranftl2020towards}, selected for its optimal balance of accuracy and computational efficiency on resource-constrained hardware. The implementation in \texttt{models/depth\_estimator.py} incorporates several key optimizations:
-
-The MiDaS network processes input images through a ResNet-based encoder-decoder architecture, producing relative depth maps where spatial relationships are preserved:
+We use MiDaS-small~\cite{ranftl2020towards} for efficiency on edge hardware. It produces relative depth maps with preserved spatial relations:
 
 \begin{equation}
 D_{raw}(x,y) = f_{\theta}(I_{norm}(x,y))
 \label{eq:midas_forward}
 \end{equation}
 
-where $I_{norm}$ represents the normalized input image processed through the MiDaS preprocessing pipeline, and $f_{\theta}$ denotes the complete MiDaS network with learned parameters $\theta$.
+\subsubsection{Monte Carlo Dropout}
 
-\subsubsection{Monte Carlo Dropout Implementation}
-
-To address the fundamental uncertainty in monocular depth estimation, we implement Monte Carlo dropout during inference. Unlike traditional approaches that disable dropout during testing, our method maintains dropout activation to obtain uncertainty estimates:
+Dropout is kept active at inference for uncertainty estimation:
 
 \begin{algorithm}
 \caption{Monte Carlo Uncertainty Estimation}
 \begin{algorithmic}
 \STATE \textbf{Input:} Image $I$, samples $N$, dropout rate $p$
 \STATE \textbf{Output:} Mean depth $\mu_D$, uncertainty $\sigma_D$
-\STATE Initialize: $depths = []$
+\STATE $depths = []$
 \FOR{$i = 1$ to $N$}
-    \STATE Enable dropout with rate $p$
+    \STATE Apply dropout $p$
     \STATE $D_i = \text{MiDaS}(I)$
     \STATE $depths.append(D_i)$
 \ENDFOR
-\STATE $\mu_D = \frac{1}{N} \sum_{i=1}^{N} D_i$
-\STATE $\sigma_D = \sqrt{\frac{1}{N-1} \sum_{i=1}^{N} (D_i - \mu_D)^2}$
+\STATE $\mu_D = \frac{1}{N} \sum D_i$
+\STATE $\sigma_D = \sqrt{\frac{1}{N-1} \sum (D_i - \mu_D)^2}$
 \RETURN $\mu_D, \sigma_D$
 \end{algorithmic}
 \end{algorithm}
 
-The uncertainty quantification provides crucial information for the adaptive fusion process. High uncertainty regions indicate areas where depth estimates are unreliable, often due to:
-\begin{itemize}
-\item Low texture or uniform regions
-\item Reflective or transparent surfaces
-\item Extreme lighting conditions
-\item Edge effects near object boundaries
-\end{itemize}
+High uncertainty highlights unreliable areas (low texture, reflections, lighting extremes, or object edges).
 
-\subsubsection{Depth Preprocessing and Normalization}
+\subsubsection{Depth Normalization}
 
-Raw MiDaS outputs require careful preprocessing to ensure consistent obstacle detection performance:
+Raw depth is normalized:
 
 \begin{equation}
 D_{norm}(x,y) = \frac{D_{raw}(x,y) - D_{\min}}{D_{\max} - D_{\min}}
 \label{eq:depth_normalization}
 \end{equation}
 
-where $D_{\min}$ and $D_{\max}$ represent the minimum and maximum depth values in the current frame, ensuring normalized depth values in the range $[0,1]$.
+\subsection{Lightweight Object Detection}
 
-\subsection{Lightweight Object Detection Module}
+\subsubsection{YOLOv8}
 
-\subsubsection{YOLOv8 Architecture and Customization}
-
-Our object detection module employs YOLOv8n \cite{jocher2023ultralytics}, the nano variant optimized for edge deployment. The implementation in \texttt{models/object\_detector.py} incorporates domain-specific optimizations for obstacle detection:
-
-The YOLOv8n architecture processes 320$\times$240 images through a CSPDarknet backbone with FPN (Feature Pyramid Network) neck, producing multi-scale detection outputs. For obstacle avoidance, we focus on detecting relevant object classes:
+YOLOv8n~\cite{jocher2023ultralytics} is used for edge-friendly detection, focusing on relevant classes:
 
 \begin{equation}
 C_{relevant} = \{\text{person}, \text{bicycle}, \text{car}, \text{motorcycle}, \text{bus}, \text{truck}\}
 \label{eq:relevant_classes}
 \end{equation}
 
-\subsubsection{Detection Filtering and Post-processing}
+\subsubsection{Filtering}
 
-YOLO detections are filtered for navigation relevance:
+Detections are filtered and dilated:
 
 \begin{algorithm}
 \caption{Obstacle Detection Filtering}
 \begin{algorithmic}
-\STATE \textbf{Input:} Raw detections $B_{raw}$, confidence threshold $\tau_c$
-\STATE \textbf{Output:} Filtered obstacles $B_{obstacles}$
-\STATE $B_{obstacles} = \{\}$
-\FOR{each detection $b$ in $B_{raw}$}
+\STATE \textbf{Input:} Detections $B_{raw}$, threshold $\tau_c$
+\STATE \textbf{Output:} Obstacles $B_{obs}$
+\STATE $B_{obs} = \{\}$
+\FOR{$b \in B_{raw}$}
     \IF{$b.class \in C_{relevant}$ AND $b.confidence > \tau_c$}
-        \STATE $b_{dilated} = \text{DilateBox}(b, \alpha_{dilation})$
-        \STATE $B_{obstacles}.add(b_{dilated})$
+        \STATE $B_{obs}.add(\text{DilateBox}(b, \alpha_{dilation}))$
     \ENDIF
 \ENDFOR
-\RETURN $B_{obstacles}$
+\RETURN $B_{obs}$
 \end{algorithmic}
 \end{algorithm}
 
-Using dilation factor $\alpha_{dilation} = 0.1$ for conservative obstacle boundaries.
+$\alpha_{dilation} = 0.1$ ensures conservative margins.
 
-\subsection{Uncertainty-Guided Adaptive Region Fusion}
+\subsection{Uncertainty-Guided Fusion}
 
-\subsubsection{Confidence Region Segmentation}
+\subsubsection{Confidence Segmentation}
 
-Image regions are segmented based on depth estimation uncertainty:
+Regions are split by uncertainty:
 
 \begin{equation}
-R_{confidence}(x,y) = \begin{cases}
-\text{HIGH} & \text{if } \sigma_D(x,y) < \tau_{uncertainty} \\
+R_{confidence}(x,y) =
+\begin{cases}
+\text{HIGH} & \sigma_D(x,y) < \tau_{uncertainty} \\
 \text{LOW} & \text{otherwise}
 \end{cases}
 \label{eq:confidence_segmentation}
 \end{equation}
 
-Uncertainty threshold $\tau_{uncertainty} = 0.3$ balances depth usage with detection coverage.
+with $\tau_{uncertainty} = 0.3$.
 
-\subsubsection{Adaptive Fusion Algorithm}
-
-The fusion algorithm weights depth and detection information based on confidence:
+\subsubsection{Fusion Algorithm}
 
 \begin{algorithm}
-\caption{Uncertainty-Guided Adaptive Fusion}
+\caption{Adaptive Fusion}
 \begin{algorithmic}
 \STATE \textbf{Input:} Depth $D$, uncertainty $\sigma_D$, detections $B$, threshold $\tau_u$
-\STATE \textbf{Output:} Obstacle likelihood map $L_{obstacle}$
+\STATE \textbf{Output:} Obstacle map $L$
 \STATE $R_{high} = (\sigma_D < \tau_u)$
-\STATE $R_{low} = \neg R_{high}$
-\STATE \textbf{// Process high-confidence regions}
-\STATE $L_{depth} = 1 - D_{norm}$ \textbf{// Invert for obstacle likelihood}
-\STATE $L_{depth}[D_{norm} < d_{min} \text{ OR } D_{norm} > d_{max}] = 0$
-\STATE \textbf{// Process low-confidence regions}
-\STATE $L_{detection} = \text{RasterizeDetections}(B)$
-\STATE \textbf{// Combine based on confidence}
-\STATE $L_{obstacle} = R_{high} \odot L_{depth} + R_{low} \odot L_{detection}$
-\STATE $L_{obstacle} = \text{GaussianBlur}(L_{obstacle}, \sigma_{smooth})$
-\RETURN $L_{obstacle}$
+\STATE $L_{depth} = 1 - D_{norm}$; clip to [$d_{min}, d_{max}$]
+\STATE $L_{det} = \text{RasterizeDetections}(B)$
+\STATE $L = R_{high} \odot L_{depth} + \neg R_{high} \odot L_{det}$
+\STATE $L = \text{GaussianBlur}(L, \sigma_{smooth})$
+\RETURN $L$
 \end{algorithmic}
 \end{algorithm}
 
-Parameters: $d_{min} = 0.4$, $d_{max} = 0.8$ define obstacle detection zone.
+$d_{min}=0.4$, $d_{max}=0.8$.
 
-\subsubsection{Map Generation Optimizations}
+\subsubsection{Optimizations}
 \begin{itemize}
-\item 50\% resolution processing with bilinear upsampling
-\item 5$\times$5 Gaussian kernel ($\sigma = 1.0$)
+\item 50\% resolution + bilinear upsampling
+\item 5$\times$5 Gaussian smoothing
 \item Frame-level LRU caching
-\item NumPy-optimized operations
+\item NumPy-optimized ops
 \end{itemize}
 
 \subsection{Navigation Decision Framework}
 
-\subsubsection{Forward Path Analysis}
+\subsubsection{Forward Path}
 
-Critical navigation region defined as:
+Navigation region:
 
 \begin{equation}
-R_{navigation} = \{(x,y) : 0.3W \leq x \leq 0.7W \text{ and } 0.6H \leq y \leq H\}
+R_{nav} = \{(x,y): 0.3W \leq x \leq 0.7W, 0.6H \leq y \leq H\}
 \label{eq:navigation_region_detailed}
 \end{equation}
 
-40\% width/height dimensions based on vehicle kinematics.
-
-\subsubsection{Obstacle Density Calculation}
-
-Navigation decisions based on obstacle density:
+\subsubsection{Obstacle Density}
 
 \begin{equation}
-\rho_{obstacle} = \frac{\sum_{(x,y) \in R_{nav}} L_{obstacle}(x,y)}{|R_{nav}|}
+\rho = \frac{\sum_{(x,y) \in R_{nav}} L(x,y)}{|R_{nav}|}
 \label{eq:obstacle_density_detailed}
 \end{equation}
 
-Threshold $\tau_{nav} = 0.4$ for safety decisions.
+Threshold $\tau_{nav}=0.4$.
 
-\subsubsection{Safety-Critical Decision Logic}
+\subsubsection{Decision Logic}
 
 \begin{equation}
-Decision_{nav} = \begin{cases}
-\text{SAFE\_FORWARD} & \text{if } \rho_{obstacle} < \tau_{nav} \text{ and } \sigma_{avg} < \tau_{conf} \\
-\text{CAUTION\_FORWARD} & \text{if } \rho_{obstacle} < \tau_{nav} \text{ and } \sigma_{avg} \geq \tau_{conf} \\
-\text{STOP\_TURN} & \text{if } \rho_{obstacle} \geq \tau_{nav}
+Decision =
+\begin{cases}
+\text{SAFE\_FORWARD} & \rho < \tau_{nav}, \ \sigma_{avg} < \tau_{conf} \\
+\text{CAUTION\_FORWARD} & \rho < \tau_{nav}, \ \sigma_{avg} \geq \tau_{conf} \\
+\text{STOP\_TURN} & \rho \geq \tau_{nav}
 \end{cases}
 \label{eq:navigation_decision_detailed}
 \end{equation}
 
-$\sigma_{avg}$ is average uncertainty, $\tau_{conf} = 0.35$ for cautious navigation.
+$\tau_{conf}=0.35$.
 
 \subsection{Performance Metrics}
 
 \subsubsection{Evolution Metrics}
 
-\texttt{EvolutionMetricsLogger} captures:
+\texttt{EvolutionMetricsLogger} tracks:
 \begin{itemize}
-\item Navigation: Decision accuracy, safety rates
-\item Performance: Timing, FPS, memory usage
-\item Quality: Depth, detection confidence
-\item Environment: Obstacle density
+\item Navigation: accuracy, safety rates
+\item Performance: timing, FPS, memory
+\item Quality: depth, detection confidence
+\item Environment: density
 \end{itemize}
 
 \subsubsection{Ground Truth Validation}
 
-Safety assessment algorithm:
-
 \begin{algorithm}
-\caption{Ground Truth Safety Assessment}
+\caption{Safety Assessment}
 \begin{algorithmic}
-\STATE \textbf{Input:} Obstacle density $\rho$, detection count $N_{det}$, confidence $c_{avg}$
-\STATE \textbf{Output:} Ground truth safety $GT_{safe}$
-\STATE $unsafe_{density} = (\rho > 0.35)$
-\STATE $unsafe_{detection} = (N_{det} \geq 2 \text{ AND } c_{avg} > 0.6)$
-\STATE $unsafe_{confidence} = (N_{det} = 1 \text{ AND } c_{avg} > 0.8)$
-\STATE $GT_{safe} = \neg(unsafe_{density} \text{ OR } unsafe_{detection} \text{ OR } unsafe_{confidence})$
+\STATE \textbf{Input:} Density $\rho$, detections $N_{det}$, confidence $c_{avg}$
+\STATE \textbf{Output:} $GT_{safe}$
+\STATE $unsafe = (\rho>0.35) \lor (N_{det}\geq2 \land c_{avg}>0.6) \lor (N_{det}=1 \land c_{avg}>0.8)$
+\STATE $GT_{safe} = \neg unsafe$
 \RETURN $GT_{safe}$
 \end{algorithmic}
 \end{algorithm}
@@ -701,272 +669,135 @@ Safety assessment algorithm:
 
 \subsection{Software Architecture}
 
-Modular Python implementation:
+Folder structure:
 
 \begin{verbatim}
 obstacle-avoidance/
-|-- main.py                    # Detection system
-|-- test_video.py             # Testing/logging
-|-- models/                   # ML components
-|   |-- depth_estimator.py   # MiDaS depth
-|   |-- object_detector.py   # YOLOv8
-|   |-- obstacle_map.py      # Fusion
-|-- utils/                    # Utilities
-|-- evaluation/              # Analysis
+|-- main.py
+|-- test_video.py
+|-- models/
+|   |-- depth_estimator.py
+|   |-- object_detector.py
+|   |-- obstacle_map.py
+|-- utils/
+|-- evaluation/
 \end{verbatim}
 
-\subsubsection{Core Modules}
-
-\textbf{Depth Estimation}:
+\textbf{Depth Estimator}:
 \begin{itemize}
-\item Auto device detection (CPU/GPU/MPS)
-\item Monte Carlo uncertainty estimation
-\item Frame-level caching
-\item Batch processing support
+\item Auto device detection
+\item Monte Carlo uncertainty
+\item Caching
+\item Batch support
 \end{itemize}
 
-\textbf{Object Detection Module} (\texttt{models/object\_detector.py}):
-The \texttt{ObjectDetector} class provides YOLOv8-based obstacle detection with domain-specific optimizations:
+\textbf{Object Detector}:
+YOLOv8 with class filtering, thresholds, NMS, coordinate normalization.
 
-\begin{itemize}
-\item \textbf{Class Filtering}: Automatic filtering for navigation-relevant object classes
-\item \textbf{Confidence Thresholding}: Configurable confidence levels for detection reliability
-\item \textbf{Non-Maximum Suppression}: Optimized NMS for real-time performance
-\item \textbf{Coordinate Normalization}: Consistent coordinate systems across components
-\end{itemize}
+\textbf{Obstacle Map}:
+Fusion with region segmentation, multi-resolution, navigation analysis, visualization.
 
-\textbf{Obstacle Map Generator} (\texttt{models/obstacle\_map.py}):
-The \texttt{ObstacleMapGenerator} class implements the core adaptive fusion algorithm:
+\subsection{Development Workflow}
 
-\begin{itemize}
-\item \textbf{Region-Based Processing}: Uncertainty-guided confidence region segmentation
-\item \textbf{Multi-Resolution Fusion}: Efficient processing with resolution scaling
-\item \textbf{Navigation Analysis}: Forward path analysis for decision making
-\item \textbf{Visualization Support}: Real-time visualization output generation
-\end{itemize}
-
-\subsection{Development Workflow and Testing Pipeline}
-
-\subsubsection{Iterative Development Approach}
-
-Our development methodology follows an iterative approach with continuous integration and testing at each stage:
-
+Steps:
 \begin{enumerate}
-\item \textbf{Component Development}: Individual module development with unit testing
-\item \textbf{Integration Testing}: Progressive integration with interface validation
-\item \textbf{Performance Optimization}: Continuous profiling and optimization cycles
-\item \textbf{Real-time Validation}: Live testing with various input sources
-\item \textbf{Metrics Collection}: Comprehensive performance data collection
+\item Module development + unit tests
+\item Integration testing
+\item Profiling + optimization
+\item Real-time validation
+\item Metrics collection
 \end{enumerate}
 
-\subsubsection{Testing and Validation Framework}
+\subsection{Testing Pipeline}
 
-The \texttt{test\_video.py} script serves as the primary testing and validation framework, providing:
+\texttt{test\_video.py} supports video/webcam, adjustable parameters, frame skipping, real-time visualization.
 
-\textbf{Video Processing Pipeline}:
-\begin{itemize}
-\item Support for both video files and real-time webcam input
-\item Configurable processing parameters (resolution, sampling rates)
-\item Frame skipping for performance optimization
-\item Real-time visualization with performance metrics
-\end{itemize}
-
-\textbf{Metrics Collection System}:
-The \texttt{EvolutionMetricsLogger} provides comprehensive performance tracking:
-
+\textbf{Metrics Logger} tracks:
 \begin{verbatim}
-# Navigation Metrics
-navigation_accuracy: Real-time decision accuracy
-false_safe_rate: Critical safety violations
-false_unsafe_rate: Efficiency impact measurements
-
-# Performance Metrics
-processing_time: Component-wise timing analysis
-fps: Real-time processing capability
-memory_usage: Resource utilization tracking
-
-# Quality Metrics
-depth_quality: Depth estimation reliability
-detection_confidence: Object detection certainty
-uncertainty_levels: Spatial uncertainty distribution
+navigation_accuracy, false_safe_rate, false_unsafe_rate
+processing_time, fps, memory_usage
+depth_quality, detection_confidence, uncertainty_levels
 \end{verbatim}
 
-\subsubsection{Evaluation and Reporting Pipeline}
+\subsection{Evaluation Framework}
 
-The \texttt{evaluation/report\_generator.py} module implements a comprehensive analysis framework:
+\texttt{report\_generator.py} provides:
+\begin{itemize}
+\item Baseline comparison with YOLO-only
+\item Temporal performance evolution
+\item Automated charts and reports
+\end{itemize}
 
-\textbf{Performance Comparison}: Automated comparison against YOLOv8-only baseline with statistical significance testing
-
-\textbf{Evolution Analysis}: Temporal analysis of performance metrics across video sequences
-
-\textbf{Visualization Generation}: Automated generation of performance charts, timing breakdowns, and safety analysis visualizations
-
-\subsection{Hardware and Software Configuration}
-
-\subsubsection{Hardware Platforms}
-
-Experiments were conducted across two distinct hardware platforms to demonstrate scalability and real-world applicability for different deployment scenarios:
+\subsection{Hardware and Software}
 
 \begin{table}[ht]
 \centering
-\caption{Hardware platform specifications for system deployment and performance evaluation}
+\caption{Hardware platforms}
 \label{tab:hardware_config}
 \begin{tabular}{@{}lll@{}}
 \toprule
-\textbf{Platform} & \textbf{Component} & \textbf{Specification} \\
+\textbf{Platform} & \textbf{Component} & \textbf{Spec} \\
 \midrule
-\multirow{5}{*}{\textbf{MacBook Air M1}} & CPU & Apple M1 SoC, 8-core (4P+4E) \\
- & GPU & Apple M1 GPU, 8-core (MPS) \\
- & RAM & 16GB Unified Memory \\
+\multirow{5}{*}{MacBook Air M1} & CPU & Apple M1 8-core \\
+ & GPU & M1 GPU, 8-core (MPS) \\
+ & RAM & 16GB Unified \\
  & Storage & 512GB SSD \\
- & Camera & Built-in FaceTime HD, 720p \\
+ & Camera & 720p \\
 \midrule
-\multirow{5}{*}{\textbf{NVIDIA Jetson TX2}} & CPU & ARMv8 Dual Denver2 + Quad ARM Cortex-A57 \\
- & GPU & NVIDIA Pascal, 256 CUDA cores \\
+\multirow{5}{*}{Jetson TX2} & CPU & Dual Denver2 + Quad A57 \\
+ & GPU & Pascal, 256 CUDA \\
  & RAM & 8GB LPDDR4 \\
  & Storage & 32GB eMMC \\
- & Camera & External USB 3.0, 1080p \\
+ & Camera & USB 1080p \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-This table shows that two distinct hardware platforms were used for testing:
-a consumer-grade MacBook Air M1 with integrated GPU and a specialized NVIDIA Jetson TX2 embedded system, demonstrating the system's adaptability across different computational capabilities.
+Platforms: MacBook Air M1 for development, Jetson TX2 for edge deployment.
 
-This dual-platform evaluation demonstrates system adaptability across:
-\begin{itemize}
-\item \textbf{Consumer Laptops}: MacBook Air M1 with Apple Silicon and Metal Performance Shaders (MPS) for development and prototyping
-\item \textbf{Edge Computing}: NVIDIA Jetson TX2 for embedded autonomous systems and deployment validation
-\end{itemize}
+Dependencies:
+Python 3.8+, PyTorch 1.9+, OpenCV 4.5+, YOLOv8, NumPy/SciPy, Matplotlib/Seaborn.
+All managed via \texttt{requirements.txt}.
 
-\subsubsection{Software Dependencies and Environment}
+\subsection{Dataset and Ground Truth}
 
-The software stack prioritizes stability and performance:
+\textbf{Platforms}: MacBook M1, Jetson TX2.
+\textbf{\\Scenarios}:
 
-\begin{itemize}
-\item \textbf{Python 3.8+}: Core runtime environment
-\item \textbf{PyTorch 1.9+}: Deep learning framework with CUDA support
-\item \textbf{OpenCV 4.5+}: Computer vision operations and video processing
-\item \textbf{Ultralytics YOLOv8}: Object detection framework
-\item \textbf{NumPy/SciPy}: Numerical computing and optimization
-\item \textbf{Matplotlib/Seaborn}: Performance visualization and reporting
-\end{itemize}
+\textbf{Indoor} (510 frames): corridors, furniture, dense vertical structures, varying lighting, confined spaces.
 
-All dependencies are managed through \texttt{requirements.txt} to ensure reproducible environments across different deployment scenarios.
+\textbf{Outdoor} (682 frames): sidewalks, daylight paths, parks, open areas, low density.
 
-\subsection{Dataset Creation and Ground Truth Generation}
+\textbf{Ground Truth}:
+Manual expert labeling (safety, clearance, hazards) + automated checks (density, consistency, outliers, validator agreement).
 
-\subsubsection{Test Dataset Composition}
+\subsection{Evaluation Metrics}
 
-Our comprehensive evaluation strategy employs a dual-platform, dual-scenario testing methodology to validate system performance across diverse hardware capabilities and environmental complexities. This approach provides robust validation of the system's adaptability and scalability.
-
-\textbf{Dual-Platform Testing Strategy}:
-\begin{itemize}
-\item \textbf{MacBook Air M1 (8GB)}: Primary development and testing platform with MPS GPU acceleration
-\item \textbf{NVIDIA Jetson TX2}: Edge computing validation for embedded autonomous systems
-\end{itemize}
-
-\textbf{Dual-Scenario Environmental Validation}:
-
-\textbf{Indoor High-Obstacle Environment} (test\_video1.mp4 - 510 frames):
-\begin{itemize}
-\item Navigation through corridors with dense furniture and equipment
-\item Complex obstacle configurations with multiple vertical structures
-\item Confined spaces requiring precise navigation decisions
-\item Variable indoor lighting conditions
-\item High obstacle density scenarios testing avoidance capabilities
-\item Challenging spatial constraints representative of indoor robotics applications
-\end{itemize}
-
-\textbf{Outdoor Simple Daylight Path Navigation} (test\_video2.mp4 - 682 frames):
-\begin{itemize}
-\item Clear sidewalk navigation with minimal obstacles
-\item Well-lit outdoor paths with consistent lighting
-\item Open space navigation scenarios
-\item Park paths and recreational areas
-\item Lower obstacle density with natural lighting conditions
-\item Representative of autonomous vehicle and outdoor mobile platform scenarios
-\end{itemize}
-
-\subsubsection{Ground Truth Annotation Methodology}
-
-Ground truth generation combines human expert annotation with automated heuristic analysis:
-
-\textbf{Human Annotation Process}:
-Expert annotators with autonomous vehicle experience manually labeled navigation decisions for key frames, considering:
-\begin{itemize}
-\item Safe forward movement capability
-\item Obstacle proximity and collision risk
-\item Navigation clearance requirements
-\item Environmental hazard assessment
-\end{itemize}
-
-\textbf{Automated Heuristic Validation}:
-Automated systems validate human annotations using:
-\begin{itemize}
-\item Obstacle density calculations
-\item Multi-frame consistency checking
-\item Statistical outlier detection
-\item Cross-validator agreement analysis
-\end{itemize}
-
-\subsection{Evaluation Metrics and Analysis Framework}
-
-\subsubsection{Navigation-Specific Performance Metrics}
-
-Unlike traditional computer vision benchmarks that emphasize pixel-level accuracy, our evaluation framework prioritizes navigation-relevant performance indicators:
-
-\textbf{Navigation Decision Accuracy}:
+\textbf{Navigation Accuracy}:
 \begin{equation}
-Accuracy_{nav} = \frac{TP_{nav} + TN_{nav}}{TP_{nav} + TN_{nav} + FP_{nav} + FN_{nav}}
+Accuracy_{nav} = \frac{TP+TN}{TP+TN+FP+FN}
 \end{equation}
 
-where decisions are classified as correct forward movement (TP), correct stopping (TN), incorrect forward movement (FP), and incorrect stopping (FN).
-
-\textbf{Safety-Critical Metrics}:
-
-\textit{False Safe Rate} (critical safety metric):
+\textbf{False Safe Rate (FSR)}:
 \begin{equation}
-FSR = \frac{FP_{nav}}{FP_{nav} + TN_{nav}} \times 100\%
+FSR = \frac{FP}{FP+TN} \times 100\%
 \end{equation}
 
-This metric quantifies the percentage of instances where the system incorrectly suggests moving forward when the path is actually unsafe, representing critical safety violations.
-
-\textit{False Unsafe Rate} (efficiency metric):
+\textbf{False Unsafe Rate (FUR)}:
 \begin{equation}
-FUR = \frac{FN_{nav}}{FN_{nav} + TP_{nav}} \times 100\%
+FUR = \frac{FN}{FN+TP} \times 100\%
 \end{equation}
 
-This metric measures unnecessary stopping when the path is actually safe, impacting system efficiency but not safety.
+\subsubsection{Real-time Analysis}
 
-\subsubsection{Real-Time Performance Analysis}
-
-\textbf{Component-Level Timing Analysis}:
-Detailed timing measurements for each system component enable performance optimization:
-
+\textbf{Timing:}
 \begin{equation}
-t_{total} = t_{depth} + t_{detection} + t_{fusion} + t_{visualization} + t_{overhead}
+t_{total} = t_{depth}+t_{detection}+t_{fusion}+t_{visualization}+t_{overhead}
 \end{equation}
 
-where each component timing is measured independently to identify optimization opportunities.
+\textbf{Scalability:} Tested with sample counts, resolutions, optimization levels, hardware.
+\textbf{Resources:} GPU memory, CPU usage, bandwidth, cache.
 
-\textbf{Scalability Analysis}:
-Performance scaling with different configuration parameters:
-\begin{itemize}
-\item Monte Carlo sample count (1-5 samples)
-\item Input resolution (160$\times$120 to 640$\times$480)
-\item Processing optimization levels
-\item Hardware capability variations
-\end{itemize}
-
-\textbf{Memory and Resource Utilization}:
-Comprehensive resource monitoring including:
-\begin{itemize}
-\item GPU memory usage and allocation efficiency
-\item CPU utilization across multiple cores
-\item Memory bandwidth requirements
-\item Cache hit rates and optimization effectiveness
-\end{itemize}
 
 \vspace{12pt}
 The next chapter presents our experimental results and analysis, demonstrating the effectiveness of our approach through comprehensive performance evaluation across different platforms and scenarios.

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025/Homebrew) (preloaded format=pdflatex 2025.3.15)  17 SEP 2025 17:55
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025/Homebrew) (preloaded format=pdflatex 2025.3.15)  17 SEP 2025 18:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -661,7 +661,7 @@ Package hyperref Info: Link coloring OFF on input line 98.
 -english.def
 File: fc-english.def 2016/01/12
 ) (./titlepage.tex
-<BRUR_Logo.svg.png, id=184, 513.92pt x 665.48625pt>
+<BRUR_Logo.svg.png, id=192, 513.92pt x 665.48625pt>
 File: BRUR_Logo.svg.png Graphic file (type png)
 <use BRUR_Logo.svg.png>
 Package pdftex.def Info: BRUR_Logo.svg.png  used on input line 9.
@@ -736,8 +736,8 @@ Overfull \hbox (2.53111pt too wide) in paragraph at lines 184--185
 
 
 [7] (./research_paper.lof
-Overfull \hbox (283.4235pt too wide) in paragraph at lines 4--5
-\T1/cmr/bx/n/12 FIGURE  [][]\T1/cmr/m/n/12 Modular
+Overfull \hbox (276.64044pt too wide) in paragraph at lines 4--5
+\T1/cmr/bx/n/12 FIGURE  [][]\T1/cmr/m/n/12 System
  []
 
 
@@ -877,12 +877,12 @@ LaTeX Warning: Citation `qin2018vins' on page 17 undefined on input line 431.
 Chapter 3.
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 443.
+(hyperref)                than one, level fixed on input line 444.
 
-<system_architecture.png, id=376, 770.88pt x 578.16pt>
+<system_architecture.png, id=386, 770.88pt x 578.16pt>
 File: system_architecture.png Graphic file (type png)
 <use system_architecture.png>
-Package pdftex.def Info: system_architecture.png  used on input line 451.
+Package pdftex.def Info: system_architecture.png  used on input line 452.
 (pdftex.def)             Requested size: 469.75385pt x 352.31538pt.
 
 
@@ -891,11 +891,11 @@ Package pdftex.def Info: system_architecture.png  used on input line 451.
 ]
 
 [19 <./system_architecture.png (PNG copy)>]
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
+put line 507.
+
 
 [20]
-Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 515.
-
 
 [21]
 
@@ -903,142 +903,107 @@ put line 515.
 
 [23]
 
-[24]
+[24
+
+]
 
 [25]
 
-[26
-
-]
-Overfull \hbox (3.51553pt too wide) in paragraph at lines 796--797
-\T1/cmr/m/n/12 The \T1/cmtt/m/n/12 evaluation/report_generator.py \T1/cmr/m/n/1
-2 mod-ule im-ple-ments a com-pre-hen-sive anal-y-sis frame-
- []
-
-
-
-[27]
-Overfull \hbox (0.94109pt too wide) in paragraph at lines 802--803
-[]\T1/cmr/bx/n/12 Visualization Gen-er-a-tion\T1/cmr/m/n/12 : Au-to-mated gen-e
-r-a-tion of per-for-mance charts, tim-ing break-
- []
-
-
-Overfull \hbox (2.38959pt too wide) in paragraph at lines 814--831
- [][] 
- []
-
-
-
-[28]
-Overfull \hbox (7.8963pt too wide) in paragraph at lines 861--862
-\T1/cmr/m/n/12 Our com-pre-hen-sive eval-u-a-tion strat-egy em-ploys a dual-pla
-tform, dual-scenario test-ing method-
- []
-
-
-
-[29]
-
-[30]
-
-[31]
-
-[32]
+[26]
 Chapter 4.
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 978.
+(hyperref)                than one, level fixed on input line 809.
 
 
 
-[33
+[27
 
 ]
 
-[34]
-<timing_breakdown.png, id=522, 570.4512pt x 425.1885pt>
+[28]
+<timing_breakdown.png, id=499, 570.4512pt x 425.1885pt>
 File: timing_breakdown.png Graphic file (type png)
 <use timing_breakdown.png>
-Package pdftex.def Info: timing_breakdown.png  used on input line 1076.
+Package pdftex.def Info: timing_breakdown.png  used on input line 907.
 (pdftex.def)             Requested size: 234.8775pt x 175.06802pt.
-<uncertainty_analysis.png, id=523, 714.9912pt x 425.4294pt>
+<uncertainty_analysis.png, id=500, 714.9912pt x 425.4294pt>
 File: uncertainty_analysis.png Graphic file (type png)
 <use uncertainty_analysis.png>
-Package pdftex.def Info: uncertainty_analysis.png  used on input line 1093.
+Package pdftex.def Info: uncertainty_analysis.png  used on input line 924.
 (pdftex.def)             Requested size: 328.82707pt x 195.66093pt.
 
 
-[35 <./timing_breakdown.png> <./uncertainty_analysis.png>]
-<safety_analysis.png, id=531, 714.9912pt x 424.9476pt>
+[29 <./timing_breakdown.png> <./uncertainty_analysis.png>]
+<safety_analysis.png, id=508, 714.9912pt x 424.9476pt>
 File: safety_analysis.png Graphic file (type png)
 <use safety_analysis.png>
-Package pdftex.def Info: safety_analysis.png  used on input line 1112.
+Package pdftex.def Info: safety_analysis.png  used on input line 943.
 (pdftex.def)             Requested size: 328.82707pt x 195.43935pt.
 
 
-[36 <./safety_analysis.png>]
-Overfull \hbox (3.95193pt too wide) in paragraph at lines 1152--1162
+[30 <./safety_analysis.png>]
+Overfull \hbox (3.95193pt too wide) in paragraph at lines 983--993
  [][] 
  []
 
 
 
-[37]
-Overfull \hbox (84.21278pt too wide) in paragraph at lines 1183--1194
+[31]
+Overfull \hbox (84.21278pt too wide) in paragraph at lines 1014--1025
  [][] 
  []
 
 
-Overfull \hbox (4.04227pt too wide) in paragraph at lines 1218--1229
+Overfull \hbox (4.04227pt too wide) in paragraph at lines 1049--1060
  [][] 
  []
 
 
 
-[38]
+[32]
 
-[39]
+[33]
 
-[40
+[34
 
 ]
 
-[41]
+[35]
 Chapter 5.
 
-Overfull \hbox (8.2226pt too wide) in paragraph at lines 1320--1328
+Overfull \hbox (8.2226pt too wide) in paragraph at lines 1151--1159
 \T1/cmr/m/n/12 object-specific nav-i-ga-tion strate-gies, and edge com-put-ing 
 op-ti-miza-tion for resource-constrained
  []
 
 
 
-[42
+[36
 
 ]
 
-[43
+[37
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 1351--1354
+Underfull \hbox (badness 10000) in paragraph at lines 1182--1185
 []\T1/cmr/m/n/12 G. Jocher, A. Chaura-sia, and J. Qiu, ``YOLO by Ul-tr-a-lyt-ic
 s,''
  []
 
 
 
-[44
+[38
 
 ]
-Overfull \hbox (14.63635pt too wide) in paragraph at lines 1400--1401
+Overfull \hbox (14.63635pt too wide) in paragraph at lines 1231--1232
 []\T1/cmr/m/n/12 For de-tailed doc-u-men-ta-tion and us-age in-struc-tions, ple
 ase re-fer to the repos-i-tory's README
  []
 
 
 
-[45
+[39
 
 ] (./research_paper.aux)
  ***********
@@ -1050,16 +1015,16 @@ L3 programming layer <2025-01-18>
 LaTeX Warning: There were undefined references.
 
 Package rerunfilecheck Info: File `research_paper.out' has not changed.
-(rerunfilecheck)             Checksum: 2AB5526B191537F615BB7E74609D9C3D;9394.
+(rerunfilecheck)             Checksum: 8E12E3C281BFC602780DE2320576DE9F;9163.
  ) 
 Here is how much of TeX's memory you used:
- 14692 strings out of 473190
- 233839 string characters out of 5704335
- 647472 words of memory out of 5000000
- 37535 multiletter control sequences out of 15000+600000
+ 14682 strings out of 473190
+ 233761 string characters out of 5704335
+ 649258 words of memory out of 5000000
+ 37537 multiletter control sequences out of 15000+600000
  574675 words of font info for 70 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,10n,79p,996b,711s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,10n,79p,996b,697s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/public/
 amsfonts/cm/cmex10.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dis
 t/fonts/type1/public/amsfonts/cm/cmmi12.pfb></opt/homebrew/Cellar/texlive/20250
@@ -1086,10 +1051,10 @@ f-dist/fonts/type1/public/cm-super/sfti1200.pfb></opt/homebrew/Cellar/texlive/2
 0250308_1/share/texmf-dist/fonts/type1/public/cm-super/sfti1440.pfb></opt/homeb
 rew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/public/cm-super/sftt
 1200.pfb>
-Output written on research_paper.pdf (46 pages, 1102179 bytes).
+Output written on research_paper.pdf (40 pages, 1085974 bytes).
 PDF statistics:
- 710 PDF objects out of 1000 (max. 8388607)
- 605 compressed objects within 7 object streams
- 180 named destinations out of 1000 (max. 500000)
- 386 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 684 PDF objects out of 1000 (max. 8388607)
+ 586 compressed objects within 6 object streams
+ 168 named destinations out of 1000 (max. 500000)
+ 402 words of extra memory for PDF output out of 10000 (max. 10000000)
 
