@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1758111688.03574 "/Users/neon/Documents/Thesis/obstacle-avoidance/paper/research_paper.tex" "research_paper.pdf" "research_paper" 1758111689.68391 0
-  "/Users/neon/Documents/Thesis/obstacle-avoidance/paper/research_paper.tex" 1758111574.91209 55064 4e7c4be4ca770dc86fffc7a72a44f7f7 ""
+["pdflatex"] 1758116416.43479 "/Users/neon/Documents/Thesis/obstacle-avoidance/paper/research_paper.tex" "research_paper.pdf" "research_paper" 1758116418.13056 0
+  "/Users/neon/Documents/Thesis/obstacle-avoidance/paper/research_paper.tex" 1758116416.2171 68003 0138d15d2d3d889ddd32e834d42b425b ""
   "/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1741388039 2971 def0b6c1f0b107b3b936def894055589 ""
   "/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1741388039 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/map/fontname/texfonts.map" 1741388039 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -139,12 +139,12 @@
   "/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/web2c/texmf.cnf" 1741388039 42151 79f67285bdd95beca4d137b380b4b9e5 ""
   "/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-var/web2c/pdftex/pdflatex.fmt" 1741388039 3346141 1288109d02d1c772df65535881471649 ""
   "BRUR_Logo.svg.png" 1758023563.93086 81159 9b0069a7c516882dfdfcc076009093c7 ""
-  "research_paper.aux" 1758111689.5358 15642 03286158f762b7f68ee5b036f65ea954 "pdflatex"
-  "research_paper.lof" 1758111689.53805 721 781d8c548a423569392ec484ad5b5218 "pdflatex"
-  "research_paper.lot" 1758111689.53808 1117 47e001b30253d46a4561e318e334983e "pdflatex"
-  "research_paper.out" 1758111689.53762 9163 8e12e3c281bfc602780de2320576de9f "pdflatex"
-  "research_paper.tex" 1758111574.91209 55064 4e7c4be4ca770dc86fffc7a72a44f7f7 ""
-  "research_paper.toc" 1758111689.5379 6512 c4acb13149e09d86158471cab5c49e82 "pdflatex"
+  "research_paper.aux" 1758116417.99283 16373 c5652e0c43ff5a93f96b316ccb36f17f "pdflatex"
+  "research_paper.lof" 1758116417.99518 721 3e2a8967102cd4652987e6ba7ef74ebd "pdflatex"
+  "research_paper.lot" 1758116417.99522 1120 1dd07d71b29e52a5c88151a7fa21bba0 "pdflatex"
+  "research_paper.out" 1758116417.99479 9117 b7ee5555bf2dbabde35a374b19ee5fe8 "pdflatex"
+  "research_paper.tex" 1758116416.2171 68003 0138d15d2d3d889ddd32e834d42b425b ""
+  "research_paper.toc" 1758116417.99504 6526 1221447eb646edc7912fb0e07db797b5 "pdflatex"
   "safety_analysis.png" 1758004943.60092 211979 7191a1609f8daa904eabefdd94a12286 ""
   "system_architecture.png" 1758101945.76981 64845 c8e0d301a9c0ff9da6d9ee2821f5c500 ""
   "timing_breakdown.png" 1758004943.61055 193793 5d340f8c447c55d6f1627a88da71342c ""
